@@ -1,0 +1,11 @@
+#main{
+    display: flex;
+}
+
+.container{
+    text-align: center;
+    background-color:  #6b7f63;
+    height: 10vh;
+    width: 25vh;
+    margin:6.25vh;
+}

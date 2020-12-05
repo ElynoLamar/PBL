@@ -1,0 +1,45 @@
+
+.header { grid-area: header;}
+.nav { grid-area: nav; }
+.main { grid-area: main; }
+
+.grid-container {
+  display: grid;
+  grid-template:
+    'header header'
+    'nav main'
+    'nav main';
+    grid-template-columns: 10% auto;
+  }
+
+  header{
+    display: flex;
+    text-align: center;
+    width: 100%;
+    height:5vh;
+    background-color: #62523b;
+    color:black; 
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  nav{
+    display: flex;
+    flex-direction: column;
+    background-color: #6b7f63;
+    color:white;
+    padding-left:10px;
+    height:95vh;
+  }
+
+#mainThing{
+  background-color: aquamarine;
+}
+
+  main{
+
+  }
+
+  
+
+  
