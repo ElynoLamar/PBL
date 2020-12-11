@@ -1,24 +1,35 @@
-var stringMap = "Map";
+var stringHome = "Home";
+var stringTeam = "Teams";
 var stringEvents = "Events";
-var stringTeam = "Team";
+var stringMap = "Map";
 
-arrayOfItems=[stringMap, stringEvents, stringTeam];
+arrayOfItems=[stringHome,stringTeam, stringEvents, stringMap];
 
-    window.onload=function(){
-        let aux=""
-        for(let i=0; i<arrayOfItems.length; i++){
-            aux+="<div class='container' onclick='showStudent("+i+")'>"+arrayOfItems[i]+"</div>";
-        }
-        
-        document.getElementById("main").innerHTML = aux;
+window.onload=function(){
+    createNav();
+}
+
+function createNav(){
+    let aux="";
+    for(let i=0; i<arrayOfItems.length; i++){
+        aux+="<span class='navContainer' onclick='show("+i+")'>"+arrayOfItems[i]+"</span>";
     }
-    function showStudent(index){
-        switch(index){
-            case 0:
-                window.location = "mainPages/map.html";
-            case 1:
-                window.location = "mainPages/events.html";
-            case 2:
-                window.location = "mainPages/team.html";
-        }
+    document.getElementById("navItems").innerHTML = aux;
+}
+
+function show(index){
+    switch(index){
+        case 0:
+            window.location = "index.html";
+            break;
+        case 1:
+            window.location = "Links/team.html";
+            break;
+        case 2:
+            window.location = "Links/event.html";
+            break;
+        case 3:
+            window.location = "Links/map.html";
+            break;
     }
+}
