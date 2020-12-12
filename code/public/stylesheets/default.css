@@ -1,0 +1,96 @@
+body{
+    display: grid;
+    height:100%;    
+    grid-template-columns: 10% auto;
+    grid-template-rows:15% auto 5%;
+    grid-template-areas: 'h h h' 'n m m' 'f f f';
+    border: solid thick;
+    overflow: hidden;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+main{
+    grid-area: m;
+    overflow: hidden;
+}
+footer{
+    grid-area: f;
+}
+
+header{
+    grid-area: h;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #62523b;
+    color:black;
+
+   /* background-image: url("../images/camobackground.jpg");
+    background-repeat: repeat-x;*/
+}
+
+#titleheader{
+    font-size:50px;
+}
+
+#userNameHeader{
+    font-size: 35px;
+    
+}
+
+nav{
+    display: flex;
+    flex-direction: column;
+    background-color: #6b7f63;
+    color:white;
+    align-items: center;   
+    overflow:hidden; 
+    grid-area: n;
+    border-top: 10px solid black;
+    border-bottom: 10px solid black;
+}
+nav>span{
+    flex: 1;
+}
+
+.navContainer{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #6b7f63;
+    border: solid thick;
+    border-color:#62523b;
+    margin:6.25vh 5px;
+    color: black;
+    font-size: 40px;
+}
+
+footer{
+    display: flex;
+    background-color: #62523b;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+#map{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+#map img{
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%
+}
+
+#userboxHeader{
+    margin-right: 20px;
+}
+
+#backpageheader{
+    margin-left: 20px;
+}
+
