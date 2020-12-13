@@ -1,20 +1,65 @@
 <html>
 
 <head>
-  <title>Express</title>
-  <link rel="stylesheet" href="../stylesheets/headerNav.css">
-  <script src="../javascripts/maps.js"></script>
+  <meta charset="utf-8" />
+  <title>Tactical Combat Planner</title>
+  <link rel="stylesheet" href="../stylesheets/default.css">
+  <link rel="stylesheet" href="../stylesheets/map.css">
+  <!-- css externo vindo de https://leafletjs.com/examples/quick-start/-->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+  crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+  <script src="../javascripts/map.js"></script>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
+  <!-- Load Leaflet from CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
+
+  <!-- Load Esri Leaflet from CDN -->
+  <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"
+    integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ=="
+    crossorigin=""></script>
+
+  <!-- Load Esri Leaflet Geocoder from CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.css"
+    integrity="sha512-IM3Hs+feyi40yZhDH6kV8vQMg4Fh20s9OzInIIAc4nx7aMYMfo+IenRUekoYsHZqGkREUgx0VvlEsgm7nCDW9g=="
+    crossorigin="">
+  <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.js"
+    integrity="sha512-HrFUyCEtIpxZloTgEKKMq4RFYhxjJkCiF5sDxuAokklOeZ68U2NPfh4MFtyIVWlsKtVbK5GD2/JzFyAfvT5ejA=="
+    crossorigin=""></script>
+  
+  
+
 </head>
 
-<body class="grid-container">
-  <header></header>
-  <nav class="nav">
-   
+<body>
+  <header>
+    <span></span>
+    <span id='titleheader'>TACTICAL COMBAT PLANNER</span>
+    <span id='userboxHeader'>
+      <span id='userimageHeader'><img src="../images/userImage.png" height='50'></span>
+      <span id='userNameHeader'>John Doe</span>
+      <span id='logoutheader'><img src="../images/on-off-button.png" height='50'></span>
+    </span>
+  </header>
+  <nav id='navItems'>
 
   </nav>
-  <main class="main">
-   
+  <main id="map"> 
+    
   </main>
+  <footer>
+		<div class="footerdivs">Contact us by email: <a href="mailto:fernandolamarsantos@gmail.com"> fernandolamarsantos@gmail.com</a> or <a href="mailto:jaimeferreira2000@gmail.com"> jaimeferreira2000@gmail.com</a></div>
+	</footer>
+	
 </body>
 
 </html>

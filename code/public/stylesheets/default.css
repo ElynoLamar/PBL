@@ -30,9 +30,6 @@ header{
     background-repeat: repeat-x;*/
 }
 
-#titleheader{
-    font-size:50px;
-}
 
 #userNameHeader{
     font-size: 35px;
@@ -79,6 +76,9 @@ footer{
     justify-content: center;
     align-items: center;
     overflow: hidden;
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%
 }
 #map img{
     flex-shrink: 0;
@@ -94,3 +94,18 @@ footer{
     margin-left: 20px;
 }
 
+@font-face {
+    font-family: 'army_rust';
+    src: url('fonts/army_rust-webfont..eot');
+    src: url('fonts/army_rust-webfont..eot?#iefix') format('embedded-opentype'),
+        url('fonts/army_rust-webfont.woff') format('woff'),
+        url('fonts/army_rust-webfont.ttf') format('truetype'),
+        url('fonts/army_rust-webfont.svg#army_rust') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#titleheader{
+font-size:90px;
+font-family: 'army_rust';
+}
