@@ -14,10 +14,10 @@ window.onload= async function(){
 
 function createNav(){
     let aux="";
-    aux+="<span class='navContainer' onclick='show(1)'>"+arrayOfItems[0]+"</span>";
-    aux+="<span class='clickedNavContainer' onclick='show(2)'>"+arrayOfItems[1]+"</span>";
-    aux+="<span class='navContainer' onclick='show(3)'>"+arrayOfItems[2]+"</span>";
-    aux+="<span class='navContainer' onclick='show(4)'>"+arrayOfItems[3]+"</span>";
+    aux+="<span class='navContainer' onclick='show(0)'>"+arrayOfItems[0]+"</span>";
+    aux+="<span class='clickedNavContainer' onclick='show(1)'>"+arrayOfItems[1]+"</span>";
+    aux+="<span class='navContainer' onclick='show(2)'>"+arrayOfItems[2]+"</span>";
+    aux+="<span class='navContainer' onclick='show(3)'>"+arrayOfItems[3]+"</span>";
     document.getElementById("navItems").innerHTML = aux;
 }
 
@@ -37,7 +37,10 @@ function show(index){
             break;
     }
 }
-
+function changeToClickedTeam(index) {
+    //sessionStorage.setItem("index",teamID);
+    window.location = "selectedTeam.html"
+  }
 function createTeamUI(){
     let block="";
     block+="<span id='myTeams'>1</span>";
@@ -62,7 +65,7 @@ async function getAllTeamsObj(){
  async function getMyTeamsObj(){
     try {
          var getmyteams = await $.ajax({
-             url: "../api/players/2/teams",
+             url: "../api/players/2/teams",//estamos a assumir q é o player user id:2 porque não sabemos como injetar aqui essa variavel
              method: "get",
              dataType: "json"
          });
@@ -97,7 +100,7 @@ async function createMyTeamsTable(){
         block+="<table class='table'>";
         block+="<tr><th>Name</th><th>Description</th></tr>";
     for(let i = 0; i <teams.length; i++){
-        block+="<tr><td>"+teams[i].name+"</td><td>"+teams[i].description+"</td></tr>";
+        block+="<tr onclick='changeToClickedTeam(this)'><td>"+teams[i].name+"</td><td>"+teams[i].description+"</td></tr>";
     }
     block+="</table>";
     document.getElementById("myTeams").innerHTML = block;
