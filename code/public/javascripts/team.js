@@ -1,32 +1,4 @@
-var team = [
-    {   
-        name: "GangGang", 
-        id: 1,
-        teammate:[
-            {id:1,name:"swagmaster",rank:"BOSS",role:"Sniper"},
-            {id:2,name:"Trollolol",rank:"Initiate",role:"Medic"},
-            {id:3,name:"ezpz",rank:"Initiate",role:"Tech"}
-        ]
-    },
-    {   
-        name: "GangGang1", 
-        id: 2,
-        teammate:[
-            {id:1,name:"swagmaster",rank:"BOSS",role:"Sniper"},
-            {id:2,name:"Trollolol",rank:"Initiate",role:"Medic"},
-            {id:3,name:"ezpz",rank:"Initiate",role:"Tech"}
-        ]
-    },
-    {   
-        name: "GangGang2", 
-        id: 3,
-        teammate:[
-            {id:1,name:"swagmaster",rank:"BOSS",role:"Sniper"},
-            {id:2,name:"Trollolol",rank:"Initiate",role:"Medic"},
-            {id:3,name:"swagmaster",rank:"Initiate",role:"Tech"}
-        ]
-    },
-];
+
 var stringHome = "Home";
 var stringTeam = "Teams";
 var stringEvents = "Events";
@@ -35,14 +7,25 @@ var stringMap = "Map";
 
 arrayOfItems=[stringHome,stringTeam, stringEvents, stringMap];
 
-window.onload=function(){
+window.onload= async function(){
     createTeamUI();
     createTeammatesTable();
     createMapsTable();
-
 }
 
-
+async function getTeamMembersObj(){
+   try {
+        var getteammembers = await $.ajax({
+            url: "../api/teams/2/members",
+            method: "get",
+            dataType: "json"
+        });
+        return getteammembers;
+   } catch (err) {
+       console.log(err);
+   }
+   
+}
 
   
 
@@ -55,16 +38,20 @@ function createTeamUI(){
 }
 
 
-function createTeammatesTable(){
+async function createTeammatesTable(){
+
+    var team = await getTeamMembersObj();
+    alert(JSON.stringify(team))
     let block="";
-    block+="<h1 id='titles'>Team members</h1>";
-    block+="<table class='table'>";
-    block+="<tr><th>Name</th><th>Rank</th><th>Role</th></tr>";
-    for(let i=0;i<team[1].teammate.length;i++){
-        block+="<tr><td>"+team[1].teammate[i].name+"</td><td>"+team[1].teammate[i].rank+"</td><td>"+team[1].teammate[i].role+"</td></tr>";
+        block+="<h1 id='titles'>Team members</h1>";
+        block+="<table class='table'>";
+        block+="<tr><th>Name</th><th>Rank</th><th>Role</th></tr>";
+    for(let i = 0; i <team.length; i++){
+        block+="<tr><td>"+team[i].name+"</td><td>"+team[i].ranking+"</td><td>"+team[i].role+"</td></tr>";
     }
     block+="</table>";
     document.getElementById("teamMembers").innerHTML = block;
+
 }
 
 function createMapsTable(){

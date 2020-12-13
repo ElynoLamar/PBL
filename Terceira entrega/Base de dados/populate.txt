@@ -1,0 +1,16 @@
+insert into Team(name_team, description_team) values('Team Snipe Matracas','Very Casual but serious');
+insert into Player(email, name, age) values('ppp@gmail.com','Paula Porto','19');
+insert into Player(email, name, age) values('ppp@gmail.com','Paula Porto','19');
+insert into Player(email, name, age) values('ppp@gmail.com','Paula Porto','19');
+insert into Player(email, name, age) values('ppp@gmail.com','Paula Porto','19');
+insert into Team(name_team, description_team) values('Competitive Lucid Games','Competitive high ranked team');
+insert into Player(email, name, age) values('ddd@gmail.com','Diogo Dontem','20');
+insert into Player(email, name, age) values('ddd@gmail.com','Diogo Dontem','20');
+insert into Player(email, name, age) values('ddd@gmail.com','Diogo Dontem','20');
+insert into TeamMember(player, team, role, ranking) values(1, 1,'Sniper' ,'Leader');
+insert into TeamMember(player, team, role, ranking) values(2, 1,'Scout', 'Player');
+insert into TeamMember(player, team, role, ranking) values(3, 1,'Riffleman', 'Player');
+insert into TeamMember(player, team, role, ranking) values(4, 1,'Medic', 'Player');
+insert into TeamMember(player, team, role, ranking) values(5, 2,'Medic', 'Leader');
+insert into TeamMember(player, team, role, ranking) values(6, 2,'Riffleman', 'Player');
+insert into TeamMember(player, team, role, ranking) values(7, 2,'Sniper', 'Player');

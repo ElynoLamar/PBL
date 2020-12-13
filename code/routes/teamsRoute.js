@@ -10,9 +10,15 @@ router.get('/', async function(req,res,next) {
 
 router.get("/:pos", async function(req,res,next){
     let pos = req.params.pos;
-    let members = await mteam.getAllTeamMembers(pos);
+    let team = await mteam.getSpecificTeam(pos);
+    res.send(team);
+});
+router.get("/:pos/members", async function(req,res,next){
+    let pos = req.params.pos;
+    let members = await mteam.getTeamMembers(pos);
     res.send(members);
 });
+
 
 
 module.exports = router;
