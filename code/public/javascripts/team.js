@@ -1,79 +1,26 @@
-
 var stringHome = "Home";
 var stringTeam = "Teams";
 var stringEvents = "Events";
 var stringMap = "Map";
 
-
 arrayOfItems=[stringHome,stringTeam, stringEvents, stringMap];
 
 window.onload= async function(){
+    createNav();
     createTeamUI();
-    createTeammatesTable();
-    createMapsTable();
+    createAllTeamsTable();
+    createMyTeamsTable();
 }
 
-async function getTeamMembersObj(){
-   try {
-        var getteammembers = await $.ajax({
-            url: "../api/teams/2/members",
-            method: "get",
-            dataType: "json"
-        });
-        return getteammembers;
-   } catch (err) {
-       console.log(err);
-   }
-   
-}
-
-  
-
-function createTeamUI(){
-    let block="";
-    block+="<span id='teamMembers'>1</span>";
-    block+="<span id='actionTeamBox'>2</span>";
-    block+="<span id='teamMaps'>3</span>";
-    document.getElementById("teamDivItems").innerHTML = block;
-}
-
-
-async function createTeammatesTable(){
-
-    var team = await getTeamMembersObj();
-    alert(JSON.stringify(team))
-    let block="";
-        block+="<h1 id='titles'>Team members</h1>";
-        block+="<table class='table'>";
-        block+="<tr><th>Name</th><th>Rank</th><th>Role</th></tr>";
-    for(let i = 0; i <team.length; i++){
-        block+="<tr><td>"+team[i].name+"</td><td>"+team[i].ranking+"</td><td>"+team[i].role+"</td></tr>";
-    }
-    block+="</table>";
-    document.getElementById("teamMembers").innerHTML = block;
-
-}
-
-function createMapsTable(){
-    let block="";
-    block+="<h1 id='titles'>Map tactics</h1>";
-    block+="<table class='table'>";
-    block+="<tr><th>Name</th><th>Date</th><th>Local</th></tr>";
-    block+="<tr><td>blabla[i].name</td><td>blabla[i].Date</td><td>blabla[i].Local</td></tr>";
-    block+="<tr><td>blabla[i].name</td><td>blabla[i].Date</td><td>blabla[i].Local</td></tr>";
-    block+="</table>";
-    document.getElementById("teamMaps").innerHTML = block;
-}
-
-//not using
 function createNav(){
     let aux="";
-    for(let i=0; i<arrayOfItems.length; i++){
-        aux+="<span class='navContainer' onclick='show("+i+")'>"+arrayOfItems[i]+"</span>";
-    }
+    aux+="<span class='navContainer' onclick='show(1)'>"+arrayOfItems[0]+"</span>";
+    aux+="<span class='clickedNavContainer' onclick='show(2)'>"+arrayOfItems[1]+"</span>";
+    aux+="<span class='navContainer' onclick='show(3)'>"+arrayOfItems[2]+"</span>";
+    aux+="<span class='navContainer' onclick='show(4)'>"+arrayOfItems[3]+"</span>";
     document.getElementById("navItems").innerHTML = aux;
 }
-//not using
+
 function show(index){
     switch(index){
         case 0:
@@ -89,4 +36,70 @@ function show(index){
             window.location = "map.html";
             break;
     }
+}
+
+function createTeamUI(){
+    let block="";
+    block+="<span id='myTeams'>1</span>";
+    block+="<span id='allTeams'>2</span>";
+    document.getElementById("teamDivItems").innerHTML = block;
+}
+
+async function getAllTeamsObj(){
+    try {
+         var getallteams = await $.ajax({
+             url: "../api/teams",
+             method: "get",
+             dataType: "json"
+         });
+         return getallteams;
+    } catch (err) {
+        console.log(err);
+    }
+    
+ }
+
+ async function getMyTeamsObj(){
+    try {
+         var getmyteams = await $.ajax({
+             url: "../api/players/2/teams",
+             method: "get",
+             dataType: "json"
+         });
+         return getmyteams;
+    } catch (err) {
+        console.log(err);
+    }
+    
+ }
+
+ async function createAllTeamsTable(){
+    
+    var teams = await getAllTeamsObj();
+    let block="";
+        block+="<h1 id='titles'>All Teams</h1>";
+        block+="<table class='table'>";
+        block+="<tr><th>Name</th><th>Description</th></tr>";
+    for(let i = 0; i <teams.length; i++){
+        block+="<tr><td>"+teams[i].name+"</td><td>"+teams[i].description+"</td></tr>";
+    }
+    block+="</table>";
+    document.getElementById("allTeams").innerHTML = block;
+
+}
+
+
+async function createMyTeamsTable(){
+    
+    var teams = await getMyTeamsObj();
+    let block="";
+        block+="<h1 id='titles'>My Teams</h1>";
+        block+="<table class='table'>";
+        block+="<tr><th>Name</th><th>Description</th></tr>";
+    for(let i = 0; i <teams.length; i++){
+        block+="<tr><td>"+teams[i].name+"</td><td>"+teams[i].description+"</td></tr>";
+    }
+    block+="</table>";
+    document.getElementById("myTeams").innerHTML = block;
+
 }

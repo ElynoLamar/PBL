@@ -44,8 +44,6 @@ nav{
     align-items: center;   
     overflow:hidden; 
     grid-area: n;
-    border-top: 10px solid black;
-    border-bottom: 10px solid black;
 }
 nav>span{
     flex: 1;
@@ -60,6 +58,16 @@ nav>span{
     border: solid thick;
     border-color:#62523b;
     margin:6.25vh 5px;
+    color: black;
+    font-size: 40px;
+}
+
+.clickedNavContainer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #4b623bff;
     color: black;
     font-size: 40px;
 }

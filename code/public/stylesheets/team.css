@@ -1,37 +1,27 @@
-body{
-    display: grid;
-    height:100%;    
-    grid-template-columns: 10% auto;
-    grid-template-rows:15% auto 5%;
-    grid-template-areas: 'h h h' 'm m m' 'f f f';
-    border: solid thick;
-    overflow: hidden;
-    margin: 0 !important;
-    padding: 0 !important;
+#myTeams{
+    background-color: #62523b;
+    min-height: 40%;
+    width:20%;
+    margin-right:10%;
 }
+
+#allTeams{
+    background-color: #62523b;
+    width:20%;
+    height: 300%;
+    margin-left:10%;
+}
+
 #teamDivItems{
-    background-color:white;
-    height:100%;
-    display: grid;
-    grid-template-areas: 'me bo ma';
-    grid-template-columns: 25% auto 25%;
-}
+    background-color:#4b623bff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%
 
-#teamMembers {
-    background-color: #48623b;
-    grid-area: me;
-    margin: 10px 5px 10px 10px;
-}
-#actionTeamBox{
-    background-color:  #48623b;
-    grid-area: bo;
-    margin: 10px 5px 10px 5px;
-
-}
-#teamMaps{
-    background-color:  #48623b;
-    grid-area: ma;
-    margin: 10px 10px 10px 5px;
 }
 
 .table{
@@ -57,7 +47,4 @@ body{
 
 #titles{
     text-align: center;
-}
-#teamDivItems{
-    background-color: black;
 }

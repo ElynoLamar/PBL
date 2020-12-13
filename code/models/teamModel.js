@@ -18,7 +18,7 @@ module.exports.getSpecificTeam= async function(index) {
 
 module.exports.getAllTeams= async function() { 
     try {
-        var query = "SELECT * from Team";
+        var query = "SELECT name_team as name, description_team as description from Team";
         const teams = await pool.query(query);
         console.log(query);
         return teams; 
