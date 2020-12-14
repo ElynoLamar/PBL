@@ -8,15 +8,16 @@ var stringMap = "Map";
 arrayOfItems=[stringHome,stringTeam, stringEvents, stringMap];
 
 window.onload= async function(){
+    let teamid = sessionStorage.getItem("id");
     createTeamUI();
-    createTeammatesTable();
+    createTeammatesTable(teamid);
     createMapsTable();
 }
 
-async function getTeamMembersObj(){
+async function getTeamMembersObj(id){
    try {
         var getteammembers = await $.ajax({
-            url: "../api/teams/2/members",
+            url: "../api/teams/"+id+"/members",
             method: "get",
             dataType: "json"
         });
@@ -38,9 +39,9 @@ function createTeamUI(){
 }
 
 
-async function createTeammatesTable(){
+async function createTeammatesTable(id){
 
-    var team = await getTeamMembersObj();
+    var team = await getTeamMembersObj(id);
     let block="";
         block+="<h1 id='titles'>Team members</h1>";
         block+="<table class='table'>";

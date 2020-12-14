@@ -37,8 +37,8 @@ function show(index){
             break;
     }
 }
-function changeToClickedTeam(index) {
-    //sessionStorage.setItem("index",teamID);
+function changeToClickedTeam(id) {
+    sessionStorage.setItem("id",id);
     window.location = "selectedTeam.html"
   }
 function createTeamUI(){
@@ -49,6 +49,7 @@ function createTeamUI(){
 }
 
 async function getAllTeamsObj(){
+    
     try {
          var getallteams = await $.ajax({
              url: "../api/teams",
@@ -63,9 +64,10 @@ async function getAllTeamsObj(){
  }
 
  async function getMyTeamsObj(){
+    let loggedUser = 2;
     try {
          var getmyteams = await $.ajax({
-             url: "../api/players/2/teams",//estamos a assumir q é o player user id:2 porque não sabemos como injetar aqui essa variavel
+             url: "../api/players/"+loggedUser+"/teams",
              method: "get",
              dataType: "json"
          });
@@ -99,8 +101,9 @@ async function createMyTeamsTable(){
         block+="<h1 id='titles'>My Teams</h1>";
         block+="<table class='table'>";
         block+="<tr><th>Name</th><th>Description</th></tr>";
+        alert(JSON.stringify(teams));
     for(let i = 0; i <teams.length; i++){
-        block+="<tr onclick='changeToClickedTeam(this)'><td>"+teams[i].name+"</td><td>"+teams[i].description+"</td></tr>";
+        block+="<tr onclick='changeToClickedTeam("+teams[i].id+")'><td>"+teams[i].name+"</td><td>"+teams[i].description+"</td></tr>";
     }
     block+="</table>";
     document.getElementById("myTeams").innerHTML = block;

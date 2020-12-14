@@ -25,7 +25,7 @@ module.exports.getAllPlayers= async function() {
 }
 module.exports.getPlayerJoinedTeams= async function(index) { 
     try {
-        var query = "SELECT name_team as name,description_team as description from Player,Team,TeamMember where Player.id_player=TeamMember.player and TeamMember.team=Team.id_team and Player.id_player=? ";
+        var query = "SELECT id_team as id, name_team as name,description_team as description from Player,Team,TeamMember where Player.id_player=TeamMember.player and TeamMember.team=Team.id_team and Player.id_player=? ";
         const teams = await pool.query(query,index);
         console.log(query);
         return teams; 
