@@ -64,7 +64,7 @@ async function getAllTeamsObj(){
  }
 
  async function getMyTeamsObj(){
-    let loggedUser = 2;
+    let loggedUser = 2;// assumir que o utilizador autenticado é o id=2
     try {
          var getmyteams = await $.ajax({
              url: "../api/players/"+loggedUser+"/teams",
@@ -101,7 +101,6 @@ async function createMyTeamsTable(){
         block+="<h1 id='titles'>My Teams</h1>";
         block+="<table class='table'>";
         block+="<tr><th>Name</th><th>Description</th></tr>";
-        alert(JSON.stringify(teams));
     for(let i = 0; i <teams.length; i++){
         block+="<tr onclick='changeToClickedTeam("+teams[i].id+")'><td>"+teams[i].name+"</td><td>"+teams[i].description+"</td></tr>";
     }
