@@ -1,13 +1,22 @@
-CREATE table TeamMember(player int not null, team int not null, rank varchar(30), role varchar(30), 
-                        CONSTRAINT TeamMemberPk primary key (team, player),
-CONSTRAINT player_TeamMember foreign key (player)
-	references Player(id_player),
-CONSTRAINT team_TeamMember foreign key (team)
-	references Team(id_team));
-
 CREATE table Team(id_team int not null AUTO_INCREMENT, name_team varchar(30) not null,description_team varchar(30),
                         CONSTRAINT TeamPk primary key (id_team));
 
 CREATE table Player(id_player int not null AUTO_INCREMENT, name_player varchar(30) not null,age_player int not null, email_player varchar(30) not null,
                         CONSTRAINT PlayerPk primary key (id_player));
 
+create table Ranking(id_ranking int not null, name_ranking varchar(10),
+			CONSTRAINT RankingPK PRIMARY KEY (id_ranking));
+
+create table Role(id_role int not null, name_role varchar(30),
+			CONSTRAINT RolePK PRIMARY KEY (id_role));       
+
+CREATE table TeamMember(player int not null, team int not null, ranking int not null, role int not null, 
+                        CONSTRAINT TeamMemberPk primary key (team, player),
+CONSTRAINT player_TeamMember foreign key (player)
+	references Player(id_player),
+CONSTRAINT team_TeamMember foreign key (team)
+	references Team(id_team),
+CONSTRAINT role_Teammember foreign key (role)
+    references Role (id_role),
+CONSTRAINT ranking_Teammember foreign key (ranking)
+    references Ranking (id_ranking));

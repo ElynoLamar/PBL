@@ -1,3 +1,15 @@
+insert into Ranking(id_ranking,name_ranking) values (1,"Leader");
+insert into Ranking(id_ranking,name_ranking) values (2,"Player");
+
+insert into Role(id_role,name_role) values (1,"Rifleman");
+insert into Role(id_role,name_role) values (2,"Designated Marksman");
+insert into Role(id_role,name_role) values (3,"Grenadier");
+insert into Role(id_role,name_role) values (4,"Breacher");
+insert into Role(id_role,name_role) values (5,"Support Gunner");
+insert into Role(id_role,name_role) values (6,"Sniper");
+insert into Role(id_role,name_role) values (7,"Scout");
+
+
 insert into Team(name_team, description_team) values('Team Snipe Matracas','Very Casual but serious');
 insert into Player(email, name, age) values('ppp@gmail.com','Paula Porto','19');
 insert into Player(email, name, age) values('ppp@gmail.com','Paula Porto','19');
@@ -8,14 +20,14 @@ insert into Player(email, name, age) values('ddd@gmail.com','Diogo Dontem','20')
 insert into Player(email, name, age) values('ddd@gmail.com','Diogo Dontem','20');
 insert into Player(email, name, age) values('ddd@gmail.com','Diogo Dontem','20');
 
-insert into TeamMember(player, team, role, ranking) values(1, 1,'Sniper' ,'Leader');
-insert into TeamMember(player, team, role, ranking) values(2, 1,'Scout', 'Player');
-insert into TeamMember(player, team, role, ranking) values(3, 1,'Riffleman', 'Player');
-insert into TeamMember(player, team, role, ranking) values(4, 1,'Medic', 'Player');
+insert into TeamMember(player, team, role, ranking) values(1, 1,6 ,1);
+insert into TeamMember(player, team, role, ranking) values(2, 1,1, 2);
+insert into TeamMember(player, team, role, ranking) values(3, 1,7, 2);
+insert into TeamMember(player, team, role, ranking) values(4, 1,3, 2);
 
-insert into TeamMember(player, team, role, ranking) values(5, 2,'Medic', 'Leader');
-insert into TeamMember(player, team, role, ranking) values(6, 2,'Riffleman', 'Player');
-insert into TeamMember(player, team, role, ranking) values(7, 2,'Sniper', 'Player');
+insert into TeamMember(player, team, role, ranking) values(5, 2,6, 1);
+insert into TeamMember(player, team, role, ranking) values(6, 2,2,2);
+insert into TeamMember(player, team, role, ranking) values(7, 2,1, 2);
 
 
 

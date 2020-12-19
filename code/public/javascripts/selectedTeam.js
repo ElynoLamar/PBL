@@ -47,7 +47,7 @@ async function createTeammatesTable(id){
         block+="<table class='table'>";
         block+="<tr><th>Name</th><th>Rank</th><th>Role</th></tr>";
     for(let i = 0; i <team.length; i++){
-        block+="<tr><td>"+team[i].name+"</td><td>"+team[i].ranking+"</td><td>"+team[i].role+"</td></tr>";
+        block+="<tr><td>"+team[i].name+"</td><td>"+team[i].Ranking+"</td><td>"+team[i].Role+"</td></tr>";
     }
     block+="</table>";
     document.getElementById("teamMembers").innerHTML = block;

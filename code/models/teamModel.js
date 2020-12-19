@@ -29,7 +29,7 @@ module.exports.getAllTeams= async function() {
 }
 module.exports.getTeamMembers= async function(index) { 
     try {
-        var query = "select name_player as name,role, ranking from Player,Team,TeamMember where Player.id_player=TeamMember.player and TeamMember.team=Team.id_team and Team.id_team=? ";
+        var query = "select name_player as name,name_role as Role,name_ranking as Ranking from Player,Team,TeamMember,Ranking,Role where Ranking.id_ranking = TeamMember.ranking and TeamMember.player = Player.id_player and Team.id_team = TeamMember.team and TeamMember.ranking = Ranking.id_ranking and TeamMember.role= Role.id_role and Team.id_team=?";
         const members = await pool.query(query,index);
         console.log(query);
         return members; 

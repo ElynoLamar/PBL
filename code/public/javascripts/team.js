@@ -52,7 +52,7 @@ async function getAllTeamsObj(){
     
     try {
          var getallteams = await $.ajax({
-             url: "../api/teams",
+             url: "/api/teams",
              method: "get",
              dataType: "json"
          });
@@ -67,7 +67,7 @@ async function getAllTeamsObj(){
     let loggedUser = 2;// assumir que o utilizador autenticado é o id=2
     try {
          var getmyteams = await $.ajax({
-             url: "../api/players/"+loggedUser+"/teams",
+             url: "/api/players/"+loggedUser+"/teams",
              method: "get",
              dataType: "json"
          });
