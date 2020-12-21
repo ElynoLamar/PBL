@@ -20,3 +20,16 @@ CONSTRAINT role_Teammember foreign key (role)
     references Role (id_role),
 CONSTRAINT ranking_Teammember foreign key (ranking)
     references Ranking (id_ranking));
+
+create table Field(id_field int not null AUTO_INCREMENT, name_field varchar(30),
+	CONSTRAINT FieldPK PRIMARY KEY (id_field));       
+
+
+create table Tactics(field int not null, name_tactic varchar(30), team int not null,
+	CONSTRAINT FieldPK PRIMARY KEY (name_tactic, team),
+    CONSTRAINT team_Tactic foreign key (team)
+    references Team (id_team),
+CONSTRAINT field_Tactic foreign key (field)
+    references Field (id_field));
+
+            

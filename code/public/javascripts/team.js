@@ -12,6 +12,8 @@ window.onload= async function(){
     createMyTeamsTable();
 }
 
+
+
 function createNav(){
     let aux="";
     aux+="<span class='navContainer' onclick='show(0)'>"+arrayOfItems[0]+"</span>";

@@ -29,6 +29,11 @@ insert into TeamMember(player, team, role, ranking) values(5, 2,6, 1);
 insert into TeamMember(player, team, role, ranking) values(6, 2,2,2);
 insert into TeamMember(player, team, role, ranking) values(7, 2,1, 2);
 
+insert into Field(name_field) values('Cacém field');
+insert into Field(name_field) values('Rio de Mouro field');    
+insert into Field(name_field) values('Cacém Igreja');
 
-
+insert into Tactics(1,'Ataque',1);
+insert into Tactics(1,'Defesa',1);
+insert into Tactics(1,'Rush',1);
 

@@ -19,5 +19,11 @@ router.get("/:pos/teams", async function(req,res,next){
     let teams = await mplayer.getPlayerJoinedTeams(pos);
     res.send(teams);
 });
+router.get("/:pos1/team/:pos2", async function(req,res,next){
+    let pos1 = req.params.pos1;
+    let pos2 = req.params.pos2;
+    let playerInfo = await mplayer.getSpecificPlayer(pos1,pos2);
+    res.send(playerInfo);
+});
 
 module.exports = router;

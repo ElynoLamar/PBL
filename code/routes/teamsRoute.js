@@ -19,6 +19,11 @@ router.get("/:pos/members", async function(req,res,next){
     res.send(members);
 });
 
+router.get("/:pos/tactics", async function(req,res,next){
+    let pos = req.params.pos;
+    let tactics = await mteam.getTeamTactics(pos);
+    res.send(tactics);
+});
 
 
 module.exports = router;

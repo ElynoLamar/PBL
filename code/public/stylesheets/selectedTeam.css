@@ -61,3 +61,26 @@ body{
 #teamDivItems{
     background-color: black;
 }
+#playerBox{
+    display:grid;
+    width: 100%; 
+    grid-template-columns: 65% auto 10%;
+    grid-template-areas: 'I P DS' 'D D DS';
+    
+}
+#playerInfo{
+    grid-area: I;
+    margin-left: 20px;
+}
+#playerPhoto{
+    grid-area: P;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+#playerDesc{
+    grid-area: D;
+    display: flex;
+    margin-left: 20px;
+}
