@@ -44,3 +44,8 @@ CONSTRAINT player_EventPlayers foreign key (player)
 	references Player(id_player),
 CONSTRAINT event_EventPlayers foreign key (event)
 	references Event(id_event));
+
+    CREATE table EventMember(player int not null, event int not null,
+     CONSTRAINT EventMemberPk primary key (event, player),
+      CONSTRAINT player_EventMember foreign key (player) references Player(id_player),
+       CONSTRAINT team_EventMember foreign key (event) references Event(id_event));

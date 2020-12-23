@@ -9,6 +9,7 @@ window.onload=function(){
     createNav();
     createEventUI();
     createAllEventsTable();
+    createMyEventsTable();
 }
 
 function createEventUI(){
@@ -45,6 +46,20 @@ function show(index){
             break;
     }
 }
+
+async function createAllEventsTable(){
+    var events = await getAllEventsObj();
+    let block="";
+        block+="<h1 id='titles'>All Events</h1>";
+        block+="<table class='table'>";
+        block+="<tr><th>Name</th><th>Field</th><th>Date</th></tr>";
+    for(let i = 0; i <events.length; i++){
+        block+="<tr><td>"+events[i].name+"</td><td>"+events[i].field+"</td><td>"+events[i].date+"</td></tr>";
+    }
+    block+="</table>";
+    document.getElementById("allEvents").innerHTML = block;
+}
+
 async function getAllEventsObj(){
     
     try {
@@ -59,33 +74,38 @@ async function getAllEventsObj(){
     }
     
  }
-async function createAllEventsTable(){
-    var events = await getAllEventsObj();
+
+
+async function createMyEventsTable(){
+    
+    var events = await getMyEventsObj();
     let block="";
-        block+="<h1 id='titles'>All Events</h1>";
+        block+="<h1 id='titles'>My Events</h1>";
         block+="<table class='table'>";
-        block+="<tr><th>Name</th><th>Date</th><th>Field</th></tr>";
+        block+="<tr><th>Name</th><th>Field</th><th>Date</th></tr>";
     for(let i = 0; i <events.length; i++){
-        block+="<tr><td>"+events[i].name+"</td><td>"+events[i].date+"</td><td>"+events[i].field+"</td></tr>";
+        block+="<tr onclick='changeToEventLobby("+events[i].id+")'><td>"+events[i].name+"</td><td>"+events[i].field+"</td><td>"+events[i].date+"</td></tr>";
     }
     block+="</table>";
-    document.getElementById("allEvents").innerHTML = block;
+    document.getElementById("myEvents").innerHTML = block;
+
 }
 
+async function getMyEventsObj(){
+    let loggedUser = 8;// assumir que o utilizador autenticado é o id=8
+    try {
+         var getmyevents = await $.ajax({
+             url: "/api/players/"+loggedUser+"/events",
+             method: "get",
+             dataType: "json"
+         });
+         return getmyevents;
+    } catch (err) {
+        console.log(err);
+    }
+ }
 
-
-
-// async function createMyTeamsTable(){
-    
-//     //var teams = await getMyTeamsObj();
-//     let block="";
-//         block+="<h1 id='titles'>My Teams</h1>";
-//         block+="<table class='table'>";
-//         block+="<tr><th>Name</th><th>Description</th></tr>";
-//     for(let i = 0; i <teams.length; i++){
-//         block+="<tr onclick='changeToClickedTeam("+teams[i].id+")'><td>"+teams[i].name+"</td><td>"+teams[i].description+"</td></tr>";
-//     }
-//     block+="</table>";
-//     document.getElementById("myTeams").innerHTML = block;
-
-// }
+ function changeToEventLobby(id) {
+    sessionStorage.setItem("id",id);
+    window.location = "eventLobby.html"
+  }

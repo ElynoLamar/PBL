@@ -34,3 +34,15 @@ module.exports.getPlayerJoinedTeams= async function(index) {
         return err;
     }
 }
+
+module.exports.getPlayerJoinedEvents= async function(index) { 
+    try {
+        var query = "SELECT id_event as id, name_event as name,name_field as field,date_event as date from Field,  Player,Event,EventMember where Player.id_player=EventMember.player and EventMember.event=Event.id_event and Field.id_field = Event.field_event and Player.id_player=?";
+        const events = await pool.query(query,index);
+        console.log(query);
+        return events; 
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}

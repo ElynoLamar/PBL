@@ -44,3 +44,14 @@ insert into Tactics(1,'Rush',1);
 
 INSERT INTO Event(name_event, field_event, date_event, duration_event, team_size_event) VALUES ("Super Cool Event", 1, "10/12/2021", "3 hours" , 5);
 INSERT INTO Event(name_event, field_event, date_event, duration_event, team_size_event) VALUES ("Not so Cool Event", 1, "22/03/2021", "4 hours" , 6);
+INSERT INTO Event(name_event, field_event, date_event, duration_event, team_size_event) VALUES ("Really Cool Event", 2, "14/02/2021", "6 hours" , 6);
+
+insert into EventMember(player, event) values(1, 1);
+insert into EventMember(player, event) values(2, 1);
+insert into EventMember(player, event) values(3, 1);
+insert into EventMember(player, event) values(4, 1);
+insert into EventMember(player, event) values(8, 1);
+insert into EventMember(player, event) values(8, 2);
+insert into EventMember(player, event) values(8, 3);
+
+
