@@ -45,7 +45,7 @@ async function getTeamTactics(id){
  }
 
  async function getPlayerInfo(player, team){
-    try {
+    try {//fixar isto para /api/team/id/player/id
          var playerinfo = await $.ajax({
              url: "/api/players/"+player+"/team/"+team,
              method: "get",
