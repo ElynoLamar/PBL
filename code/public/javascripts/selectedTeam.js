@@ -151,7 +151,7 @@ async function createTacticsTable(id){
     block+="<table class='table'>";
     block+="<tr><th>Name</th><th>Field</th></tr>";
     for(let i = 0; i <tactics.length; i++){
-        block+="<tr onclick='changeMiddleBox_Tactics("+id+",\'"+tactics[i].image+"\'')><td>"+tactics[i].name+"</td><td>"+tactics[i].field+"</td></tr>";
+        block+="<tr onclick=changeMiddleBox_Tactics("+id+",\'"+tactics[i].image+"\')><td>"+tactics[i].name+"</td><td>"+tactics[i].field+"</td></tr>";
     }
     block+="</table>";
     document.getElementById("teamMaps").innerHTML = block;

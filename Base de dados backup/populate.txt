@@ -37,3 +37,5 @@ insert into Tactics(1,'Ataque',1);
 insert into Tactics(1,'Defesa',1);
 insert into Tactics(1,'Rush',1);
 
+INSERT INTO Event(date_event, duration_event, field_event, name_event, team_size_event) VALUES ("10/12/2021", "3 hours" , 1, "Super Cool Event", 5);
+INSERT INTO Event(date_event, duration_event, field_event, name_event, team_size_event) VALUES ("22/03/2021", "4 hours" , 1, "Not so Cool Event", 6);

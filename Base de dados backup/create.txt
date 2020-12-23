@@ -32,4 +32,9 @@ create table Tactics(field int not null, name_tactic varchar(30), team int not n
 CONSTRAINT field_Tactic foreign key (field)
     references Field (id_field));
 
-            
+//Events
+CREATE table Event(id_event int not null AUTO_INCREMENT, name_event varchar(30) not null, field_event int not null, date_event varchar(10), duration_event varchar(10), team_size_event int not null,
+                        CONSTRAINT EventPk primary key (id_event), 
+                   		CONSTRAINT field_Event foreign key (field_event)
+	references Field(id_field));
+                        
