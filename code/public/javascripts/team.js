@@ -46,6 +46,7 @@ function changeToClickedTeam(id) {
 function createTeamUI(){
     let block="";
     block+="<span id='myTeams'>1</span>";
+    block+="<span id='MiddleBox'></span>";
     block+="<span id='allTeams'>2</span>";
     document.getElementById("teamDivItems").innerHTML = block;
 }
@@ -66,7 +67,7 @@ async function getAllTeamsObj(){
  }
 
  async function getMyTeamsObj(){
-    let loggedUser = 2;// assumir que o utilizador autenticado é o id=2
+    let loggedUser = 8;// assumir que o utilizador autenticado é o id=8
     try {
          var getmyteams = await $.ajax({
              url: "/api/players/"+loggedUser+"/teams",
@@ -77,7 +78,6 @@ async function getAllTeamsObj(){
     } catch (err) {
         console.log(err);
     }
-    
  }
 
  async function createAllTeamsTable(){
@@ -107,6 +107,35 @@ async function createMyTeamsTable(){
         block+="<tr onclick='changeToClickedTeam("+teams[i].id+")'><td>"+teams[i].name+"</td><td>"+teams[i].description+"</td></tr>";
     }
     block+="</table>";
+    block+="CREATE A NEW TEAM";
+    block+="<img src='../images/plusIcon.png' height='100' onclick='createNewTeamForm()'>";
     document.getElementById("myTeams").innerHTML = block;
 
 }
+
+function createNewTeam(){
+    
+}
+ 
+
+function createNewTeamForm() {
+    let block="";
+    block+="<form class='form-container'>";
+    block+="<h1>Create a new Team</h1>";
+    block+=" <label><b>Team name</b></label>";
+    block+="<input type='text' placeholder='Enter Team Name' id='cteamName' required>";
+    block+=" <label><b>Team Description</b></label>";
+    block+=" <input type='text' placeholder='Enter Team Description' id='cteamDesc'>";
+    block+=" <button type='button' class='btn' onclick='blablat()'>Create</button>";
+    block+="  <button type='button' class='btn cancel' onclick='closeNewTeamForm()'>Cancel</button>";
+    block+="</form>";
+    block+="</div>";
+    document.getElementById("MiddleBox").innerHTML = block;
+  }
+  
+  function closeNewTeamForm() {
+    document.getElementById("MiddleBox").innerHTML = "";
+  }
+  function blablat() { 
+      alert("team created");
+ }

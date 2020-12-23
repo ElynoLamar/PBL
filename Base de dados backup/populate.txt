@@ -11,23 +11,28 @@ insert into Role(id_role,name_role) values (7,"Scout");
 
 
 insert into Team(name_team, description_team) values('Team Snipe Matracas','Very Casual but serious');
-insert into Player(email, name, age) values('ppp@gmail.com','Paula Porto','19');
-insert into Player(email, name, age) values('ppp@gmail.com','Paula Porto','19');
-insert into Player(email, name, age) values('ppp@gmail.com','Paula Porto','19');
-insert into Player(email, name, age) values('ppp@gmail.com','Paula Porto','19');
 insert into Team(name_team, description_team) values('Competitive Lucid Games','Competitive high ranked team');
-insert into Player(email, name, age) values('ddd@gmail.com','Diogo Dontem','20');
-insert into Player(email, name, age) values('ddd@gmail.com','Diogo Dontem','20');
-insert into Player(email, name, age) values('ddd@gmail.com','Diogo Dontem','20');
+insert into Team(name_team, description_team) values('Bruv Gaming','Friends private team');
 
-insert into TeamMember(player, team, role, ranking) values(1, 1,6 ,1);
-insert into TeamMember(player, team, role, ranking) values(2, 1,1, 2);
-insert into TeamMember(player, team, role, ranking) values(3, 1,7, 2);
-insert into TeamMember(player, team, role, ranking) values(4, 1,3, 2);
+insert into Player(email_player, name_player, age_player, description_player, image_path) values('ppp@gmail.com','Player1','19', 'Lorem ipsum dolor sit amet', 'Player1.png');
+insert into Player(email_player, name_player, age_player, description_player, image_path) values('ppp@gmail.com','Player2','19', 'Lorem ipsum dolor sit amet', 'Player2.png');
+insert into Player(email_player, name_player, age_player, description_player, image_path) values('ppp@gmail.com','Player3','19', 'Lorem ipsum dolor sit amet', 'Player3.png');
+insert into Player(email_player, name_player, age_player, description_player, image_path) values('ppp@gmail.com','Player4','19', 'Lorem ipsum dolor sit amet', 'Player4.png');
+insert into Player(email_player, name_player, age_player, description_player, image_path) values('ddd@gmail.com','Player5','20', 'Lorem ipsum dolor sit amet', 'Player5.png');
+insert into Player(email_player, name_player, age_player, description_player, image_path) values('ddd@gmail.com','Player6','20', 'Lorem ipsum dolor sit amet', 'Player6.png');
+insert into Player(email_player, name_player, age_player, description_player, image_path) values('ddd@gmail.com','Player7','20', 'Lorem ipsum dolor sit amet', 'Player7.png');
+insert into Player(email_player, name_player, age_player, description_player, image_path) values('ccc@gmail.com','Player8','28', 'Lorem ipsum dolor sit amet', 'Player8.png');
 
-insert into TeamMember(player, team, role, ranking) values(5, 2,6, 1);
-insert into TeamMember(player, team, role, ranking) values(6, 2,2,2);
-insert into TeamMember(player, team, role, ranking) values(7, 2,1, 2);
+insert into TeamMember(player, team,ranking, role) values(1, 1, 1, 6);
+insert into TeamMember(player, team,ranking, role) values(2, 1, 2, 1);
+insert into TeamMember(player, team,ranking, role) values(3, 1, 2, 7);
+insert into TeamMember(player, team,ranking, role) values(4, 1, 2, 3);
+insert into TeamMember(player, team,ranking, role) values(5, 2, 1, 6);
+insert into TeamMember(player, team,ranking, role) values(6, 2, 2, 2);
+insert into TeamMember(player, team,ranking, role) values(7, 2, 2, 1);
+insert into TeamMember(player, team,ranking, role) values(8, 1, 2, 4);
+insert into TeamMember(player, team,ranking, role) values(8, 2, 2, 4);
+insert into TeamMember(player, team,ranking, role) values(8, 3, 1, 4);
 
 insert into Field(name_field) values('Cacém field');
 insert into Field(name_field) values('Rio de Mouro field');    
@@ -37,5 +42,5 @@ insert into Tactics(1,'Ataque',1);
 insert into Tactics(1,'Defesa',1);
 insert into Tactics(1,'Rush',1);
 
-INSERT INTO Event(date_event, duration_event, field_event, name_event, team_size_event) VALUES ("10/12/2021", "3 hours" , 1, "Super Cool Event", 5);
-INSERT INTO Event(date_event, duration_event, field_event, name_event, team_size_event) VALUES ("22/03/2021", "4 hours" , 1, "Not so Cool Event", 6);
+INSERT INTO Event(name_event, field_event, date_event, duration_event, team_size_event) VALUES ("Super Cool Event", 1, "10/12/2021", "3 hours" , 5);
+INSERT INTO Event(name_event, field_event, date_event, duration_event, team_size_event) VALUES ("Not so Cool Event", 1, "22/03/2021", "4 hours" , 6);

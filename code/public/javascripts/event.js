@@ -45,20 +45,6 @@ function show(index){
             break;
     }
 }
-
-async function createAllEventsTable(){
-    var events = await getAllEventsObj();
-    let block="";
-        block+="<h1 id='titles'>All Events</h1>";
-        block+="<table class='table'>";
-        block+="<tr><th>Name</th><th>Field</th><th>Date</th></tr>";
-    for(let i = 0; i <events.length; i++){
-        block+="<tr><td>"+events[i].name+"</td><td>"+events[i].field+"</td><td>"+events[i].date+"</td></tr>";
-    }
-    block+="</table>";
-    document.getElementById("allEvents").innerHTML = block;
-}
-
 async function getAllEventsObj(){
     
     try {
@@ -73,6 +59,20 @@ async function getAllEventsObj(){
     }
     
  }
+async function createAllEventsTable(){
+    var events = await getAllEventsObj();
+    let block="";
+        block+="<h1 id='titles'>All Events</h1>";
+        block+="<table class='table'>";
+        block+="<tr><th>Name</th><th>Date</th><th>Field</th></tr>";
+    for(let i = 0; i <events.length; i++){
+        block+="<tr><td>"+events[i].name+"</td><td>"+events[i].date+"</td><td>"+events[i].field+"</td></tr>";
+    }
+    block+="</table>";
+    document.getElementById("allEvents").innerHTML = block;
+}
+
+
 
 
 // async function createMyTeamsTable(){
