@@ -7,6 +7,13 @@ router.get('/', async function(req,res,next) {
     res.send(teams);
 });
 
+router.post("/:pos/members", async function(req,res,next){
+    let pos = req.params.pos;
+    let team = req.body;
+    let newMember = await mteam.newTeamMember(team);
+    res.send(newMember);
+});
+
 router.post('/', async function(req,res,next) {
     let team = req.body;
     let newteam = await mteam.newTeam(team);
