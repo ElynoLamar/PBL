@@ -20,11 +20,7 @@ router.get("/:pos/teams", async function(req,res,next){
     res.send(teams);
 });
 
-router.get("/:pos/events", async function(req,res,next){
-    let pos = req.params.pos;
-    let events = await mplayer.getPlayerJoinedEvents(pos);
-    res.send(events);
-});
+
 
 router.get("/:pos1/team/:pos2", async function(req,res,next){
     let pos1 = req.params.pos1;

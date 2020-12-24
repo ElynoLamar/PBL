@@ -5,7 +5,12 @@ var mteam = require("../models/teamModel");
 router.get('/', async function(req,res,next) {
     let teams = await mteam.getAllTeams();
     res.send(teams);
-    
+});
+
+router.post('/', async function(req,res,next) {
+    let team = req.body;
+    let newteam = await mteam.newTeam(team);
+    res.send(newteam);
 });
 
 router.get("/:pos", async function(req,res,next){

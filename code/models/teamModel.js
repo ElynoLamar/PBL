@@ -4,9 +4,9 @@ var pool = require("../models/connection");
 module.exports.getSpecificTeam= async function(index) { 
     try {
         var query = "SELECT * from Team where id_team = ?";
-        const unit = await pool.query(query, index);
+        const team = await pool.query(query, index);
         console.log(query);
-        return unit; 
+        return team; 
     } catch (err) {
         console.log(err);
         return err;
@@ -41,6 +41,18 @@ module.exports.getTeamTactics= async function(index) {
         const tactics = await pool.query(query,index);
         console.log(query);
         return tactics; 
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+
+module.exports.newTeam= async function(team) { 
+    try {
+        var query = "insert into Team(name_team, description_team) values(?,?);";
+        const result = await pool.query(query,[team.name,team.desc]);
+        console.log(query);
+        return {status:200, data: result}; 
     } catch (err) {
         console.log(err);
         return err;

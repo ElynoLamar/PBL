@@ -117,18 +117,18 @@ async function changeMiddleBox_Player(player,team){
     block+="<h2>Player Details: </h2>";
     block+= "<span id='playerBox'>"
     block+= "<span id='playerInfo'>"
-    block+="<p><img src='../images/pistol.png' height='10'> Age: "+playerinfo[0].name+"</p>";
-    block+="<p><img src='../images/pistol.png' height='10'> Age: "+playerinfo[0].age+"</p>";
-    block+="<p><img src='../images/pistol.png' height='10'> Team Rank: "+playerinfo[0].ranking+"</p>";
-    block+="<p><img src='../images/pistol.png' height='10'> Team Role: "+playerinfo[0].role+"</p>";
-    block+="<p><img src='../images/pistol.png' height='10'> email: "+playerinfo[0].email+"</p>";
+    block+="<p><img src='../images/pistol.png' height='10'> Age: "+playerinfo.name+"</p>";
+    block+="<p><img src='../images/pistol.png' height='10'> Age: "+playerinfo.age+"</p>";
+    block+="<p><img src='../images/pistol.png' height='10'> Team Rank: "+playerinfo.ranking+"</p>";
+    block+="<p><img src='../images/pistol.png' height='10'> Team Role: "+playerinfo.role+"</p>";
+    block+="<p><img src='../images/pistol.png' height='10'> email: "+playerinfo.email+"</p>";
     block+= "</span>"
     block+= "<span id='playerPhoto'>"
-    block+="<img src='../images/"+playerinfo[0].photo+"' height='150'>";
+    block+="<img src='../images/"+playerinfo.photo+"' height='150'>";
     block+= "</span>"
     block+= "<span id='deadSpace'></span>"
     block+= "</span>"
-    block+="<span id='playerDesc'><img src='../images/pistol.png' height='10'> Description: "+playerinfo[0].description+"</span>"; 
+    block+="<span id='playerDesc'><img src='../images/pistol.png' height='10'> Description: "+playerinfo.description+"</span>"; 
     document.getElementById("actionTeamBox").innerHTML = block;
 }
 //caixa onde mostramos info especifica sobre (inicialmente) teams, e apos cliques nas tabelas laterais sobre players ou tacticas

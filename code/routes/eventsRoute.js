@@ -13,4 +13,10 @@ router.get("/:pos", async function(req,res,next){
     res.send(event);
 });
 
+router.get("/player/:pos", async function(req,res,next){
+    let pos = req.params.pos;
+    let events = await mevent.getPlayerJoinedEvents(pos);
+    res.send(events);
+});
+
 module.exports = router;

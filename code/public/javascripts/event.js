@@ -95,7 +95,7 @@ async function getMyEventsObj(){
     let loggedUser = 8;// assumir que o utilizador autenticado é o id=8
     try {
          var getmyevents = await $.ajax({
-             url: "/api/players/"+loggedUser+"/events",
+             url: "/api/events/player/"+loggedUser,
              method: "get",
              dataType: "json"
          });

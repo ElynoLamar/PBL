@@ -67,7 +67,7 @@ async function getAllTeamsObj(){
  }
 
  async function getMyTeamsObj(){
-    let loggedUser = 8;// assumir que o utilizador autenticado é o id=8
+    let loggedUser = 1;// assumir que o utilizador autenticado é o id=8
     try {
          var getmyteams = await $.ajax({
              url: "/api/players/"+loggedUser+"/teams",
@@ -113,8 +113,24 @@ async function createMyTeamsTable(){
 
 }
 
-function createNewTeam(){
-    
+async function createNewTeam(){
+    try {
+        let team = {
+            name: document.getElementById("cteamName").value,
+            desc: document.getElementById("cteamDesc").value
+        }
+        let result = await $.ajax({
+            url: "/api/teams",
+            method: "post",
+            dataType: "json",
+            data: JSON.stringify(team),
+            contentType: "application/json"
+        });
+        alert(JSON.stringify(result));
+    } catch (err) {
+        console.log(err);
+    }
+    document.getElementById("MiddleBox").innerHTML = "";
 }
  
 
@@ -126,16 +142,13 @@ function createNewTeamForm() {
     block+="<input type='text' placeholder='Enter Team Name' id='cteamName' required>";
     block+=" <label><b>Team Description</b></label>";
     block+=" <input type='text' placeholder='Enter Team Description' id='cteamDesc'>";
-    block+=" <button type='button' class='btn' onclick='blablat()'>Create</button>";
+    block+=" <button type='button' class='btn' onclick='createNewTeam()'>Create</button>";
     block+="  <button type='button' class='btn cancel' onclick='closeNewTeamForm()'>Cancel</button>";
     block+="</form>";
     block+="</div>";
     document.getElementById("MiddleBox").innerHTML = block;
   }
   
-  function closeNewTeamForm() {
+function closeNewTeamForm() {
     document.getElementById("MiddleBox").innerHTML = "";
-  }
-  function blablat() { 
-      alert("team created");
- }
+}

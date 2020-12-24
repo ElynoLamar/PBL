@@ -25,11 +25,17 @@ header{
     justify-content: space-between;
     background-color: #62523b;
     color:black;
+    padding-left: 30px;
+    padding-right: 30px;
 
    /* background-image: url("../images/camobackground.jpg");
     background-repeat: repeat-x;*/
 }
 
+#titleheader{
+    font-size:90px;
+    font-family: 'army_rust';
+}
 
 #userNameHeader{
     font-size: 35px;
@@ -113,10 +119,7 @@ footer{
     font-style: normal;
 }
 
-#titleheader{
-font-size:90px;
-font-family: 'army_rust';
-}
+
 
 .table{
 	font-family: Arial, Helvetica, sans-serif;
