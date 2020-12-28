@@ -137,7 +137,7 @@ async function createMiddleBox(teamid){
     let block="";
     block+="<span id='playerPhoto'>";
     block+="<h2>Selected Team</h2>";
-    block+="<p>Team Name:"+team.name_team+" </p>";
+    block+="<p>Team Name:"+team.name+" </p>";
     block+="</span>";
     block+="<span id='playerPhoto'> <img src='../images/teamlogo.png' height='150'></span>";
     document.getElementById("actionTeamBox").innerHTML = block;

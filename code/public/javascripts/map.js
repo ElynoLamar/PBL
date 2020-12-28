@@ -37,8 +37,8 @@
       }
 
       function createMap(){
-          
-        var mymap = L.map('map').setView([30, -0.09], 2.5);
+        var center = [30, -0.09];//depois podemos por a localização do user
+        var mymap = L.map('map').setView(center, 2.5);
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 18,
@@ -72,3 +72,66 @@
         //markers
         L.marker([51.5, -0.09], {icon: simpleIcon}).addTo(map);
         }
+
+        
+// Initialise the FeatureGroup to store editable layers
+var editableLayers = new L.FeatureGroup();
+map.addLayer(editableLayers);
+
+var options = {
+  position: 'topleft',
+  draw: {
+    polygon: {
+      allowIntersection: false, // Restricts shapes to simple polygons
+      drawError: {
+        color: '#e1e100', // Color the shape will turn when intersects
+        message: '<strong>Oh snap!<strong> you can\'t draw that!' // Message that will show when intersect
+      },
+      shapeOptions: {
+        color: '#97009c'
+      }
+    },
+    polyline: {
+    	shapeOptions: {
+        color: '#f357a1',
+        weight: 10
+          }
+    },
+    // disable toolbar item by setting it to false
+    polyline: true,
+    circle: true, // Turns off this drawing tool
+    polygon: true,
+    marker: true,
+    rectangle: true,
+  },
+  edit: {
+    featureGroup: editableLayers, //REQUIRED!!
+    remove: true
+  }
+};
+
+// Initialise the draw control and pass it the FeatureGroup of editable layers
+var drawControl = new L.Control.Draw(options);
+map.addControl(drawControl);
+
+var editableLayers = new L.FeatureGroup();
+map.addLayer(editableLayers);
+
+map.on('draw:created', function(e) {
+  var type = e.layerType,
+    layer = e.layer;
+
+  if (type === 'polyline') {
+    layer.bindPopup('A polyline!');
+  } else if ( type === 'polygon') {
+  	layer.bindPopup('A polygon!');
+  } else if (type === 'marker') 
+  {layer.bindPopup('marker!');}
+  else if (type === 'circle') 
+  {layer.bindPopup('A circle!');}
+   else if (type === 'rectangle') 
+  {layer.bindPopup('A rectangle!');}
+
+
+  editableLayers.addLayer(layer);
+});
