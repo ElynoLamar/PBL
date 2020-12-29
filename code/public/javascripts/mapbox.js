@@ -1,19 +1,67 @@
+var stringHome = "Home";
+var stringTeam = "Teams";
+var stringEvents = "Events";
+var stringMap = "Map";
+
+arrayOfItems=[stringHome,stringTeam, stringEvents, stringMap];
+
+function createNav(){
+    let aux="";
+    for(let i=0; i<arrayOfItems.length; i++){
+        aux+="<span class='navContainer' onclick='show("+i+")'>"+arrayOfItems[i]+"</span>";
+    }
+    document.getElementById("navItems").innerHTML = aux;
+}
+
+function show(index){
+    switch(index){
+        case 0:
+            window.location = "../index.html";
+            break;
+        case 1:
+            window.location = "team.html";
+            break;
+        case 2:
+            window.location = "event.html";
+            break;
+        case 3:
+            window.location = "map.html";
+            break;
+    }
+}
 window.onload=function(){
+    //createNav();
     mapboxgl.accessToken = 'pk.eyJ1IjoiZWx5bm8iLCJhIjoiY2tqOG8waWE2MDd1ejJzcGVteHd1Y21vdSJ9.0K2deDMvBrkZXzoHjZvWCw';
     var map = new mapboxgl.Map({
         container: 'map', // container id
         style: 'mapbox://styles/mapbox/satellite-v9', //hosted style id
-        center: [-91.874, 42.76], // starting position
-        zoom: 12 // starting zoom
+        center: [-9.314149, 38.77295], // starting position
+        zoom: 16 // starting zoom
     });
-     
+
     var draw = new MapboxDraw({
         displayControlsDefault: false,
         controls: {
-        polygon: true,
-        trash: true
+            polygon: true,
+            trash: true
         }
     });
+    //caixa de texto procurar
+    map.addControl(
+        new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl
+        })
+    );
+    //localização do utilizador
+    map.addControl(
+        new mapboxgl.GeolocateControl({
+            positionOptions: {
+            enableHighAccuracy: true
+            },
+            trackUserLocation: true
+        })
+    );
     map.addControl(draw);
      
     map.on('draw.create', updateArea);
@@ -22,6 +70,13 @@ window.onload=function(){
      
     function updateArea(e) {
         var data = draw.getAll();
+        if(data.features.length>0){
+            for(let i = 0; i<data.features[0].geometry.coordinates[0].length; i++){
+                alert(JSON.stringify(data.features[0].geometry.coordinates[0][i]));
+            }
+        }
+
+        // calcular area
         var answer = document.getElementById('calculated-area');
         if (data.features.length > 0) {
             var area = turf.area(data);
@@ -38,5 +93,18 @@ window.onload=function(){
         }
     }
 
+    map.on('mousemove', function (e) {
+        document.getElementById('info').innerHTML =
+        // e.point is the x, y coordinates of the mousemove event relative
+        // to the top-left corner of the map
+        JSON.stringify(e.point) +
+        '<br />' +
+        // e.lngLat is the longitude, latitude geographical position of the event
+        JSON.stringify(e.lngLat.wrap());
+    });
+
+    
+
+    
 }
 
