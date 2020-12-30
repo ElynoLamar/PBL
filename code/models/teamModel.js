@@ -70,3 +70,27 @@ module.exports.newTeamMember= async function(newMember) {
         return err;
     }
 }
+
+module.exports.changeRole= async function(newRole) { 
+    try {
+        var query = "UPDATE TeamMember SET role = ? WHERE TeamMember.player = ? AND TeamMember.team = ?;";
+        const result = await pool.query(query,[newRole.role,newRole.player,newRole.team]);
+        console.log(query);
+        return {status:200, data: result}; 
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+
+module.exports.changeRank= async function(newRank) { 
+    try {
+        var query = "UPDATE TeamMember SET ranking = ? WHERE TeamMember.player = ? AND TeamMember.team = ?;";
+        const result = await pool.query(query,[newRank.ranking,newRank.player,newRank.team]);
+        console.log(query);
+        return {status:200, data: result}; 
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}

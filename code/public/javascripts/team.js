@@ -2,7 +2,7 @@ var stringHome = "Home";
 var stringTeam = "Teams";
 var stringEvents = "Events";
 var stringMap = "Map";
-let loggedUser = 8;// assumir que o utilizador autenticado é o id=8
+let loggedUser = 3;// assumir que o utilizador autenticado é o id=8
 
 arrayOfItems=[stringHome,stringTeam, stringEvents, stringMap];
 
@@ -110,12 +110,12 @@ async function createMyTeamsTable(player){
     }
     block+="</table>";
     block+="CREATE A NEW TEAM";
-    block+="<img src='../images/plusIcon.png' height='100' onclick='createNewTeamForm()'>";
+    block+="<img src='../images/plusIcon.png' height='100' onclick='createNewTeamForm("+player+")'>";
     document.getElementById("myTeams").innerHTML = block;
 
 }
 
-async function createNewTeam(){
+async function createNewTeam(playerID){
     try {
         let team = {
             name: document.getElementById("cteamName").value,
@@ -131,6 +131,9 @@ async function createNewTeam(){
     } catch (err) {
         console.log(err);
     }
+    //changeRank(playerID, teamID);
+    createAllTeamsTable(playerID);
+    createMyTeamsTable(playerID);
     closeMiddleBox();
 }
 
@@ -156,7 +159,6 @@ function closeMiddleBox() {
 
 
 async function joinTeam(teamID,playerID){
-    alert("cheguei aqui");
     try {
         let newMember = {
             player: playerID,
@@ -175,10 +177,28 @@ async function joinTeam(teamID,playerID){
         alert(JSON.stringify(result));
         } catch (err) {
             console.log(err);
-        }
-        closeMiddleBox();
+        }  
+        closeMiddleBox();      
 }
+async function changeRank(playerID, teamID) {
+    try {
+        let newRankInfo = {
+            rank: 1,
+            player: playerID,
+            team: teamID
+        }
 
+        let result = await $.ajax({
+            url: "/api/teams/" + teamID + "/player/" + playerID + "/rank/" + 1,
+            method: "post",
+            dataType: "json",
+            data: JSON.stringify(newRankInfo),
+            contentType: "application/json"
+        });
+    } catch (err) {
+        console.log(err);
+    }
+}
 async function getSpecificTeamObj(id){
     
     try {

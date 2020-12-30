@@ -37,5 +37,28 @@ router.get("/:pos/tactics", async function(req,res,next){
     res.send(tactics);
 });
 
+router.post('/', async function(req,res,next) {
+    let team = req.body;
+    let newteam = await mteam.newTeam(team);
+    res.send(newteam);
+});
+
+router.post("/:pos/player/:pos2/role/:pos3", async function(req,res,next){
+    let pos = req.params.pos;
+    let pos2 = req.params.pos2;
+    let pos3 = req.params.pos3;
+    let newRoleInfo = req.body;
+    let newRole = await mteam.changeRole(newRoleInfo);
+    res.send(newRole);
+});
+
+router.post("/:pos/player/:pos2/rank/:pos3", async function(req,res,next){
+    let pos = req.params.pos;
+    let pos2 = req.params.pos2;
+    let pos3 = req.params.pos3;
+    let newRankInfo = req.body;
+    let newRank = await mteam.changeRank(newRankInfo);
+    res.send(newRank);
+});
 
 module.exports = router;
