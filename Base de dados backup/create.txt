@@ -49,3 +49,9 @@ CONSTRAINT event_EventPlayers foreign key (event)
      CONSTRAINT EventMemberPk primary key (event, player),
       CONSTRAINT player_EventMember foreign key (player) references Player(id_player),
        CONSTRAINT team_EventMember foreign key (event) references Event(id_event));
+
+
+CREATE table Notification(player int not null, text_notif varchar(512) not null,
+                        CONSTRAINT NotificationPk primary key (player, text_notif),
+CONSTRAINT player_Notification foreign key (player)
+	references Player(id_player));

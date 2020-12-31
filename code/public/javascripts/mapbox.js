@@ -30,7 +30,7 @@ function show(index){
     }
 }
 window.onload=function(){
-    //createNav();
+    createNav();
     mapboxgl.accessToken = 'pk.eyJ1IjoiZWx5bm8iLCJhIjoiY2tqOG8waWE2MDd1ejJzcGVteHd1Y21vdSJ9.0K2deDMvBrkZXzoHjZvWCw';
     var map = new mapboxgl.Map({
         container: 'map', // container id
@@ -67,12 +67,13 @@ window.onload=function(){
     map.on('draw.create', updateArea);
     map.on('draw.delete', updateArea);
     map.on('draw.update', updateArea);
-     
+    
     function updateArea(e) {
         var data = draw.getAll();
         if(data.features.length>0){
             for(let i = 0; i<data.features[0].geometry.coordinates[0].length; i++){
-                alert(JSON.stringify(data.features[0].geometry.coordinates[0][i]));
+                
+               // alert(JSON.stringify(data.features[0].geometry.coordinates[0][i]));
             }
         }
 

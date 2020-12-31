@@ -52,6 +52,10 @@ module.exports.newTeam= async function(team) {
         var query = "insert into Team(name_team, description_team) values(?,?);";
         const result = await pool.query(query,[team.name,team.desc]);
         console.log(query);
+        let addedTeamID = result.insertId;
+        let sql = "insert into TeamMember(player, team, ranking, role) values(?,?,1,1);"
+        const result1 = await pool.query(sql,[team.player,addedTeamID]);
+        
         return {status:200, data: result}; 
     } catch (err) {
         console.log(err);
@@ -82,7 +86,7 @@ module.exports.changeRole= async function(newRole) {
         return err;
     }
 }
-
+//not used
 module.exports.changeRank= async function(newRank) { 
     try {
         var query = "UPDATE TeamMember SET ranking = ? WHERE TeamMember.player = ? AND TeamMember.team = ?;";

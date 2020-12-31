@@ -141,3 +141,42 @@ footer{
 }
 
 .table tr{background-color: #f2f2f2;}
+
+.notification {
+    text-decoration: none;
+    padding: 15px 26px;
+    position: relative;
+    display: inline-block;
+}
+  
+/**
+    .notification:hover {
+        background: red;
+    }
+*/
+.badge {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background: red;
+    color: white;
+}
+
+.notif-content{
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+ }
+
+ .notif-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  .notif-content a:hover {background-color: #f1f1f1}

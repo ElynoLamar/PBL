@@ -3,7 +3,7 @@ var stringHome = "Home";
 var stringTeam = "Teams";
 var stringEvents = "Events";
 var stringMap = "Map";
-
+let loggedUser = 1;// assumir que o utilizador autenticado é o id=1
 
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
@@ -13,6 +13,7 @@ window.onload = async function () {
     createTeammatesTable(teamid);
     createTacticsTable(teamid);
     createMiddleBox(teamid);
+    //notifButton();
 }
 // buscar obj da team usando o teamid
 async function getTeamObj(id) {
@@ -227,4 +228,6 @@ function show(index) {
             break;
     }
 }
+
+
 
