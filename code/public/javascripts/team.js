@@ -7,7 +7,7 @@ let loggedUser = 9;// assumir que o utilizador autenticado é o este id
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
 window.onload = async function () {
-
+ 
     createNav();
     createTeamUI();
     createAllTeamsTable(loggedUser);
