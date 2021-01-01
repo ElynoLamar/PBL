@@ -72,9 +72,38 @@ body{
     grid-area: I;
     margin-left: 20px;
 }
-#allPlayerInfo{
+
+
+#allPlayerInfo {
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
+}
+#allPlayerSpecificInfo {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+#allPlayerInfo a{
+    min-height:5px;
+
+}
+#allPlayerInfo div{
+    margin-left: 5px;
+    margin-right: 30px;
+    
+    color: white;
+    background-color: #44CC44;
+    text-align: center;
+    min-width: 20px;
+    max-width: 40px;
+
+    color: #FFF;
+    background: #44CC44;
+
+    
 }
 #playerPhoto{
     grid-area: P;

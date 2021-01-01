@@ -10,7 +10,7 @@ router.get('/', async function(req,res,next) {
 
 router.get("/:pos", async function(req,res,next){
     let pos = req.params.pos;
-    let player = await mplayer.getSpecificPlayer(pos);
+    let player = await mplayer.getPlayer(pos);
     res.send(player);
 });
 

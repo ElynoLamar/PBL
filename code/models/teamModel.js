@@ -2,7 +2,7 @@ var pool = require("../models/connection");
 
 
 module.exports.getSpecificTeam= async function(index) { 
-    try {
+    try {           
         var query = "SELECT id_team as id, name_team as name, description_team as description from Team where id_team = ?";
         const team = await pool.query(query, index);
         console.log(query);

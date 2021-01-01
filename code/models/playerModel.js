@@ -12,6 +12,18 @@ module.exports.getSpecificPlayer= async function(playerID,teamID) {
     }
 }
 
+module.exports.getPlayer= async function(playerID) { 
+    try {
+        var query = "select id_player as id, name_player as name,age_player as age,email_player as email,description_player as description,image_path as photo from Player where Player.id_player=?;";
+        const player = await pool.query(query,playerID);
+        console.log(query);
+        return player[0]; 
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+
 module.exports.getAllPlayers= async function() { 
     try {
         var query = "SELECT id_player as id, name_player as name, age_player as age from Player";

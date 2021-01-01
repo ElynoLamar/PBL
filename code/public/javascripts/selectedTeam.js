@@ -11,7 +11,7 @@ window.onload = async function () {
     let teamid = sessionStorage.getItem("teamid");
     let loggedUser = sessionStorage.getItem("playerid");
     createTeamUI();
-    createTeammatesTable(teamid);
+    createTeammatesTable(teamid,loggedUser);
     createTacticsTable(teamid);
     createMiddleBox(teamid);
     //notifButton();
@@ -51,12 +51,12 @@ async function getTeamMembersObj(id) {
     }
 }
 //uma lista que mostra os players desta equipa
-async function createTeammatesTable(teamid) {
+async function createTeammatesTable(teamid,player) {
     var teammember = await getTeamMembersObj(teamid);
     let block = "";
     if (Object.keys(teammember).length != 0) {
         block += "<div class='flex-container'>";
-        block += "<span></span><h1 class='titles'>Team members</h1><span><img id='plusimage' src='../images/plus-sign.png' height=30 onclick=changeMiddleBox_AllPlayers("+teamid+")></span>";
+        block += "<span></span><h1 class='titles'>Team members</h1><span><img id='plusimage' src='../images/plus-sign.png' height=30 onclick=changeMiddleBox_AllPlayers("+teamid+","+player+")></span>";
         block += "</div>";
         block += "<table class='table'>";
         block += "<tr><th>Name</th><th>Rank</th><th>Role</th></tr>";
@@ -217,19 +217,55 @@ async function getAllPlayers() {
     }
 }
 
-async function changeMiddleBox_AllPlayers(teamid) {
+async function getPlayer(id) {
+    try {
+        var player = await $.ajax({
+            url: "/api/players/"+id,
+            method: "get",
+            dataType: "json"
+        });
+        return player;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+async function changeMiddleBox_AllPlayers(teamid,player) {
     let block = "";
     var playersinfo = await getAllPlayers();
-    alert(JSON.stringify(playersinfo))
     block += "<h2>All players: </h2>";
-    //block +="<div class='notif-content'>";
-    block += "<span id='allPlayerInfo'>"
+    block += "<span id='allPlayerInfo'>";
     for(let i = 0; i<playersinfo.length; i++){
-        block +="<a>"+playersinfo[i].name+"</a><div class='accept'>Invite</div>";
+        block +="<span id='allPlayerSpecificInfo'><a>"+playersinfo[i].name+"</a><div onclick=createNewInvite("+teamid+","+playersinfo[i].id+","+player+")>Invite</div></span>";
     }
     block+= "</span>";
-    //block +="</div>";
    document.getElementById("actionTeamBox").innerHTML = block;
+}
+
+async function createNewInvite(teamID, clickedPlayerID, loggedPlayer) {
+
+    var player = await getPlayer(loggedPlayer);
+    alert(JSON.stringify(player));
+    var team = await getTeamObj(teamID);
+    alert(JSON.stringify(team));
+    try {
+        let newInvite = {
+            playerRec: clickedPlayerID,
+            playerSend: player.id,
+            team: team.id,
+            text: "You have been invited to join "+team.name+" by the player "+ player.name
+        }
+        alert(JSON.stringify(newInvite));
+        let result = await $.ajax({
+            url:"/api/notifications/team/"+teamID +"/player/"+clickedPlayerID,
+            method: "post",
+            dataType: "json",
+            data: JSON.stringify(newInvite),
+            contentType: "application/json"
+        });
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 //not using

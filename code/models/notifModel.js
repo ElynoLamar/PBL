@@ -38,3 +38,15 @@ module.exports.updateInviteStatus= async function(invite) {
         return err;
     }
 } 
+
+module.exports.sendInvSpecificTeam= async function(newInvite) { 
+    try {
+        var query = "insert into Notification(receiver,sender,teamInv,text_notif,invite,status) values(?, ?, ?, ?,1,1);";
+        const result = await pool.query(query,[newInvite.playerRec,newInvite.playerSend,newInvite.team,newInvite.text]);
+        console.log(query);
+        return {status:200, data: result}; 
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
