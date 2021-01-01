@@ -9,6 +9,17 @@ insert into Role(id_role,name_role) values (5,"Support Gunner");
 insert into Role(id_role,name_role) values (6,"Sniper");
 insert into Role(id_role,name_role) values (7,"Scout");
 
+insert into InviteStatus(id_i_status, name_i_status) values (1,"Awaiting");
+insert into InviteStatus(id_i_status, name_i_status) values (2,"Accepted");
+insert into InviteStatus(id_i_status, name_i_status) values (3,"Rejected");
+
+insert into Notification(receiver,sender,teamInv,text_notif,invite,status) VALUES(5,1,1,"Join our team! inv nº1", true, 1);
+insert into Notification(receiver,sender,teamInv,text_notif,invite,status) VALUES(5,1,1,"Join our team! inv nº2", true, 1);
+insert into Notification(receiver,sender,teamInv,text_notif,invite,status) VALUES(5,8,3,"Join our team! inv nº3", true, 1);
+insert into Notification(receiver,sender,text_notif,invite,status) VALUES(5,1,"Atualizações foram feitas ao sistema",false,1);
+insert into Notification(receiver,sender,text_notif,invite,status) VALUES(5,1,"Atualizações foram feitas ao sistema v2",false,1);
+//mudanças foram feitas, atualizar o resto do populate
+
 
 insert into Team(name_team, description_team) values('Team Snipe Matracas','Very Casual but serious');
 insert into Team(name_team, description_team) values('Competitive Lucid Games','Competitive high ranked team');

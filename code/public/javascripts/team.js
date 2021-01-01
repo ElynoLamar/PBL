@@ -2,7 +2,7 @@ var stringHome = "Home";
 var stringTeam = "Teams";
 var stringEvents = "Events";
 var stringMap = "Map";
-let loggedUser = 1;// assumir que o utilizador autenticado é o id=8
+let loggedUser = 5;// assumir que o utilizador autenticado é o id=8
 
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
@@ -42,8 +42,9 @@ function show(index) {
             break;
     }
 }
-function changeToClickedTeam(id) {
-    sessionStorage.setItem("id", id);
+function changeToClickedTeam(team, player) {
+    sessionStorage.setItem("teamid", team);
+    sessionStorage.setItem("playerid", player);
     window.location = "selectedTeam.html"
 }
 function createTeamUI() {
@@ -107,7 +108,7 @@ async function createMyTeamsTable(player) {
     block += "<table class='table'>";
     block += "<tr><th>Name</th><th>Description</th></tr>";
     for (let i = 0; i < teams.length; i++) {
-        block += "<tr onclick='changeToClickedTeam(" + teams[i].id + ")'><td>" + teams[i].name + "</td><td>" + teams[i].description + "</td></tr>";
+        block += "<tr onclick='changeToClickedTeam(" + teams[i].id + "," + player + ")'><td>" + teams[i].name + "</td><td>" + teams[i].description + "</td></tr>";
     }
     block += "</table>";
     block += "CREATE A NEW TEAM";
@@ -236,12 +237,18 @@ async function joinTeamForm(id, player) {
 }
 
 async function notifButton(player) {
-    var notif = await  getPlayersNotif(player);
+    var notif = await getPlayersNotif(player);
     let block = "";
     block += "<div class='dropdown' onclick=toggleNotif()>";
     block += "<img src='../images/notif.png' height='50'><span class='badge'>3</span><div class='notif-content'>";
-    for(let i = 0; i<notif.length; i++){
-        block +="<a>"+notif[i].text_notif+"</a>";
+    for (let i = 0; i < notif.length; i++) {
+        block += "<a>" + notif[i].text_notif;
+        if (notif[i].invite == 1) {
+            //if (Number.isInteger(notif[i].invite)) {
+            //var invite = await getInviteInfo(notif[i].invite);
+            block += "<span class='flex-notif-container'><div class='accept' onclick=changeStatus(" + notif[i].id_notif + "," + 2 + "," + notif[i].teamInv + "," + notif[i].receiver + ")>✔</div><div class='deny'onclick=changeStatus(" + notif[i].id_notif + "," + 3 + "," + notif[i].teamInv + "," + notif[i].receiver + ")>✖</div></span>";
+        }
+        block += "</a>";
     }
     block += "</div>";
     block += "</div>";
@@ -257,16 +264,61 @@ function toggleNotif() {
     }
 }
 
-async function getPlayersNotif(player){
-    
+async function getPlayersNotif(player) {
+
     try {
-         var getmyNotif = await $.ajax({
-             url: "/api/notifications/player/"+player,
-             method: "get",
-             dataType: "json"
-         });
-         return getmyNotif;
+        var getmyNotif = await $.ajax({
+            url: "/api/notifications/player/" + player,
+            method: "get",
+            dataType: "json"
+        });
+
+        return getmyNotif;
     } catch (err) {
         console.log(err);
     }
- }
+}
+
+/**
+    async function getInviteInfo(invNum) {
+    
+        try {
+            var inviteInfo = await $.ajax({
+                url: "/api/notifications/invite/" + invNum,
+                method: "get",
+                dataType: "json"
+            });
+    
+            return inviteInfo;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+*/
+
+
+async function changeStatus(idNotif, newstatus, team, player) {
+    alert("id da notif é:" + idNotif);
+    {
+        try {
+            let updatedInv = {
+                id: idNotif,
+                status: newstatus
+            }
+
+            let result = await $.ajax({
+                url: "/api/notifications/" + idNotif,
+                method: "post",
+                dataType: "json",
+                data: JSON.stringify(updatedInv),
+                contentType: "application/json"
+            });
+            if(newstatus==2){
+                joinTeam(team, player);
+            }
+            notifButton(player);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+}

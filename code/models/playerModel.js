@@ -14,7 +14,7 @@ module.exports.getSpecificPlayer= async function(playerID,teamID) {
 
 module.exports.getAllPlayers= async function() { 
     try {
-        var query = "SELECT name_player as name, age_player as age from Player";
+        var query = "SELECT id_player as id name_player as name, age_player as age from Player";
         const players = await pool.query(query);
         console.log(query);
         return players; 

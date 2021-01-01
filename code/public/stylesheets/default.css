@@ -50,6 +50,7 @@ nav{
     align-items: center;   
     overflow:hidden; 
     grid-area: n;
+    
 }
 nav>span{
     flex: 1;
@@ -66,6 +67,7 @@ nav>span{
     margin:6.25vh 5px;
     color: black;
     font-size: 40px;
+    cursor: pointer;
 }
 
 .clickedNavContainer{
@@ -76,6 +78,7 @@ nav>span{
     background-color: #4b623bff;
     color: black;
     font-size: 40px;
+    cursor: pointer;
 }
 
 footer{
@@ -124,7 +127,8 @@ footer{
 .table{
 	font-family: Arial, Helvetica, sans-serif;
 	border-collapse: collapse;
-	width: 100%;
+    width: 100%;
+    overflow:hidden; overflow-y:scroll;
 }
 
 .table td, .table th {
@@ -168,15 +172,58 @@ footer{
     display: none;
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 160px;
+    top: 65px;  /* ajustar pra baixo*/
+    right: 10px; /* ajustar pra esquerda*/
+    min-width: 500px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+    z-index: 1; /* por pela frente*/
+    max-width: 500px;
  }
 
- .notif-content a {
+.notif-content a {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
-    display: block;
-  }
-  .notif-content a:hover {background-color: #f1f1f1}
+    display: flex;
+    justify-content: space-between;
+    min-height:50px;
+}
+.notif-content a:hover {background-color: #f1f1f1}
+.flex-notif-container{
+    display: none;
+}
+.notif-content a:hover .flex-notif-container{
+    display: flex;
+    justify-content: space-between; 
+}
+.accept {
+    color: #FFF;
+    background: #44CC44;
+    padding: 15px 20px;
+    border-radius: 50%;
+
+}
+.accept:hover {
+    background: #6FE76F;
+}
+.deny {
+    color: #FFF;
+    background: tomato;
+    padding: 15px 20px;
+
+    margin-left: 5px;
+    border-radius: 50%;
+}
+.deny:hover {
+    background: rgb(255, 147, 128);
+}
+
+.flex-container{
+    display: flex;
+    justify-content: space-between;
+}
+span #plusimage{
+
+    margin-top: 25px;
+    margin-right: 30px;
+ }

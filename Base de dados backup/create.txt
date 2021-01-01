@@ -50,8 +50,35 @@ CONSTRAINT event_EventPlayers foreign key (event)
       CONSTRAINT player_EventMember foreign key (player) references Player(id_player),
        CONSTRAINT team_EventMember foreign key (event) references Event(id_event));
 
+create table InviteStatus(id_i_status int not null, name_i_status varchar(30),
+			CONSTRAINT InviteStatusPK PRIMARY KEY (id_i_status));  
 
-CREATE table Notification(player int not null, text_notif varchar(512) not null,
-                        CONSTRAINT NotificationPk primary key (player, text_notif),
-CONSTRAINT player_Notification foreign key (player)
-	references Player(id_player));
+CREATE table Invite(id_invite int not null AUTO_INCREMENT,receiver int not null, sender int not null, teamInv int, eventInv int,status int not null,
+                        CONSTRAINT InvitePk primary key (id_invite),
+CONSTRAINT receiver_Invite foreign key (receiver)
+	references Player(id_player),
+CONSTRAINT sender_Invite foreign key (sender) 
+	references Player(id_player),
+CONSTRAINT team_Invite foreign key (teamInv) 
+	references Team(id_team),
+CONSTRAINT event_Invite foreign key (eventInv) 
+	references Event(id_event));
+
+
+CREATE table Notification(id_notif int not null AUTO_INCREMENT,receiver int not null,sender int not null,teamInv int, eventInv int, text_notif varchar(512) not null, invite boolean, status int not null, 
+CONSTRAINT NotificationPk primary key (id_notif),
+CONSTRAINT receiver_Notification foreign key (receiver)
+	references Player(id_player),
+CONSTRAINT sender_Notification foreign key (sender)
+	references Player(id_player),
+CONSTRAINT team_Invite foreign key (teamInv) 
+	references Team(id_team),
+CONSTRAINT event_Invite foreign key (eventInv) 
+	references Event(id_event),
+CONSTRAINT status_notif foreign key (status)
+    references InviteStatus (id_i_status));
+
+
+
+
+

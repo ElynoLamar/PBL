@@ -3,12 +3,13 @@ var stringHome = "Home";
 var stringTeam = "Teams";
 var stringEvents = "Events";
 var stringMap = "Map";
-let loggedUser = 1;// assumir que o utilizador autenticado é o id=1
+
 
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
 window.onload = async function () {
-    let teamid = sessionStorage.getItem("id");
+    let teamid = sessionStorage.getItem("teamid");
+    let loggedUser = sessionStorage.getItem("playerid");
     createTeamUI();
     createTeammatesTable(teamid);
     createTacticsTable(teamid);
@@ -54,7 +55,9 @@ async function createTeammatesTable(teamid) {
     var teammember = await getTeamMembersObj(teamid);
     let block = "";
     if (Object.keys(teammember).length != 0) {
-        block += "<h1 id='titles'>Team members</h1>";
+        block += "<div class='flex-container'>";
+        block += "<span></span><h1 id='titles'>Team members</h1><span><img id='plusimage' src='../images/plus-sign.png' height=30 onclick=changeMiddleBox_AllPlayers("+teamid+")></span>";
+        block += "</div>";
         block += "<table class='table'>";
         block += "<tr><th>Name</th><th>Rank</th><th>Role</th></tr>";
         for (let i = 0; i < teammember.length; i++) {
@@ -186,7 +189,7 @@ async function createMiddleBox(teamid) {
     block += "<h2>Selected Team</h2>";
     block += "<p>Team Name:" + team.name + " </p>";
     block += "</span>";
-    block += "<span id='playerPhoto'> <img src='../images/teamlogo.png' height='150'></span>";
+    block += "<span id='playerPhoto'> <img src='../images/teamlogo.png' height='150' ></span>";
     document.getElementById("actionTeamBox").innerHTML = block;
 }
 // mostrar info sobre tacticas
@@ -201,7 +204,32 @@ async function changeMiddleBox_Tactics(teamid, tacticmap) {
     document.getElementById("actionTeamBox").innerHTML = block;
 }
 
+async function getAllPlayers() {
+    try {
+        var players = await $.ajax({
+            url: "/api/players/",
+            method: "get",
+            dataType: "json"
+        });
+        return players;
+    } catch (err) {
+        console.log(err);
+    }
+}
 
+async function changeMiddleBox_AllPlayers(teamid) {
+    let block = "";
+    var playersinfo = await getAllPlayers();
+    block += "<h2>All players: </h2>";
+    block +="<div class='notif-content'>";
+    block += "<span id='playerInfo'>"
+    for(let i = 0; i<playersinfo.length; i++){
+        block +="<a>"+playersinfo[i].name+"</a><div class='accept' >Invite</div>";
+    }
+    block+= "</span>";
+    block +="</div>";
+   document.getElementById("actionTeamBox").innerHTML = block;
+}
 
 //not using
 function createNav() {
