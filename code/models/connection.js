@@ -1,7 +1,7 @@
 const util = require('util')
 const mysql = require('mysql')
 const pool = mysql.createPool({
-  connectionLimit: 10,
+  connectionLimit: 50,
   host: 'remotemysql.com',
   port: 3306,
   user: 'kST6V7n37P',

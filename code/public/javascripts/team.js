@@ -112,7 +112,7 @@ async function createMyTeamsTable(player) {
     }
     block += "</table>";
     block += "CREATE A NEW TEAM";
-    block += "<img src='../images/plusIcon.png' height='100' onclick='createNewTeamForm(" + player + ")'><div id='newteamform'></div>";
+    block += "<img src='../images/plusIcon.png' height='100' onclick='createNewTeamForm()'>";
     document.getElementById("myTeams").innerHTML = block;
 
 }
@@ -150,10 +150,10 @@ function createNewTeamForm() {
     block += " <label><b>Team Description</b></label>";
     block += " <input type='text' placeholder='Enter Team Description' id='cteamDesc'>";
     block += " <button type='button' class='btn' onclick='createNewTeam(" + loggedUser + ")'>Create</button>";
-    block += "  <button type='button' class='btn cancel' onclick='togglecreateNewTeamForm()'>Cancel</button>";
+    block += "  <button type='button' class='btn cancel' onclick='closeMiddleBox()'>Cancel</button>";
     block += "</form>";
     block += "</div>";
-    document.getElementById("newteamform").innerHTML = block;
+    document.getElementById("MiddleBox").innerHTML = block;
 
 }
 function togglecreateNewTeamForm() {

@@ -72,6 +72,10 @@ body{
     grid-area: I;
     margin-left: 20px;
 }
+#allPlayerInfo{
+    display: flex;
+    justify-content: space-between;
+}
 #playerPhoto{
     grid-area: P;
     margin-left: auto;

@@ -220,14 +220,15 @@ async function getAllPlayers() {
 async function changeMiddleBox_AllPlayers(teamid) {
     let block = "";
     var playersinfo = await getAllPlayers();
+    alert(JSON.stringify(playersinfo))
     block += "<h2>All players: </h2>";
-    block +="<div class='notif-content'>";
-    block += "<span id='playerInfo'>"
+    //block +="<div class='notif-content'>";
+    block += "<span id='allPlayerInfo'>"
     for(let i = 0; i<playersinfo.length; i++){
-        block +="<a>"+playersinfo[i].name+"</a><div class='accept' >Invite</div>";
+        block +="<a>"+playersinfo[i].name+"</a><div class='accept'>Invite</div>";
     }
     block+= "</span>";
-    block +="</div>";
+    //block +="</div>";
    document.getElementById("actionTeamBox").innerHTML = block;
 }
 
