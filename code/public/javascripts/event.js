@@ -2,6 +2,7 @@ var stringHome = "Home";
 var stringTeam = "Teams";
 var stringEvents = "Events";
 var stringMap = "Map";
+let loggedUser = 1;// assumir que o utilizador autenticado é o id=1
 
 arrayOfItems=[stringHome,stringTeam, stringEvents, stringMap];
 
@@ -50,7 +51,7 @@ function show(index){
 async function createAllEventsTable(){
     var events = await getAllEventsObj();
     let block="";
-        block+="<h1 id='titles'>All Events</h1>";
+        block+="<h1 class='titles'>All Events</h1>";
         block+="<table class='table'>";
         block+="<tr><th>Name</th><th>Field</th><th>Date</th></tr>";
     for(let i = 0; i <events.length; i++){
@@ -80,13 +81,14 @@ async function createMyEventsTable(){
     
     var events = await getMyEventsObj();
     let block="";
-        block+="<h1 id='titles'>My Events</h1>";
+        block+="<h1 class='titles'>My Events</h1>";
         block+="<table class='table'>";
         block+="<tr><th>Name</th><th>Field</th><th>Date</th></tr>";
     for(let i = 0; i <events.length; i++){
         block+="<tr onclick='changeToEventLobby("+events[i].id+")'><td>"+events[i].name+"</td><td>"+events[i].field+"</td><td>"+events[i].date+"</td></tr>";
     }
     block+="</table>";
+    block += "<img src='../images/plusIcon.png' height='100' onclick='createNewEventForm()'>";
     document.getElementById("myEvents").innerHTML = block;
 
 }
@@ -108,4 +110,9 @@ async function getMyEventsObj(){
  function changeToEventLobby(id) {
     sessionStorage.setItem("id",id);
     window.location = "eventLobby.html"
+  }
+
+  function createNewEventForm(){
+    var popup = document.getElementById("eventForm");
+    popup.classList.toggle("show");
   }

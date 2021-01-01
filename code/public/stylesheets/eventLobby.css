@@ -1,0 +1,27 @@
+
+#eventlobbymain{
+    background-color: #4b623bff;
+    display: flex;
+}
+
+#eventlobbynav{
+background-color:  #6b7f63;
+}
+.lobbyGroup{
+    background-color: #62523b;
+    min-height: 40%;
+    width:20%;
+    margin-right:1%;
+    margin-left:1%;
+}
+
+#eventlobbymain{
+  background-color:#4b623bff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    flex-shrink: 0;
+    min-width: 100%;
+    min-height: 100%
+}
