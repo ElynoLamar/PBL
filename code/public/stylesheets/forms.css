@@ -24,9 +24,17 @@
 
 /* Add styles to the form container */
 .form-container {
+  display: block;
+  position:absolute;
   max-width: 300px;
   padding: 10px;
+  top: -50px;
   background-color: white;
+  z-index: 9;
+
+}
+#newteamform{
+  display: block;
 }
 
 /* Full-width input fields */

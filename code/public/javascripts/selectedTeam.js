@@ -56,7 +56,7 @@ async function createTeammatesTable(teamid) {
     let block = "";
     if (Object.keys(teammember).length != 0) {
         block += "<div class='flex-container'>";
-        block += "<span></span><h1 id='titles'>Team members</h1><span><img id='plusimage' src='../images/plus-sign.png' height=30 onclick=changeMiddleBox_AllPlayers("+teamid+")></span>";
+        block += "<span></span><h1 class='titles'>Team members</h1><span><img id='plusimage' src='../images/plus-sign.png' height=30 onclick=changeMiddleBox_AllPlayers("+teamid+")></span>";
         block += "</div>";
         block += "<table class='table'>";
         block += "<tr><th>Name</th><th>Rank</th><th>Role</th></tr>";
@@ -65,7 +65,7 @@ async function createTeammatesTable(teamid) {
         }
         block += "</table>";
     } else {
-        block = "<h1 id='titles'> No teammembers found</h1>";
+        block = "<h1 class='titles'> No teammembers found</h1>";
     }
     document.getElementById("teamMembers").innerHTML = block;
 }
@@ -88,7 +88,7 @@ async function createTacticsTable(id) {
     var tactics = await getTeamTactics(id);
     let block = "";
     if (Object.keys(tactics).length != 0) {
-        block += "<h1 id='titles'>Map tactics</h1>";
+        block += "<h1 class='titles'>Map tactics</h1>";
         block += "<table class='table'>";
         block += "<tr><th>Name</th><th>Field</th></tr>";
         for (let i = 0; i < tactics.length; i++) {
@@ -96,7 +96,7 @@ async function createTacticsTable(id) {
         }
         block += "</table>";
     } else {
-        block = "<h1 id='titles'> No tactics found</h1>";
+        block = "<h1 class='titles'> No tactics found</h1>";
     }
     document.getElementById("teamMaps").innerHTML = block;
 }
