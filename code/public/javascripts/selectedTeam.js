@@ -245,9 +245,9 @@ async function changeMiddleBox_AllPlayers(teamid,player) {
 async function createNewInvite(teamID, clickedPlayerID, loggedPlayer) {
 
     var player = await getPlayer(loggedPlayer);
-    alert(JSON.stringify(player));
+
     var team = await getTeamObj(teamID);
-    alert(JSON.stringify(team));
+
     try {
         let newInvite = {
             playerRec: clickedPlayerID,
@@ -255,7 +255,7 @@ async function createNewInvite(teamID, clickedPlayerID, loggedPlayer) {
             team: team.id,
             text: "You have been invited to join "+team.name+" by the player "+ player.name
         }
-        alert(JSON.stringify(newInvite));
+
         let result = await $.ajax({
             url:"/api/notifications/team/"+teamID +"/player/"+clickedPlayerID,
             method: "post",
