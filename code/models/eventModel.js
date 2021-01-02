@@ -35,3 +35,28 @@ module.exports.getPlayerJoinedEvents= async function(index) {
         return err;
     }
 }
+
+module.exports.getEventMembers= async function(id_event) { 
+    try {
+        var query = "select Player.name_player as name, Team.name_team as team from EventMember Left join Player ON EventMember.player=Player.id_player Left join Team on EventMember.team=Team.id_team Left OUTER join EventGroup ON EventMember.player = EventGroup.player where EventMember.event=? and EventGroup.player is null";
+        const member = await pool.query(query,id_event);
+        console.log(query);     
+        return member; 
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+
+
+module.exports.getEventGroupMembers= async function(id_event, groupNumber) { 
+    try {
+        var query = "select Player.name_player as name, Team.name_team as team from EventMember Left join Player ON EventMember.player=Player.id_player Left join Team on EventMember.team=Team.id_team Left OUTER join EventGroup ON EventMember.player = EventGroup.player where EventMember.event=? and EventGroup.groupNumber=?";
+        const groupMember = await pool.query(query,[id_event, groupNumber]);
+        console.log(query);     
+        return groupMember; 
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}

@@ -65,4 +65,5 @@ insert into EventMember(player, event) values(8, 1);
 insert into EventMember(player, event) values(8, 2);
 insert into EventMember(player, event) values(8, 3);
 
-
+INSERT into EventGroup(groupNumber, player, event) values(1,1,1);
+INSERT into EventGroup(groupNumber, player, event) values(1,2,1);

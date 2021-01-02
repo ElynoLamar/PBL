@@ -96,7 +96,7 @@ async function createTacticsTable(id) {
         }
         block += "</table>";
     } else {
-        block = "<h1 class='titles'> No tactics found</h1>";
+        block = "<h1 class='titles'> No tactics found</h1>";    
     }
     document.getElementById("teamMaps").innerHTML = block;
 }
