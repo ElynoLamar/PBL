@@ -156,11 +156,14 @@ function createNewTeamForm() {
     document.getElementById("MiddleBox").innerHTML = block;
 
 }
-function togglecreateNewTeamForm() {
-    let content = document.querySelector('#newteamform');
+
+function toggleTeamForm() {
+    let content = document.querySelector('.newteamform');
+    
     if (content.style.display === "") {
         content.style.display = "block";
     } else {
+        
         content.style.display = "";
     }
 }

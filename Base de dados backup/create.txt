@@ -78,6 +78,13 @@ CONSTRAINT event_Invite foreign key (eventInv)
 CONSTRAINT status_notif foreign key (status)
     references InviteStatus (id_i_status));
 
+CREATE table EventGroup(groupNumber int not null, player int, event int not null,
+                        CONSTRAINT EventGroupPk primary key (player, event, groupNumber),
+CONSTRAINT player_EventGroup foreign key (player)
+	references EventMember(player),
+CONSTRAINT event_EventGroup foreign key (event)
+	references EventMember(event));
+
 
 
 
