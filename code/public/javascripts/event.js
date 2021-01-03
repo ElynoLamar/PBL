@@ -84,6 +84,7 @@ async function createMyEventsTable(){
         block+="<h1 class='titles'>My Events</h1>";
         block+="<table class='table'>";
         block+="<tr><th>Name</th><th>Field</th><th>Date</th></tr>";
+    alert(JSON.stringify(events));
     for(let i = 0; i <events.length; i++){
         block+="<tr onclick='changeToEventLobby("+events[i].id+")'><td>"+events[i].name+"</td><td>"+events[i].field+"</td><td>"+events[i].date+"</td></tr>";
     }
@@ -107,10 +108,11 @@ async function getMyEventsObj(){
     }
  }
 
- function changeToEventLobby(id) {
+ 
+function changeToEventLobby(id) {
     sessionStorage.setItem("id",id);
     window.location = "eventLobby.html"
-  }
+}
 
   function createNewEventForm(){
     var popup = document.getElementById("eventForm");

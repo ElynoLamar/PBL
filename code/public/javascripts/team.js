@@ -2,7 +2,7 @@ var stringHome = "Home";
 var stringTeam = "Teams";
 var stringEvents = "Events";
 var stringMap = "Map";
-let loggedUser = 9;// assumir que o utilizador autenticado é o este id
+let loggedUser =3;// assumir que o utilizador autenticado é o este id
 
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
@@ -189,7 +189,6 @@ async function joinTeam(teamID, playerID) {
             data: JSON.stringify(newMember),
             contentType: "application/json"
         });
-        alert(JSON.stringify(result));
     } catch (err) {
         console.log(err);
     }
@@ -257,7 +256,7 @@ async function notifButton(player) {
         if (notif[i].invite == 1) {
             //if (Number.isInteger(notif[i].invite)) {
             //var invite = await getInviteInfo(notif[i].invite);
-            block += "<span class='flex-notif-container'><div class='accept' onclick=changeStatus(" + notif[i].id_notif + "," + 2 + "," + notif[i].teamInv + "," + notif[i].receiver + ")>✔</div><div class='deny'onclick=changeStatus(" + notif[i].id_notif + "," + 3 + "," + notif[i].teamInv + "," + notif[i].receiver + ")>✖</div></span>";
+            block += "<span class='flex-notif-container'><div class='accept' onclick=changeStatus(" + notif[i].id_notif + "," + 2 + "," + notif[i].teamInv + "," + notif[i].receiver + ")>✔</div><div class='deny' onclick=changeStatus(" + notif[i].id_notif + "," + 3 + "," + notif[i].teamInv + "," + notif[i].receiver + ")>✖</div></span>";
         }
         block += "</a>";
     }
@@ -309,7 +308,6 @@ async function getPlayersNotif(player) {
 
 
 async function changeStatus(idNotif, newstatus, team, player) {
-    alert("id da notif é:" + idNotif);
     {
         try {
             let updatedInv = {

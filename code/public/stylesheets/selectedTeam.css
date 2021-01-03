@@ -113,7 +113,40 @@ body{
 }
 
 #playerDesc{
-    grid-area: D;
     display: flex;
     margin-left: 20px;
+}
+
+#removeOrGiveLeaderFlex{
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    min-height:50px;
+    width: 100%;    
+    
+}
+.promote {
+    color: #FFF;
+    background: #FF8C00;
+    padding: 15px 20px;
+    text-align: center;
+
+
+}
+.promote:hover {
+    background: #ffb84d;
+}
+.removeTeammate {
+    color: #FFF;
+    background: tomato;
+    padding: 15px 20px;
+    margin-left: 5px;
+    text-align: center;
+
+}
+.removeTeammate:hover {
+    background: rgb(255, 147, 128);
 }

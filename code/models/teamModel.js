@@ -26,7 +26,7 @@ module.exports.getAllTeams= async function() {
 }
 module.exports.getTeamMembers= async function(index) { 
     try {
-        var query = "select id_player as id, name_player as name,name_role as Role,name_ranking as Ranking from Player,Team,TeamMember,Ranking,Role where Ranking.id_ranking = TeamMember.ranking and TeamMember.player = Player.id_player and Team.id_team = TeamMember.team and TeamMember.ranking = Ranking.id_ranking and TeamMember.role= Role.id_role and Team.id_team=?";
+        var query = "select id_player as id, name_player as name,name_role as Role,name_ranking as Ranking from Player,Team,TeamMember,Ranking,Role where Ranking.id_ranking = TeamMember.ranking and TeamMember.player = Player.id_player and Team.id_team = TeamMember.team and TeamMember.ranking = Ranking.id_ranking and TeamMember.role= Role.id_role and Team.id_team=? ORDER BY id ASC ";
         const members = await pool.query(query,index);
         console.log(query);
         return members; 
@@ -93,6 +93,36 @@ module.exports.changeRank= async function(newRank) {
         const result = await pool.query(query,[newRank.ranking,newRank.player,newRank.team]);
         console.log(query);
         return {status:200, data: result}; 
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+
+module.exports.removeTeammate= async function(teammate) { 
+    try {
+        var query = "DELETE FROM TeamMember WHERE team=? and player=?;";
+        const result = await pool.query(query,[teammate.team, teammate.player]);
+        console.log(query);
+        return {status:200, data: result}; 
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+
+module.exports.promoteToLeader= async function(newRank) { 
+    try {// ranking 1 é "leader", ranking 2 é "player"
+        console.log(newRank.newLeader);
+        console.log(newRank.oldLeader);
+        console.log(newRank.team);
+        var query = "UPDATE TeamMember SET ranking = 1 WHERE TeamMember.player = ? AND TeamMember.team = ?;";
+        const result = await pool.query(query,[newRank.newLeader,newRank.team]);
+        console.log(query);
+        let sql = "UPDATE TeamMember SET ranking = 2 WHERE TeamMember.player = ? AND TeamMember.team = ?;"
+        const result1 = await pool.query(sql,[newRank.oldLeader,newRank.team]);
+        console.log(sql);
+        return {status:200, data: result1}; 
     } catch (err) {
         console.log(err);
         return err;

@@ -61,4 +61,19 @@ router.post("/:pos/player/:pos2/rank/:pos3", async function(req,res,next){
     res.send(newRank);
 });
 
+router.post("/:pos/player/:pos2", async function(req,res,next){
+    let pos = req.params.pos;
+    let pos2 = req.params.pos2;
+    let teammate = req.body;
+    let removedTeammate = await mteam.removeTeammate(teammate);
+    res.send(removedTeammate);
+});
+
+router.post("/:pos/player/:pos2/giveLead/:pos3", async function(req,res,next){
+    let newRankInfo = req.body;
+    let newRank = await mteam.promoteToLeader(newRankInfo);
+    res.send(newRank);
+});
+
+
 module.exports = router;

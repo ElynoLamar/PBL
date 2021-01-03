@@ -1,6 +1,7 @@
 window.onload= async function(){
-    //let eventid = sessionStorage.getItem("id");
-    let eventid=1;
+    let eventid = sessionStorage.getItem("id");
+    //let eventid=1;
+    alert(eventid);
     createNav(eventid);
     createEventLobbyUI(eventid);
 }
