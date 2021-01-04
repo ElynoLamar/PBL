@@ -230,3 +230,9 @@ span #plusimage{
  .titles{
     text-align: center;
 }
+
+.tablediv{
+    Overflow-y:scroll;
+    min-height: 50vh;
+    max-height: 50vh;
+}

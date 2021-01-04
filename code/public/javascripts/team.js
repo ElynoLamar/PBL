@@ -89,12 +89,12 @@ async function createAllTeamsTable(player) {
     var teams = await getAllTeamsObj();
     let block = "";
     block += "<h1 class='titles'>All Teams</h1>";
-    block += "<table class='table'>";
+    block += "<div class='tablediv'><table class='table'>";
     block += "<tr><th>Name</th><th>Description</th></tr>";
     for (let i = 0; i < teams.length; i++) {
         block += "<tr onclick='joinTeamForm(" + teams[i].id + "," + player + ")'><td>" + teams[i].name + "</td><td>" + teams[i].description + "</td></tr>";
     }
-    block += "</table>";
+    block += "</table></div>";
     document.getElementById("allTeams").innerHTML = block;
 
 }
@@ -105,12 +105,12 @@ async function createMyTeamsTable(player) {
     var teams = await getMyTeamsObj(player);
     let block = "";
     block += "<h1 class='titles'>My Teams</h1>";
-    block += "<table class='table'>";
+    block += "<div class='tablediv'><table class='table'>";
     block += "<tr><th>Name</th><th>Description</th></tr>";
     for (let i = 0; i < teams.length; i++) {
         block += "<tr onclick='changeToClickedTeam(" + teams[i].id + "," + player + ")'><td>" + teams[i].name + "</td><td>" + teams[i].description + "</td></tr>";
     }
-    block += "</table>";
+    block += "</table></div>";
     block += "CREATE A NEW TEAM";
     block += "<img src='../images/plusIcon.png' height='100' onclick='createNewTeamForm()'>";
     document.getElementById("myTeams").innerHTML = block;
