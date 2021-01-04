@@ -1,7 +1,6 @@
 window.onload= async function(){
     let eventid = sessionStorage.getItem("id");
     //let eventid=1;
-    alert(eventid);
     createNav(eventid);
     createEventLobbyUI(eventid);
 }
@@ -46,12 +45,12 @@ async function createEventLobbyUI(event_id){
     let groupMembers = await getGroupMembersObj(event_id, i);
     block+="<span class='lobbyGroup' id='group"+i+"'>";
     block+="<h1 class='titles'>Group "+i+"</h1>";
-    block+="<table class='table'>";
+    block+="<div class='tablediv'><table class='table'>";
     block+="<tr><th>Name</th><th>Team</th></tr>";
     for(let i = 0; i <groupMembers.length; i++){
       block+="<tr><td>"+groupMembers[i].name+"</td><td>"+groupMembers[i].team+"</td></tr>";
     }
-    block+="</table></span>" ;
+    block+="</table></div></span>" ;
   }
   
   document.getElementById("eventlobbymain").innerHTML = block;
