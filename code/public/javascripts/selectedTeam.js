@@ -299,6 +299,7 @@ async function removeThisPlayer(playerID, teamID, loggedPlayer) {
         createMiddleBox(teamID);
         if(playerID==loggedPlayer){
             window.location = "team.html";
+            return;
         }
     } catch (err) {
         console.log(err);

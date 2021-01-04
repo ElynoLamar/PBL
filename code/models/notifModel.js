@@ -50,3 +50,16 @@ module.exports.sendInvSpecificTeam= async function(newInvite) {
         return err;
     }
 }
+
+
+module.exports.getPlayerNotifCount= async function(player) { 
+    try {
+        var query = "SELECT COUNT(id_notif) as num FROM Notification WHERE Notification.receiver=? and status=1; ";
+        const count = await pool.query(query,player);
+        console.log(query);
+        return count[0];
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+} 

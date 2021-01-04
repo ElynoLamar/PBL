@@ -2,7 +2,7 @@ var stringHome = "Home";
 var stringTeam = "Teams";
 var stringEvents = "Events";
 var stringMap = "Map";
-let loggedUser =3;// assumir que o utilizador autenticado é o este id
+let loggedUser =9;// assumir que o utilizador autenticado é o este id
 
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
@@ -248,9 +248,10 @@ async function joinTeamForm(id, player) {
 
 async function notifButton(player) {
     var notif = await getPlayersNotif(player);
+    var notifCount = await getNotifCount(player);
     let block = "";
     block += "<div class='dropdown' onclick=toggleNotif()>";
-    block += "<img src='../images/notif.png' height='50'><span class='badge'>3</span><div class='notif-content'>";
+    block += "<img src='../images/notif.png' height='50'><span class='badge'>"+notifCount.num+"</span><div class='notif-content'>";
     for (let i = 0; i < notif.length; i++) {
         block += "<a>" + notif[i].text_notif;
         if (notif[i].invite == 1) {
@@ -329,5 +330,18 @@ async function changeStatus(idNotif, newstatus, team, player) {
         } catch (err) {
             console.log(err);
         }
+    }
+}
+
+async function getNotifCount(player) {
+    try {
+        var notifCount = await $.ajax({
+            url: "/api/notifications/player/" + player + "/count",
+            method: "get",
+            dataType: "json"
+        });
+        return notifCount;
+    } catch (err) {
+        console.log(err);
     }
 }

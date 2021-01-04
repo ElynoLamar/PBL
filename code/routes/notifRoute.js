@@ -7,6 +7,12 @@ router.get('/player/:pos', async function(req,res,next) {
     let notif = await mnotif.getPlayerNotifications(pos);
     res.send(notif);
 });
+router.get('/player/:pos/count', async function(req,res,next) {
+    let pos = req.params.pos;
+    let notif = await mnotif.getPlayerNotifCount(pos);
+    res.send(notif);
+});
+
 router.get('/invite/:pos', async function(req,res,next) {
     let pos = req.params.pos;
     let ivnites = await mnotif.getInviteInfo(pos);
