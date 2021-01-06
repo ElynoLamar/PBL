@@ -45,10 +45,10 @@ CONSTRAINT player_EventPlayers foreign key (player)
 CONSTRAINT event_EventPlayers foreign key (event)
 	references Event(id_event));
 
-    CREATE table EventMember(player int not null, event int not null,
-     CONSTRAINT EventMemberPk primary key (event, player),
+	CREATE table EventMember(player int not null, event int not null, team int, CONSTRAINT EventMemberPk primary key (event, player),
       CONSTRAINT player_EventMember foreign key (player) references Player(id_player),
-       CONSTRAINT team_EventMember foreign key (event) references Event(id_event));
+       CONSTRAINT event_EventMember foreign key (event) references Event(id_event),
+	   CONSTRAINT team_EventMember foreign key (team) references Team(id_team));
 
 create table InviteStatus(id_i_status int not null, name_i_status varchar(30),
 			CONSTRAINT InviteStatusPK PRIMARY KEY (id_i_status));  

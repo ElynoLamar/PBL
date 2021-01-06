@@ -50,7 +50,6 @@ nav{
     align-items: center;   
     overflow:hidden; 
     grid-area: n;
-    
 }
 nav>span{
     flex: 1;
