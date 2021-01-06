@@ -232,7 +232,6 @@ span #plusimage{
 }
 
 .tablediv{
-    Overflow-y:scroll;
-    min-height: 50vh;
+    Overflow-y:auto;
     max-height: 50vh;
 }

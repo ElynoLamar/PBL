@@ -3,18 +3,18 @@ var stringTeam = "Teams";
 var stringEvents = "Events";
 var stringMap = "Map";
 
-arrayOfItems=[stringHome,stringTeam, stringEvents, stringMap];
+arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
-function createNav(){
-    let aux="";
-    for(let i=0; i<arrayOfItems.length; i++){
-        aux+="<span class='navContainer' onclick='show("+i+")'>"+arrayOfItems[i]+"</span>";
+function createNav() {
+    let aux = "";
+    for (let i = 0; i < arrayOfItems.length; i++) {
+        aux += "<span class='navContainer' onclick='show(" + i + ")'>" + arrayOfItems[i] + "</span>";
     }
     document.getElementById("navItems").innerHTML = aux;
 }
 
-function show(index){
-    switch(index){
+function show(index) {
+    switch (index) {
         case 0:
             window.location = "../index.html";
             break;
@@ -29,7 +29,8 @@ function show(index){
             break;
     }
 }
-window.onload=function(){
+
+window.onload = function () {
     createNav();
     mapboxgl.accessToken = 'pk.eyJ1IjoiZWx5bm8iLCJhIjoiY2tqOG8waWE2MDd1ejJzcGVteHd1Y21vdSJ9.0K2deDMvBrkZXzoHjZvWCw';
     var map = new mapboxgl.Map({
@@ -49,31 +50,36 @@ window.onload=function(){
     //caixa de texto procurar
     map.addControl(
         new MapboxGeocoder({
-        accessToken: mapboxgl.accessToken,
-        mapboxgl: mapboxgl
+            accessToken: mapboxgl.accessToken,
+            mapboxgl: mapboxgl
         })
     );
     //localização do utilizador
     map.addControl(
         new mapboxgl.GeolocateControl({
             positionOptions: {
-            enableHighAccuracy: true
+                enableHighAccuracy: true
             },
             trackUserLocation: true
         })
     );
+
+    var marker = new mapboxgl.Marker()
+        .setLngLat([-9.26218, 38.76958])
+        .addTo(map);
     map.addControl(draw);
-     
+    map.on('click', addMarker);
+    
+
     map.on('draw.create', updateArea);
     map.on('draw.delete', updateArea);
     map.on('draw.update', updateArea);
-    
+
     function updateArea(e) {
         var data = draw.getAll();
-        if(data.features.length>0){
-            for(let i = 0; i<data.features[0].geometry.coordinates[0].length; i++){
-                
-               // alert(JSON.stringify(data.features[0].geometry.coordinates[0][i]));
+        if (data.features.length > 0) {
+            for (let i = 0; i < data.features[0].geometry.coordinates[0].length; i++) {
+                alert(JSON.stringify(data.features[0].geometry.coordinates[0][i]));
             }
         }
 
@@ -84,9 +90,9 @@ window.onload=function(){
             // restrict to area to 2 decimal points
             var rounded_area = Math.round(area * 100) / 100;
             answer.innerHTML =
-            '<p><strong>' +
-            rounded_area +
-            '</strong></p><p>square meters</p>';
+                '<p><strong>' +
+                rounded_area +
+                '</strong></p><p>square meters</p>';
         } else {
             answer.innerHTML = '';
             if (e.type !== 'draw.delete')
@@ -96,16 +102,19 @@ window.onload=function(){
 
     map.on('mousemove', function (e) {
         document.getElementById('info').innerHTML =
-        // e.point is the x, y coordinates of the mousemove event relative
-        // to the top-left corner of the map
-        JSON.stringify(e.point) +
-        '<br />' +
-        // e.lngLat is the longitude, latitude geographical position of the event
-        JSON.stringify(e.lngLat.wrap());
+            // e.point is the x, y coordinates of the mousemove event relative
+            // to the top-left corner of the map
+            JSON.stringify(e.point) +
+            '<br />' +
+            // e.lngLat is the longitude, latitude geographical position of the event
+            JSON.stringify(e.lngLat.wrap());
     });
 
-    
 
-    
+    function addMarker(e) {
+        var data = draw.getAll();
+        alert(JSON.stringify(data));
+    }
+
 }
 

@@ -187,7 +187,7 @@ async function changeRole(roleID, playerID, teamID, loggedPlayer) {
             contentType: "application/json"
         });
         changeMiddleBox_Player(playerID, teamID, loggedPlayer);
-        createTeammatesTable(teamID);
+        createTeammatesTable(teamID,loggedPlayer);
     } catch (err) {
         console.log(err);
     }

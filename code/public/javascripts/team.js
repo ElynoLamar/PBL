@@ -2,12 +2,12 @@ var stringHome = "Home";
 var stringTeam = "Teams";
 var stringEvents = "Events";
 var stringMap = "Map";
-let loggedUser =9;// assumir que o utilizador autenticado é o este id
+let loggedUser = 1;// assumir que o utilizador autenticado é o este id
 
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
 window.onload = async function () {
- 
+
     createNav();
     createTeamUI();
     createAllTeamsTable(loggedUser);
@@ -159,11 +159,11 @@ function createNewTeamForm() {
 
 function toggleTeamForm() {
     let content = document.querySelector('.newteamform');
-    
+
     if (content.style.display === "") {
         content.style.display = "block";
     } else {
-        
+
         content.style.display = "";
     }
 }
@@ -178,7 +178,7 @@ async function joinTeam(teamID, playerID) {
         let newMember = {
             player: playerID,
             team: teamID,
-            ranking: 10,
+            ranking: 2,
             role: 1
         }
 
@@ -197,6 +197,39 @@ async function joinTeam(teamID, playerID) {
     createMyTeamsTable(loggedUser);
 }
 
+//not used
+async function getPlayer(id) {
+    try {
+        var player = await $.ajax({
+            url: "/api/players/" + id,
+            method: "get",
+            dataType: "json"
+        });
+        return player;
+    } catch (err) {
+        console.log(err);
+    }
+}
+async function requestToJoinTeam(teamID, loggedPlayer) {
+    var player = await getPlayer(loggedPlayer);
+    try {
+        let request = {
+            player: loggedPlayer,
+            team: teamID,
+            text:"Player "+player.name+" is requesting to join your team."
+        }
+
+        let result = await $.ajax({
+            url: "/api/notifications/player/:pos/team/:pos2/request/",
+            method: "post",
+            dataType: "json",
+            data: JSON.stringify(request),
+            contentType: "application/json"
+        });
+    } catch (err) {
+        console.log(err);
+    }
+}
 //not used
 async function changeRank(playerID, teamID) {
     try {
@@ -219,7 +252,7 @@ async function changeRank(playerID, teamID) {
 }
 
 async function getSpecificTeamObj(id) {
-
+    
     try {
         var getTeam = await $.ajax({
             url: "/api/teams/" + id,
@@ -231,15 +264,22 @@ async function getSpecificTeamObj(id) {
         console.log(err);
     }
 }
-async function joinTeamForm(id, player) {
+async function joinTeamForm(teamID, player) {
     closeMiddleBox();
-    var team = await getSpecificTeamObj(id);
+    var team = await getSpecificTeamObj(teamID);
+    alert(JSON.stringify(team));
     let block = "";
     block += "<form class='form-container'>";
     block += "<h1>Join this team?</h1>";
     block += " <label><b>Team name: " + team.name + " </b></label>";
     block += " <label><b>Team Description: " + team.description + " </b></label>";
-    block += " <button type='button' class='btn' onclick='joinTeam(" + id + "," + player + ")'>Join</button>";
+    if (team.privacy == 2) {
+        block += " <button type='button' class='btn' onclick='requestToJoinTeam(" + teamID + "," + player + ")'>Request to join</button>";
+    }
+    else if (team.privacy == 3) alert("team por pass")
+    else if (team.privacy == 1) {
+        block += " <button type='button' class='btn' onclick='joinTeam(" + teamID + "," + player + ")'>Join</button>";
+    }
     block += "  <button type='button' class='btn cancel' onclick='closeMiddleBox()'>Cancel</button>";
     block += "</form>";
     block += "</div>";
@@ -251,14 +291,23 @@ async function notifButton(player) {
     var notifCount = await getNotifCount(player);
     let block = "";
     block += "<div class='dropdown' onclick=toggleNotif()>";
-    block += "<img src='../images/notif.png' height='50'><span class='badge'>"+notifCount.num+"</span><div class='notif-content'>";
+    block += "<img src='../images/notif.png' height='50'><span class='badge'>" + notifCount.num + "</span><div class='notif-content'>";
     for (let i = 0; i < notif.length; i++) {
         block += "<a>" + notif[i].text_notif;
         if (notif[i].invite == 1) {
-            //if (Number.isInteger(notif[i].invite)) {
-            //var invite = await getInviteInfo(notif[i].invite);
-            block += "<span class='flex-notif-container'><div class='accept' onclick=changeStatus(" + notif[i].id_notif + "," + 2 + "," + notif[i].teamInv + "," + notif[i].receiver + ")>✔</div><div class='deny' onclick=changeStatus(" + notif[i].id_notif + "," + 3 + "," + notif[i].teamInv + "," + notif[i].receiver + ")>✖</div></span>";
+            if (Number.isInteger(notif[i].teamInv)) {
+                block += "<span class='flex-notif-container'><div class='accept' onclick=changeStatus(" + notif[i].id_notif + "," + 2 + "," + notif[i].teamInv + "," + notif[i].receiver + ")>✔</div><div class='deny' onclick=changeStatus(" + notif[i].id_notif + "," + 3 + "," + notif[i].teamInv + "," + notif[i].receiver + ")>✖</div></span>";
+            } else {
+                // entrar em evento
+            }
+        } else if (notif[i].invite == 0) {
+            if (Number.isInteger(notif[i].teamInv)) {
+                block += "<span class='flex-notif-container'><div class='accept' onclick=changeStatus(" + notif[i].id_notif + "," + 2 + "," + notif[i].teamInv + "," + notif[i].sender + ")>✔</div><div class='deny' onclick=changeStatus(" + notif[i].id_notif + "," + 3 + "," + notif[i].teamInv + "," + notif[i].receiver + ")>✖</div></span>";
+            } else {
+                // entrar em evento
+            }
         }
+
         block += "</a>";
     }
     block += "</div>";
@@ -323,9 +372,10 @@ async function changeStatus(idNotif, newstatus, team, player) {
                 data: JSON.stringify(updatedInv),
                 contentType: "application/json"
             });
-            if(newstatus==2){
+            if (newstatus == 2) {
                 joinTeam(team, player);
             }
+
             notifButton(player);
         } catch (err) {
             console.log(err);

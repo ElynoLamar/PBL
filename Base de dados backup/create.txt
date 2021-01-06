@@ -85,6 +85,9 @@ CONSTRAINT player_EventGroup foreign key (player)
 CONSTRAINT event_EventGroup foreign key (event)
 	references EventMember(event));
 
+create table Privacy(id_privacy int not null, name_privacy varchar(30),
+			CONSTRAINT PrivacyPK PRIMARY KEY (id_privacy));  
+
 
 
 
