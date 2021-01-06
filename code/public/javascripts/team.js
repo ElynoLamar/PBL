@@ -104,24 +104,29 @@ async function createMyTeamsTable(player) {
 
     var teams = await getMyTeamsObj(player);
     let block = "";
-    block += "<h1 class='titles'>My Teams</h1>";
+    block += "<h1 class='titles'>My Teams<img src='../images/plusIcon.png' height='100' onclick='createNewTeamForm()'></h1>";
     block += "<div class='tablediv'><table class='table'>";
     block += "<tr><th>Name</th><th>Description</th></tr>";
     for (let i = 0; i < teams.length; i++) {
         block += "<tr onclick='changeToClickedTeam(" + teams[i].id + "," + player + ")'><td>" + teams[i].name + "</td><td>" + teams[i].description + "</td></tr>";
     }
     block += "</table></div>";
-    block += "CREATE A NEW TEAM";
-    block += "<img src='../images/plusIcon.png' height='100' onclick='createNewTeamForm()'>";
     document.getElementById("myTeams").innerHTML = block;
 
 }
 
 async function createNewTeam(playerID) {
     try {
+        let tprivacy=0;
+        if(document.getElementById("openTeam").checked){
+            tprivacy =1;
+        }else if(document.getElementById("privateTeam").checked){
+            tprivacy =2;
+        }
         let team = {
             name: document.getElementById("cteamName").value,
             desc: document.getElementById("cteamDesc").value,
+            privacy: tprivacy,
             player: playerID
         }
         let result = await $.ajax({
@@ -149,6 +154,11 @@ function createNewTeamForm() {
     block += "<input type='text' placeholder='Enter Team Name' id='cteamName' required>";
     block += " <label><b>Team Description</b></label>";
     block += " <input type='text' placeholder='Enter Team Description' id='cteamDesc'>";
+    block += " <label><b>Choose your team privacy</b></label><br>";
+    block += "<input type='radio' id='openTeam' name='privacy' value='openTeam'>";
+    block += "<label for='openTeam'>Open team, anyone can join</label><br>";
+    block += "<input type='radio' id='privateTeam' name='privacy' value='privateTeam'>";
+    block += "<label for='privateTeam'>Private, requires autorization to join</label><br><br>";
     block += " <button type='button' class='btn' onclick='createNewTeam(" + loggedUser + ")'>Create</button>";
     block += "  <button type='button' class='btn cancel' onclick='closeMiddleBox()'>Cancel</button>";
     block += "</form>";

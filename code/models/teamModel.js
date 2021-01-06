@@ -49,8 +49,8 @@ module.exports.getTeamTactics= async function(index) {
 
 module.exports.newTeam= async function(team) { 
     try {
-        var query = "insert into Team(name_team, description_team) values(?,?);";
-        const result = await pool.query(query,[team.name,team.desc]);
+        var query = "insert into Team(name_team, description_team,privacy) values(?,?,?);";
+        const result = await pool.query(query,[team.name,team.desc, team.privacy]);
         console.log(query);
         let addedTeamID = result.insertId;
         let sql = "insert into TeamMember(player, team, ranking, role) values(?,?,1,1);"
