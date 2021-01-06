@@ -84,7 +84,6 @@ async function createMyEventsTable(){
         block+="<h1 class='titles'>My Events</h1>";
         block+="<div class='tablediv'><table class='table'>";
         block+="<tr><th>Name</th><th>Field</th><th>Date</th></tr>";
-    alert(JSON.stringify(events));
     for(let i = 0; i <events.length; i++){
         block+="<tr onclick='changeToEventLobby("+events[i].id+")'><td>"+events[i].name+"</td><td>"+events[i].field+"</td><td>"+events[i].date+"</td></tr>";
     }
@@ -95,7 +94,7 @@ async function createMyEventsTable(){
 }
 
 async function getMyEventsObj(){
-    let loggedUser = 8;// assumir que o utilizador autenticado é o id=8
+    let loggedUser = 1;// assumir que o utilizador autenticado é o id=8
     try {
          var getmyevents = await $.ajax({
              url: "/api/events/player/"+loggedUser,

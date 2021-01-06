@@ -4,9 +4,12 @@
     display: flex;
 }
 
+body{grid-template-columns: 30vh auto;}
+
 #eventlobbynav{
 background-color:  #6b7f63;
 Overflow-y:scroll;
+
 }
 .lobbyGroup{
     background-color: #62523b;
@@ -26,4 +29,16 @@ Overflow-y:scroll;
     flex-shrink: 0;
     min-width: 100%;
     min-height: 100%
+}
+
+#group_choice{
+    display: none;
+    position: relative ;
+    background-color: #f9f9f9;
+    top: 0vh;  /* ajustar pra baixo*/
+    right: 40vh; /* ajustar pra esquerda*/
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1; /* por pela frente*/
+    max-width: 500px;
 }

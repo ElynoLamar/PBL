@@ -60,3 +60,16 @@ module.exports.getEventGroupMembers= async function(id_event, groupNumber) {
         return err;
     }
 }
+
+module.exports.getEventNumOfGroups= async function(id_event) { 
+    try {
+        var query = "Select group_num from Event WHERE id_event = ?";
+        const numofgroups = await pool.query(query,id_event);
+        console.log(query);     
+        return numofgroups[0]; 
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+
