@@ -23,33 +23,41 @@ CONSTRAINT ranking_Teammember foreign key (ranking)
 
 create table Field(id_field int not null AUTO_INCREMENT, name_field varchar(30),
 	CONSTRAINT FieldPK PRIMARY KEY (id_field));       
+alter table Field add COLUMn coords int not null;
+
+Create table Coordinates(id_coord int not null AUTO_INCREMENT, coords int, field int not null,
+Constraint CoordinatesPK PRIMARY KEY (id_coord),
+CONSTRAINT field_Coordinates FOREIGN key (field) REFERENCES Field (id_field));
 
 
-create table Tactics(field int not null, name_tactic varchar(30), team int not null,
-	CONSTRAINT FieldPK PRIMARY KEY (name_tactic, team),
-    CONSTRAINT team_Tactic foreign key (team)
-    references Team (id_team),
-CONSTRAINT field_Tactic foreign key (field)
-    references Field (id_field));
+create table Tactics(field int not null, name_tactic varchar(30), team int not null, image_tactic varchar(250),
+                     CONSTRAINT TacticsPK PRIMARY KEY (name_tactic, team),
+                     CONSTRAINT team_Tactic foreign key (team) references Team (id_team), 
+                     CONSTRAINT field_Tactic foreign key (field) references Field (id_field))
+
 
 CREATE table Event(id_event int not null AUTO_INCREMENT, name_event varchar(30) not null, field_event int not null, date_event varchar(10), duration_event varchar(10), team_size_event int not null,
                         CONSTRAINT EventPk primary key (id_event), 
                    		CONSTRAINT field_Event foreign key (field_event)
 	references Field(id_field));
+Alter table Event add column privacy int not null;
+ALTER TABLE Event ADD CONSTRAINT privacy_Event FOREIGN KEY (privacy) REFERENCES Privacy(id_privacy)
                         
-
-Create table EventPlayers(player int not null, event int not null, 
-                        CONSTRAINT TeamMemberPk primary key (event, player),
-CONSTRAINT player_EventPlayers foreign key (player)
-	references Player(id_player),
-CONSTRAINT event_EventPlayers foreign key (event)
-	references Event(id_event));
-
-	CREATE table EventMember(player int not null, event int not null, team int, CONSTRAINT EventMemberPk primary key (event, player),
+CREATE table EventMember(player int not null, event int not null, team int, CONSTRAINT EventMemberPk primary key (event, player),
       CONSTRAINT player_EventMember foreign key (player) references Player(id_player),
        CONSTRAINT event_EventMember foreign key (event) references Event(id_event),
 	   CONSTRAINT team_EventMember foreign key (team) references Team(id_team));
 
+
+
+CREATE table EventGroup(groupNumber int not null, player int, event int not null,
+                        CONSTRAINT EventGroupPk primary key (player, event, groupNumber),
+CONSTRAINT player_EventGroup foreign key (player)
+	references EventMember(player),
+CONSTRAINT event_EventGroup foreign key (event)
+	references EventMember(event));
+
+	
 create table InviteStatus(id_i_status int not null, name_i_status varchar(30),
 			CONSTRAINT InviteStatusPK PRIMARY KEY (id_i_status));  
 
@@ -78,16 +86,24 @@ CONSTRAINT event_Invite foreign key (eventInv)
 CONSTRAINT status_notif foreign key (status)
     references InviteStatus (id_i_status));
 
-CREATE table EventGroup(groupNumber int not null, player int, event int not null,
-                        CONSTRAINT EventGroupPk primary key (player, event, groupNumber),
-CONSTRAINT player_EventGroup foreign key (player)
-	references EventMember(player),
-CONSTRAINT event_EventGroup foreign key (event)
-	references EventMember(event));
+
 
 create table Privacy(id_privacy int not null, name_privacy varchar(30),
 			CONSTRAINT PrivacyPK PRIMARY KEY (id_privacy));  
 
+
+
+
+
+
+
+
+Create table EventPlayers(player int not null, event int not null, 
+                        CONSTRAINT TeamMemberPk primary key (event, player),
+CONSTRAINT player_EventPlayers foreign key (player)
+	references Player(id_player),
+CONSTRAINT event_EventPlayers foreign key (event)
+	references Event(id_event));
 
 
 

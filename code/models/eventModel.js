@@ -73,3 +73,19 @@ module.exports.getEventNumOfGroups= async function(id_event) {
     }
 }
 
+module.exports.newEvent= async function(event) { 
+    try {
+        var query = "insert into Event(name_event, field_event, date_event, duration_event, team_size_event ,group_num, privacy) values(?,?,?,?,?,?,?);";
+        const result = await pool.query(query,[event.name, event.field, event.date, event.duration, event.teamsSize, event.groupNum, event.privacy]);
+        console.log(query);
+        let addedEventID = result.insertId;
+        let sql = "insert into EventMember(player, event,ranking) values(?,?,1);"
+        const result1 = await pool.query(sql,[event.player,addedEventID,1]);
+        
+        return {status:200, data: result}; 
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+

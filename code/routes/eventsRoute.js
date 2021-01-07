@@ -38,4 +38,11 @@ router.get("/:pos1/numofgroups", async function(req,res,next){
     res.send(numofgroups);
 });
 
+
+router.post('/', async function(req,res,next) {
+    let event = req.body;
+    let newevent = await mevent.newEvent(event);
+    res.send(newevent);
+});
+
 module.exports = router;

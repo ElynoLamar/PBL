@@ -13,6 +13,9 @@ function createNav() {
     document.getElementById("navItems").innerHTML = aux;
 }
 
+
+
+
 function show(index) {
     switch (index) {
         case 0:
@@ -63,13 +66,34 @@ window.onload = function () {
             trackUserLocation: true
         })
     );
-
+        
     var marker = new mapboxgl.Marker()
         .setLngLat([-9.26218, 38.76958])
         .addTo(map);
     map.addControl(draw);
     map.on('click', addMarker);
-    
+    function addMarker(e) {
+        console.log('Map clicked!',e.lngLat.lat,e.lngLat.lng);
+        newMarker();
+    }
+    function newMarker(){
+        alert("hey!");
+        var marker = new mapboxgl.Marker()
+            .setLngLat([-10.26218, 38.76958])
+            .addTo(map);
+        map.addControl(draw);
+    }
+    geojson.features.forEach(function(marker) {
+
+        // create a HTML element for each feature
+        var el = document.createElement('div');
+        el.className = 'marker';
+      
+        // make a marker for each feature and add to the map
+        new mapboxgl.Marker(el)
+          .setLngLat(marker.geometry.coordinates)
+          .addTo(map);
+      });    
 
     map.on('draw.create', updateArea);
     map.on('draw.delete', updateArea);
@@ -79,7 +103,7 @@ window.onload = function () {
         var data = draw.getAll();
         if (data.features.length > 0) {
             for (let i = 0; i < data.features[0].geometry.coordinates[0].length; i++) {
-                alert(JSON.stringify(data.features[0].geometry.coordinates[0][i]));
+                //alert(JSON.stringify(data.features[0].geometry.coordinates[0][i]));
             }
         }
 
@@ -111,10 +135,7 @@ window.onload = function () {
     });
 
 
-    function addMarker(e) {
-        var data = draw.getAll();
-        alert(JSON.stringify(data));
-    }
+    
 
 }
 
