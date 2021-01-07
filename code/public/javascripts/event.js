@@ -17,7 +17,15 @@ function createEventUI(){
     let block="";
     block+="<span id='myEvents' >1</span>";
     block+="<span id='allEvents' >2</span>";
+    //modal box
+    block+="<div id='myModal' class='modal'>"
+    block+="</div>"
+    
+    //
     document.getElementById("eventDivItems").innerHTML = block;
+
+    buildModal();
+
 }
 
 
@@ -88,7 +96,9 @@ async function createMyEventsTable(){
         block+="<tr onclick='changeToEventLobby("+events[i].id+")'><td>"+events[i].name+"</td><td>"+events[i].field+"</td><td>"+events[i].date+"</td></tr>";
     }
     block+="</table></div>";
-    block += "<img src='../images/plusIcon.png' height='100' onclick='createNewEventForm()'>";
+    block+="<div onClick='plusClick()'>";
+    block += "<img src='../images/plusIcon.png' height='100' >";
+    block+="</div>";
     document.getElementById("myEvents").innerHTML = block;
 
 }
@@ -113,7 +123,38 @@ function changeToEventLobby(id) {
     window.location = "eventLobby.html"
 }
 
-  function createNewEventForm(){
-    var popup = document.getElementById("eventForm");
-    popup.classList.toggle("show");
-  }
+//   function createNewEventForm(){
+//     var popup = document.getElementById("eventForm");
+//     popup.classList.toggle("show");
+//   }
+
+  //modal box
+  
+function plusClick(){
+    
+    let content = document.querySelector('#myModal');
+    
+        content.style.display = "block";
+    
+}
+
+function buildModal(){
+    let block="";
+    
+    block+="<div class='modal-content'>"
+    block+="<div class='modal-header'>"
+    block+="  <span class='close'>&times;</span>"
+    block+="  <h2>Modal Header</h2>"
+    block+="</div>"
+    block+="<div class='modal-body'>"
+    block+="  <p>Some text in the Modal Body</p>"
+    block+="  <p>Some other text...</p>"
+    block+="</div>"
+    block+="<div class='modal-footer'>"
+    block+="  <h3>Modal Footer</h3>"
+    block+="</div>"
+    block+="</div>"
+
+    
+    document.getElementById("myModal").innerHTML = block
+}
