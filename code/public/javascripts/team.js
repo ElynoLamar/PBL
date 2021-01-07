@@ -149,6 +149,8 @@ async function createNewTeam(playerID) {
 function createNewTeamForm() {
     let block = "";
     block += "<form class='form-container'>";
+    block +="<div class='form-content' onclick='closeMiddleBox()'>";
+    block+="  <span class='close'>&times;</span>"
     block += "<h1>Create a new Team</h1>";
     block += " <label><b>Team name</b></label>";
     block += "<input type='text' placeholder='Enter Team Name' id='cteamName' required>";

@@ -173,6 +173,8 @@ async function createNewEventForm() {
     var fields = await getAllFields();
     let block = "";
     block += "<form class='form-container'>";
+    block +="<div class='form-content'>";
+    block+="  <span class='close' onclick='closeMiddleBox()'>&times;</span>"
     block += "<h1>Create a new Event</h1>";
     block += " <label><b>Event name</b></label>";
     block += "<input type='text' placeholder='Enter Event Name' id='ceventName' required>";
@@ -198,8 +200,8 @@ async function createNewEventForm() {
     block += "<label for='eventdurationhours'>hours</label><br>"
     block += "<input type='number' id='eventdurationmins' name='eventdurationmins' min='0' max='59'></input>"
     block += "<label for='eventdurationmins'>mins</label><br><br>"
-    block += " <button type='button' class='btn' onclick='createNewEvent()'>Create</button>";
-    block += "  <button type='button' class='btn cancel' onclick='closeMiddleBox()'>Cancel</button>";
+    block += "<button type='button' class='btn' onclick='createNewEvent()'>Create</button>";
+    block += "<button type='button' class='btn cancel' onclick='closeMiddleBox()'>Cancel</button>";
     block += "</form>";
     block += "</div>";
     document.getElementById("MiddleBox").innerHTML = block;
