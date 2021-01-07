@@ -8,7 +8,7 @@ var teamRouter = require('./routes/teamsRoute');
 var eventRouter = require('./routes/eventsRoute');
 var roleRouter = require('./routes/roleRoute');
 var notifRouter = require('./routes/notifRoute');
-
+var fieldsRouter = require('./routes/fieldsRoute');
 var app = express();
 
 app.use(logger('dev'));
@@ -24,5 +24,5 @@ app.use('/api/players', playerRouter);
 app.use('/api/events', eventRouter);
 app.use('/api/roles', roleRouter);
 app.use('/api/notifications', notifRouter);
-
+app.use('/api/fields', fieldsRouter);
 module.exports = app;

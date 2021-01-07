@@ -3,7 +3,7 @@ var pool = require("../models/connection");
 
 module.exports.getSpecificTeam= async function(index) { 
     try {           
-        var query = "SELECT id_team as id, name_team as name, description_team as description from Team where id_team = ?";
+        var query = "SELECT privacy, id_team as id, name_team as name, description_team as description from Team where id_team = ?";
         const team = await pool.query(query, index);
         console.log(query);
         return team[0];
@@ -49,8 +49,8 @@ module.exports.getTeamTactics= async function(index) {
 
 module.exports.newTeam= async function(team) { 
     try {
-        var query = "insert into Team(name_team, description_team) values(?,?);";
-        const result = await pool.query(query,[team.name,team.desc]);
+        var query = "insert into Team(name_team, description_team,privacy) values(?,?,?);";
+        const result = await pool.query(query,[team.name,team.desc, team.privacy]);
         console.log(query);
         let addedTeamID = result.insertId;
         let sql = "insert into TeamMember(player, team, ranking, role) values(?,?,1,1);"
