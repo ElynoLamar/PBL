@@ -1,35 +1,121 @@
 <html>
 
 <head>
-  <title>Tactical Combat Planner</title>
+    <title>Tactical Combat Planner</title>
+    <link rel="stylesheet" href="stylesheets/index.css">
+    <script src="javascripts/index.js"></script>
+    <link rel="stylesheet" href="stylesheets/navMenu.css">
+    <!-- Write your comments here
+  
   <link rel="stylesheet" href="stylesheets/default.css">
-  <script src="javascripts/index.js"></script>
-  <link rel = "icon" href = "images/on-off-button.png"  type = "image/x-icon">
+  -->
+    <link rel="icon" href="images/on-off-button.png" type="image/x-icon">
 </head>
 
 <body>
-  <header>
-      <span id='logoheader'><img src="images/TCPlogo.png" height='100'></span>
-      <span id='titleheader'>TACTICAL COMBAT PLANNER</span>
-      <span id='userboxHeader'>
-        <span id='userimageHeader'><img src="images/userImage.png" height='50'></span>
+    <header>
+        <span id='logoheader' onclick='show(0)'><img src="images/TCPlogo.png"></span>
+        <span id='titleheader'><h1>TACTICAL COMBAT PLANNER</h1></span>
+        <nav class='menu'>
+            <ul>
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
+                <li>
+                    <a href="links/map.html">Map</a>
+                </li>
+                <li>
+                    <a href="links/event.html">Event</a>
+                </li>
+                <li>
+                    <a href="links/team.html">Team</a>
+                </li>
+            </ul>
+        </nav>
+
+
+
+        <span id='userboxHeader'>
+            <span id='userimageHeader'><img src="images/userImage.png" height='50px'></span>
         <span id='userNameHeader'>John Doe</span>
-        <span id='logoutheader'><img src="images/on-off-button.png" height='50'></span>
-      </span>
-  </header>
-  <nav id='navItems'>
+        <span id='logoutheader'><img src="images/on-off-button.png"  height='50px'></span>
+        </span>
 
-  </nav>
-  <main> 
-    <video width="100%" autoplay loop muted playsinline>
-      <source src="images/video_preview_h264.mp4" type="video/mp4">
-    </video>
 
-  </main>
-  <footer>
-		<div class="footerdivs">Contact us by email: <a href="mailto:fernandolamarsantos@gmail.com"> fernandolamarsantos@gmail.com</a> or <a href="mailto:jaimeferreira2000@gmail.com"> jaimeferreira2000@gmail.com</a></div>
-	</footer>
-	
+    </header>
+    <main>
+        <video id="indexVideo" autoplay loop muted playsinline>
+        <source src="images/video_preview_h264.mp4" type="video/mp4">
+         </video>
+        <div class="arrow bounce">
+            <a class="fa fa-arrow-down fa-2x" href="#"></a>
+        </div>
+    </main>
+    <div class='infoboxes' id='mapinfo'>
+        <div id='mapinfo' class='blackinfobox'>
+            <div class='iconblackbox'><img src="images/indexmapicon.PNG"></div>
+            <div class='headerblackbox'>
+                <h2>Here is where you can see the events near you <br>and around the world!</h2>
+            </div>
+            <div class='listblackbox'>
+                <h3>You can also:</h3>
+                <ul>
+                    <li>Create and join events</li>
+                    <li>Train your tactic creation skills</li>
+                    <li>See all the airsoft fields around the world</li>
+                </ul>
+            </div>
+            <div id='mapgobutton' class='buttonblackbox' onclick='show(3)'>go button here</div>
+        </div>
+        <div class='test'>
+            <img class='testImg' src="images/airsoftteams.png">
+        </div>
+    </div>
+    <div class='infoboxes' id='eventinfo'>
+        <div class='test'>
+            <img class='testImg' src="images/airsoftteams.png">
+        </div>
+        <div id='eventinfo' class='blackinfobox'>
+            <div class='iconblackbox'><img src="images/indexeventicon.PNG"></div>
+            <div class='headerblackbox'>
+                <h2>Here is where you can manage your <br>events" <br>and around the world!</h2>
+            </div>
+            <div class='listblackbox'>
+                <h3>You can also:</h3>
+                <ul>
+                    <li>Create new events</li>
+                    <li>Sign up for events</li>
+                    <li>Contact the organizer</li>
+                </ul>
+            </div>
+            <div id='eventgobutton' class='buttonblackbox' onclick='show(2)'>go button here</div>
+        </div>
+    </div>
+    <div class='infoboxes' id='teaminfo'>
+        <div id='teaminfo' class='blackinfobox'>
+            <div class='iconblackbox'><img src="images/indexteamicon.PNG"></div>
+            <div class='headerblackbox'>
+                <h2>Here is where you can find your own <br>Airsoft team !</h2>
+            </div>
+            <div class='listblackbox'>
+                <h3>You can also:</h3>
+                <ul>
+                    <li>Create new teams</li>
+                    <li>Sign up for a team</li>
+                    <li>Contact the team leader</li>
+                </ul>
+            </div>
+            <div id='teamgobutton' class='buttonblackbox' onclick='show(1)'></div>
+        </div>
+        <div class='test'>
+            <img class='testImg' src="images/airsoftteams.png">
+        </div>
+    </div>
+    <footer>
+        <div class="footerdivs"> Contact us by email: Lorem ipsum dolor sit amet, consectetur adipiscing elit. In sit amet neque sapien. In fringilla enim sapien, aliquam pharetra lectus mattis pretium. Nulla blandit ligula felis, quis tempus magna tincidunt at. Maecenas a elit
+            Nulla sit amet tristique ligula. Donec pharetra arcu ac nulla tincidunt auctor. Nullam a hendrerit nulla. Quisque vel enim bibendum, tincidunt odio in, malesuada nunc. <a href="mailto:fernandolamarsantos@gmail.com"> fernandolamarsantos@gmail.com</a>            or <a href="mailto:jaimeferreira2000@gmail.com"> jaimeferreira2000@gmail.com</a></div>
+    </footer>
+
 </body>
 
 </html>

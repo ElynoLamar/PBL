@@ -1,8 +1,8 @@
-body{
+body {
     display: grid;
-    height:100%;    
+    height: 100%;
     grid-template-columns: 10% auto;
-    grid-template-rows:15% auto 5%;
+    grid-template-rows: 15% auto 5%;
     grid-template-areas: 'h h h' 'n m m' 'f f f';
     border: solid thick;
     overflow: hidden;
@@ -10,66 +10,66 @@ body{
     padding: 0 !important;
 }
 
-main{
+main {
     grid-area: m;
     overflow: hidden;
 }
-footer{
+
+footer {
     grid-area: f;
 }
 
-header{
+header {
     grid-area: h;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: #62523b;
-    color:black;
+    color: black;
     padding-left: 30px;
     padding-right: 30px;
-
-   /* background-image: url("../images/camobackground.jpg");
+    /* background-image: url("../images/camobackground.jpg");
     background-repeat: repeat-x;*/
 }
 
-#titleheader{
-    font-size:90px;
+#titleheader {
+    font-size: 90px;
     font-family: 'army_rust';
 }
 
-#userNameHeader{
+#userNameHeader {
     font-size: 35px;
-    
 }
 
-nav{
+nav {
     display: flex;
     flex-direction: column;
     background-color: #6b7f63;
-    color:white;
-    align-items: center;   
-    overflow:hidden; 
+    color: white;
+    align-items: center;
+    overflow: hidden;
     grid-area: n;
 }
-nav>span{
+
+nav>span {
     flex: 1;
 }
 
-.navContainer{
+.navContainer {
     width: 80%;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #6b7f63;
     border: solid thick;
-    border-color:#62523b;
-    margin:6.25vh 5px;
+    border-color: #62523b;
+    margin: 6.25vh 5px;
     color: black;
     font-size: 40px;
     cursor: pointer;
 }
 
-.clickedNavContainer{
+.clickedNavContainer {
     width: 100%;
     display: flex;
     justify-content: center;
@@ -80,14 +80,15 @@ nav>span{
     cursor: pointer;
 }
 
-footer{
+footer {
     display: flex;
     background-color: #62523b;
     text-align: center;
     align-items: center;
     justify-content: center;
 }
-#map{
+
+#map {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -96,54 +97,46 @@ footer{
     min-width: 100%;
     min-height: 100%
 }
-#map img{
+
+#map img {
     flex-shrink: 0;
     min-width: 100%;
     min-height: 100%
 }
 
-#userboxHeader{
+#userboxHeader {
     margin-right: 20px;
 }
 
-#backpageheader{
+#backpageheader {
     margin-left: 20px;
 }
 
-@font-face {
-    font-family: 'army_rust';
-    src: url('fonts/army_rust-webfont..eot');
-    src: url('fonts/army_rust-webfont..eot?#iefix') format('embedded-opentype'),
-        url('fonts/army_rust-webfont.woff') format('woff'),
-        url('fonts/army_rust-webfont.ttf') format('truetype'),
-        url('fonts/army_rust-webfont.svg#army_rust') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
-
-
-.table{
-	font-family: Arial, Helvetica, sans-serif;
-	border-collapse: collapse;
+.table {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
     width: 100%;
-    overflow:hidden; overflow-y:scroll;
+    overflow: hidden;
+    overflow-y: scroll;
 }
 
-.table td, .table th {
-  border: 1px solid #ddd;
-  padding: 8px;
+.table td,
+.table th {
+    border: 1px solid #ddd;
+    padding: 8px;
 }
 
 .table th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: black;
-  color: white;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: black;
+    color: white;
 }
 
-.table tr{background-color: #f2f2f2;}
+.table tr {
+    background-color: #f2f2f2;
+}
 
 .notification {
     text-decoration: none;
@@ -151,12 +144,14 @@ footer{
     position: relative;
     display: inline-block;
 }
-  
+
+
 /**
     .notification:hover {
         background: red;
     }
 */
+
 .badge {
     position: absolute;
     top: -7px;
@@ -167,17 +162,20 @@ footer{
     color: white;
 }
 
-.notif-content{
+.notif-content {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
-    top: 65px;  /* ajustar pra baixo*/
-    right: 10px; /* ajustar pra esquerda*/
+    top: 65px;
+    /* ajustar pra baixo*/
+    right: 10px;
+    /* ajustar pra esquerda*/
     min-width: 500px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1; /* por pela frente*/
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    /* por pela frente*/
     max-width: 500px;
- }
+}
 
 .notif-content a {
     color: black;
@@ -185,26 +183,33 @@ footer{
     text-decoration: none;
     display: flex;
     justify-content: space-between;
-    min-height:50px;
+    min-height: 50px;
 }
-.notif-content a:hover {background-color: #f1f1f1}
-.flex-notif-container{
+
+.notif-content a:hover {
+    background-color: #f1f1f1
+}
+
+.flex-notif-container {
     display: none;
 }
-.notif-content a:hover .flex-notif-container{
+
+.notif-content a:hover .flex-notif-container {
     display: flex;
-    justify-content: space-between; 
+    justify-content: space-between;
 }
+
 .accept {
     color: #FFF;
     background: #44CC44;
     padding: 15px 20px;
     border-radius: 50%;
-
 }
+
 .accept:hover {
     background: #6FE76F;
 }
+
 .deny {
     color: #FFF;
     background: tomato;
@@ -212,25 +217,26 @@ footer{
     margin-left: 5px;
     border-radius: 50%;
 }
+
 .deny:hover {
     background: rgb(255, 147, 128);
 }
 
-.flex-container{
+.flex-container {
     display: flex;
     justify-content: space-between;
 }
-span #plusimage{
 
+span #plusimage {
     margin-top: 25px;
     margin-right: 30px;
- }
+}
 
- .titles{
+.titles {
     text-align: center;
 }
 
-.tablediv{
-    Overflow-y:auto;
+.tablediv {
+    Overflow-y: auto;
     max-height: 50vh;
 }

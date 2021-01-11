@@ -1,0 +1,73 @@
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
+header span {
+    max-height: 100%;
+    max-width: 40%;
+}
+
+#userboxHeader {
+    padding-right: 30px;
+}
+
+#logoheader {
+    max-width: 5%;
+}
+
+#logoheader img {
+    max-height: 10vh;
+    max-width: 10vh;
+}
+
+header nav {
+    margin: auto;
+}
+
+.menu {
+    margin: 5px 0px 5px;
+    padding-right: 5px;
+    float: left;
+    text-align: right;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav a:link {
+    text-decoration: none;
+    font-family: Verdana, Arial;
+    font-size: 0.90em;
+    color: #36454f;
+    width: auto;
+    background-color: white;
+    transition: 1s;
+    padding: 10px;
+}
+
+nav a:visited {
+    text-decoration: none;
+    font-family: Verdana, Arial;
+    font-size: 0.90em;
+    color: black;
+    border: solid #36454f 1px;
+}
+
+nav a:hover {
+    text-decoration: none;
+    font-family: Verdana, Arial;
+    font-size: 0.90em;
+    color: black;
+    border: solid #36454f 1px;
+}
+
+nav a:active {
+    background-color: grey;
+}
