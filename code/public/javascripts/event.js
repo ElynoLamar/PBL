@@ -13,17 +13,7 @@ window.onload = function () {
     createMyEventsTable();
 }
 
-// function createEventUI(){
-//     let block="";
-//     block+="<span id='myEvents' >1</span>";
-//     block+="<span id='allEvents' >2</span>";
-//     //modal box
-//     block+="<div id='myModal' class='modal'>"
-//     block+="</div>"
-//     document.getElementById("eventDivItems").innerHTML = block;
-//     buildModal();
-//     //
-// }
+
 function createEventUI() {
     let block = "";
     block += "<span id='myEvents' >1</span>";
@@ -96,16 +86,12 @@ async function createMyEventsTable() {
 
     var events = await getMyEventsObj();
     let block = "";
-    block += "<h1 class='titles'>My Events <img src='../images/plusIcon.png' height='100' onclick='createNewEventForm()'></h1>";
+    block += "<h1 class='titles'>My Events <img src='../images/plus-sign.png' height=40 class='addPlus' onclick='createNewEventForm()'></h1>";
     block += "<div class='tablediv'><table class='table'>";
     block += "<tr><th>Name</th><th>Field</th><th>Date</th></tr>";
     for (let i = 0; i < events.length; i++) {
         block += "<tr onclick='changeToEventLobby(" + events[i].id + ")'><td>" + events[i].name + "</td><td>" + events[i].field + "</td><td>" + events[i].date + "</td></tr>";
     }
-    // block+="</table></div>";
-    // block+="<div onClick='plusClick()'>";
-    // block += "<img src='../images/plusIcon.png' height='100' >";
-    // block+="</div>";
     block += "</table></div>";
     document.getElementById("myEvents").innerHTML = block;
 
@@ -131,40 +117,6 @@ function changeToEventLobby(id) {
     window.location = "eventLobby.html"
 }
 
-// //   function createNewEventForm(){
-// //     var popup = document.getElementById("eventForm");
-// //     popup.classList.toggle("show");
-// //   }
-
-//   //modal box
-  
-// function plusClick(){
-    
-//     let content = document.querySelector('#myModal');
-    
-//         content.style.display = "block";
-    
-// }
-
-// function buildModal(){
-//     let block="";
-    
-//     block+="<div class='modal-content'>"
-//     block+="<div class='modal-header'>"
-//     block+="  <span class='close'>&times;</span>"
-//     block+="  <h2>Modal Header</h2>"
-//     block+="</div>"
-//     block+="<div class='modal-body'>"
-//     block+="  <p>Some text in the Modal Body</p>"
-//     block+="  <p>Some other text...</p>"
-//     block+="</div>"
-//     block+="<div class='modal-footer'>"
-//     block+="  <h3>Modal Footer</h3>"
-//     block+="</div>"
-//     block+="</div>"
-
-    
-//     document.getElementById("myModal").innerHTML = block
 async function createNewEventForm() {
     /**
         var popup = document.getElementById("eventForm");
@@ -173,8 +125,8 @@ async function createNewEventForm() {
     var fields = await getAllFields();
     let block = "";
     block += "<form class='form-container'>";
-    block +="<div class='form-content'>";
-    block+="  <span class='close' onclick='closeMiddleBox()'>&times;</span>"
+    block += "<div class='form-content'>";
+    block += "<span class='close' onclick='closeMiddleBox()'>&times;</span>"
     block += "<h1>Create a new Event</h1>";
     block += " <label><b>Event name</b></label>";
     block += "<input type='text' placeholder='Enter Event Name' id='ceventName' required>";

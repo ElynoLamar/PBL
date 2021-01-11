@@ -104,7 +104,7 @@ async function createMyTeamsTable(player) {
 
     var teams = await getMyTeamsObj(player);
     let block = "";
-    block += "<h1 class='titles'>My Teams<img src='../images/plusIcon.png' height='100' onclick='createNewTeamForm()'></h1>";
+    block += "<h1 class='titles'>My Teams<img src='../images/plus-sign.png' class='addPlus' height=40 onclick='createNewTeamForm()'></h1>";
     block += "<div class='tablediv'><table class='table'>";
     block += "<tr><th>Name</th><th>Description</th></tr>";
     for (let i = 0; i < teams.length; i++) {

@@ -1,7 +1,5 @@
 /* Button used to open the contact form - fixed at the bottom of the page */
-.body{
-  font-family: Arial, Helvetica, sans-serif;
-}
+
 .open-button {
   background-color: #555;
   color: white;

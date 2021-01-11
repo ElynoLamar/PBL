@@ -23,8 +23,8 @@ async function createNav(eventid){
     }else{
       block+="<td>"+eventMembers[i].team+"</td>";
     }
-    block+="<td><div id='buttonCell' onClick='toggleChoice() ; chooseGroup("+i+")'>";
-    block += "<img src='../images/plusicon.png' height='50'><span class='badge'>3</span>"
+    block+="<td><div id='buttonCell' onClick='createGroupChoiceUI("+i+")'>";
+    block += "<img src='../images/plus-sign.png' height='50'><span class='badge'>3</span>"
     block+="</tr>";
   }
   block+="</table>" ;
@@ -46,7 +46,7 @@ async function getEventMembersObj(id_event){
 
 async function createEventLobbyUI(event_id){
   let block="";
-  block+="<div id='group_choice'></div></td>";
+  block+="<div id='ChoiceBox' ></div></td>";
   for(let i = 1; i <=numOfGroups; i++){
     let groupMembers = await getGroupMembersObj(event_id, i);
     block+="<span class='lobbyGroup' id='group"+i+"'>";
@@ -75,31 +75,34 @@ async function getGroupMembersObj(id_event, group_id){
   }
 }
 
-async function chooseGroup(eventMember){
+async function createGroupChoiceUI(eventMember){
    eventMember=eventMember+1;
     let block = "";
-    block += "<div class='dropdown' >";
+    block += "<div  class='form-container'>";
+    block += "<div class='form-content'>";
+    block+="<boxHeader id='choiceHeader'>";
+    block+="<h1 id='choiceTitle'>Choose a Group!</h1>";
+    block+="<span class='close' onclick='closeChoice()'>&times;</span>";
+    block+="</boxHeader>";
+    
         for (let i = 1; i <= numOfGroups; i++) {
-        block += "<a onClick=insertIntoGroup()>Group " + i;
+        block += "<div onClick=insertIntoGroup("+i+")>Group " + i;
         block +="<div class='accept'>✔</div>"
-        block += "</a>";
+        block += "</div>";
     }
+  
     block += "</div>";
-    document.getElementById("group_choice").innerHTML = block;
+    block += "</div>";
+    document.getElementById("ChoiceBox").innerHTML = block;
 }
 
-function insertIntoGroup(){
+function insertIntoGroup(groupNum){
 
 }
 
 
-function toggleChoice() {
-    let content = document.querySelector('#group_choice');
-    if (content.style.display === "") {
-        content.style.display = "block";
-    } else {
-        content.style.display = "";
-    }
+function closeChoice() {
+  document.getElementById("ChoiceBox").innerHTML = "";
 }
 
 async function getEventGroups(event_id){

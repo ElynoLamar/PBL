@@ -102,18 +102,24 @@ footer {
     height: 10vh;
 }
 
-.titleheader h1 {
-    margin: auto;
-    font-family: 'army_rust';
-}
-
 @font-face {
     font-family: 'army_rust';
     src: url('fonts/army_rust-webfont..eot');
-    src: url('fonts/army_rust-webfont..eot?#iefix') format('embedded-opentype'), url('fonts/army_rust-webfont.woff') format('woff'), url('fonts/army_rust-webfont.ttf') format('truetype'), url('fonts/army_rust-webfont.svg#army_rust') format('svg');
+    src: url('fonts/army_rust-webfont..eot?#iefix') format('embedded-opentype'),
+        url('fonts/army_rust-webfont.woff') format('woff'),
+        url('fonts/army_rust-webfont.ttf') format('truetype'),
+        url('fonts/army_rust-webfont.svg#army_rust') format('svg');
     font-weight: normal;
     font-style: normal;
 }
+
+#titleheader h1 {
+    margin: auto;
+    font-family: 'army_rust';
+   font-size: 7vh;
+}
+
+
 
 .testImg {
     min-height: 100%;
