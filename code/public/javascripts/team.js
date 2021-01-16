@@ -2,12 +2,11 @@ var stringHome = "Home";
 var stringTeam = "Teams";
 var stringEvents = "Events";
 var stringMap = "Map";
-let loggedUser = 3;// assumir que o utilizador autenticado é o este id
+let loggedUser = 2; // assumir que o utilizador autenticado é o este id
 
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
-window.onload = async function () {
-
+window.onload = async function() {
     createNav();
     createTeamUI();
     createAllTeamsTable(loggedUser);
@@ -42,11 +41,13 @@ function show(index) {
             break;
     }
 }
+
 function changeToClickedTeam(team, player) {
     sessionStorage.setItem("teamid", team);
     sessionStorage.setItem("playerid", player);
     window.location = "selectedTeam.html"
 }
+
 function createTeamUI() {
     let block = "";
     block += "<span id='myTeams'>1</span>";
@@ -117,11 +118,11 @@ async function createMyTeamsTable(player) {
 
 async function createNewTeam(playerID) {
     try {
-        let tprivacy=0;
-        if(document.getElementById("openTeam").checked){
-            tprivacy =1;
-        }else if(document.getElementById("privateTeam").checked){
-            tprivacy =2;
+        let tprivacy = 0;
+        if (document.getElementById("openTeam").checked) {
+            tprivacy = 1;
+        } else if (document.getElementById("privateTeam").checked) {
+            tprivacy = 2;
         }
         let team = {
             name: document.getElementById("cteamName").value,
@@ -149,8 +150,8 @@ async function createNewTeam(playerID) {
 function createNewTeamForm() {
     let block = "";
     block += "<form class='form-container'>";
-    block +="<div class='form-content' onclick='closeMiddleBox()'>";
-    block+="  <span class='close'>&times;</span>"
+    block += "<div class='form-content' onclick='closeMiddleBox()'>";
+    block += "  <span class='close'>&times;</span>"
     block += "<h1>Create a new Team</h1>";
     block += " <label><b>Team name</b></label>";
     block += "<input type='text' placeholder='Enter Team Name' id='cteamName' required>";
@@ -228,7 +229,7 @@ async function requestToJoinTeam(teamID, loggedPlayer) {
         let request = {
             player: loggedPlayer,
             team: teamID,
-            text:"Player "+player.name+" is requesting to join your team."
+            text: "Player " + player.name + " is requesting to join your team."
         }
 
         let result = await $.ajax({
@@ -264,7 +265,7 @@ async function changeRank(playerID, teamID) {
 }
 
 async function getSpecificTeamObj(id) {
-    
+
     try {
         var getTeam = await $.ajax({
             url: "/api/teams/" + id,
@@ -287,8 +288,7 @@ async function joinTeamForm(teamID, player) {
     block += " <label><b>Team Description: " + team.description + " </b></label>";
     if (team.privacy == 2) {
         block += " <button type='button' class='btn' onclick='requestToJoinTeam(" + teamID + "," + player + ")'>Request to join</button>";
-    }
-    else if (team.privacy == 3) alert("team por pass")
+    } else if (team.privacy == 3) alert("team por pass")
     else if (team.privacy == 1) {
         block += " <button type='button' class='btn' onclick='joinTeam(" + teamID + "," + player + ")'>Join</button>";
     }

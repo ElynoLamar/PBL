@@ -39,11 +39,16 @@ header #logoheader img {
     height: 100%;
 }
 
+main {
+    max-height: 66vh;
+}
+
 #indexVideo {
     overflow-y: hidden;
     background-color: black;
     min-width: 100%;
-    min-height: 90vh;
+    min-height: 66vh;
+    clip-path: polygon(0 0, 100% 0, 100% 66%, 0 58%);
 }
 
 .infoboxes {
