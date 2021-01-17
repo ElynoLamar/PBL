@@ -68,6 +68,7 @@ main {
 }
 
 .iconblackbox {
+    
     font-family: 'prestige';
     color:white;
     grid-area: I;
@@ -75,6 +76,7 @@ main {
     padding-top: 10vh;
     letter-spacing: 0.5vh;
     padding-left: 15vh;
+    
 }
 
 .headerBlackbox{
@@ -109,11 +111,13 @@ mark{
 
 .listblackbox {
     grid-area: L;
+    
     color:white;
     font-family: 'prestige';
     padding-left: 16vh;
     padding-top: 14vh;
     font-size: 1.7vh;
+    
 }
 
 
@@ -220,3 +224,17 @@ header {
     z-index: 200;
 }
 
+#eventsPointer{
+    right:230vh;
+    
+}
+
+#eventsTitle{
+    position: relative;
+    right: -20vh;
+}
+
+#eventsList{
+    position: relative;
+    right:-40vh;
+}
