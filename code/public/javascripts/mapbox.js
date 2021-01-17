@@ -1,35 +1,3 @@
-var stringHome = "Home";
-var stringTeam = "Teams";
-var stringEvents = "Events";
-var stringMap = "Map";
-
-arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
-
-function createNav() {
-    let aux = "";
-    for (let i = 0; i < arrayOfItems.length; i++) {
-        aux += "<span class='navContainer' onclick='show(" + i + ")'>" + arrayOfItems[i] + "</span>";
-    }
-    document.getElementById("navItems").innerHTML = aux;
-}
-
-function show(index) {
-    switch (index) {
-        case 0:
-            window.location = "../index.html";
-            break;
-        case 1:
-            window.location = "team.html";
-            break;
-        case 2:
-            window.location = "event.html";
-            break;
-        case 3:
-            window.location = "map.html";
-            break;
-    }
-}
-
 /**
     async function createMap() {
     
@@ -37,145 +5,107 @@ function show(index) {
         return map;
     }
 */
+mapboxgl.accessToken = 'pk.eyJ1IjoiZWx5bm8iLCJhIjoiY2tqOG8waWE2MDd1ejJzcGVteHd1Y21vdSJ9.0K2deDMvBrkZXzoHjZvWCw';
+var map = new mapboxgl.Map({
+    container: 'map', // container id
+    style: 'mapbox://styles/mapbox/satellite-v9', //hosted style id
+    center: [-9.314149, 38.77295], // starting position
+    zoom: 11 // starting zoom
+});
+
+var draw = new MapboxDraw({
+    displayControlsDefault: false,
+    controls: {
+        polygon: true,
+        trash: true
+    }
+});
+//caixa de texto procurar
+map.addControl(
+    new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl
+    })
+);
+//localização do utilizador
+map.addControl(
+    new mapboxgl.GeolocateControl({
+        positionOptions: {
+            enableHighAccuracy: true
+        },
+        trackUserLocation: true
+    })
+);
 
 
-window.onload = async function() {
-    mapboxgl.accessToken = 'pk.eyJ1IjoiZWx5bm8iLCJhIjoiY2tqOG8waWE2MDd1ejJzcGVteHd1Y21vdSJ9.0K2deDMvBrkZXzoHjZvWCw';
-    var map = new mapboxgl.Map({
-        container: 'map', // container id
-        style: 'mapbox://styles/mapbox/satellite-v9', //hosted style id
-        center: [-9.314149, 38.77295], // starting position
-        zoom: 16 // starting zoom
-    });
-    //let map = createMap();
-    var draw = new MapboxDraw({
-        displayControlsDefault: false,
-        controls: {
-            polygon: true,
-            trash: true
-        }
-    });
-    //caixa de texto procurar
-    map.addControl(
-        new MapboxGeocoder({
-            accessToken: mapboxgl.accessToken,
-            mapboxgl: mapboxgl
-        })
-    );
-    //localização do utilizador
-    map.addControl(
-        new mapboxgl.GeolocateControl({
-            positionOptions: {
-                enableHighAccuracy: true
-            },
-            trackUserLocation: true
-        })
-    );
 
 
-    map.addControl(draw);
 
-    map.on('draw.create', updateArea);
-    map.on('draw.delete', updateArea);
-    map.on('draw.update', updateArea);
 
-    function updateArea(e) {
+map.on('mousemove', function(e) {
+    document.getElementById('info').innerHTML =
+        // e.point is the x, y coordinates of the mousemove event relative
+        // to the top-left corner of the map
+        JSON.stringify(e.point) +
+        '<br />' +
+        // e.lngLat is the longitude, latitude geographical position of the event
+        JSON.stringify(e.lngLat.wrap());
+});
 
-        var data = draw.getAll();
-        if (data.features.length > 0) {
-            for (let i = 0; i < data.features[0].geometry.coordinates[0].length; i++) {
-
-                alert(JSON.stringify(data.features[0].geometry.coordinates[0][i]));
-            }
-        }
-        //var center = e.layer.bounds.getCenter().addTo(map);;
-
-        // calcular area
-        var answer = document.getElementById('calculated-area');
-        if (data.features.length > 0) {
-
-            var area = turf.area(data);
-            // restrict to area to 2 decimal points
-            var rounded_area = Math.round(area * 100) / 100;
-            answer.innerHTML =
-                '<p><strong>' +
-                rounded_area +
-                '</strong></p><p>square meters</p>';
-        } else {
-            answer.innerHTML = '';
-            if (e.type !== 'draw.delete')
-                alert('Use the draw tools to draw a polygon!');
-        }
+//criar markers com BD
+map.on('load', async function() {
+    var teste = await getSpecificField();
+    //  alert(JSON.stringify(teste));
+    let aux = [];
+    for (let i = 0; i < teste.length; i++) {
+        aux.push([parseFloat(teste[i].lng), parseFloat(teste[i].lat)]);
     }
 
 
-    map.on('mousemove', function(e) {
-        document.getElementById('info').innerHTML =
-            // e.point is the x, y coordinates of the mousemove event relative
-            // to the top-left corner of the map
-            JSON.stringify(e.point) +
-            '<br />' +
-            // e.lngLat is the longitude, latitude geographical position of the event
-            JSON.stringify(e.lngLat.wrap());
-    });
-
-    //criar markers com BD
-    map.on('load', async function() {
-        var teste = await getSpecificField();
-        //  alert(JSON.stringify(teste));
-        let aux = [];
-        for (let i = 0; i < teste.length; i++) {
-            aux.push([parseFloat(teste[i].lng), parseFloat(teste[i].lat)]);
-        }
-
-
-        try {
-            let data = {
-                'type': 'geojson',
-                'data': {
-                    'type': 'Feature',
-                    'geometry': {
-                        'type': 'Polygon',
-                        'coordinates': [
-                            aux
-                        ]
-                    }
+    try {
+        let data = {
+            'type': 'geojson',
+            'data': {
+                'type': 'Feature',
+                'geometry': {
+                    'type': 'Polygon',
+                    'coordinates': [
+                        aux
+                    ]
                 }
             }
-            map.addSource("'" + teste[0].name + "'", data);
-            var polygon = turf.polygon([aux]);
-
-            var centroid = turf.centroid(polygon);
-            let centroidX = centroid.geometry.coordinates[0];
-
-            let centroidY = centroid.geometry.coordinates[1];
-            alert(centroidX);
-            let myLatlng = new mapboxgl.LngLat(centroidX, centroidY);
-            alert(myLatlng);
-            var marker = new mapboxgl.Marker().setLngLat(myLatlng).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<h3> YOOOO </h3>'))
-                .addTo(map);
-        } catch (err) {
-            console.log(err);
         }
-        map.addLayer({
-            'id': "'" + teste[0].name + "'",
-            'type': 'fill',
-            'source': "'" + teste[0].name + "'",
-            'layout': {},
-            'paint': {
-                'fill-color': '#088',
-                'fill-opacity': 0.8
-            }
-        });
+        map.addSource("'" + teste[0].name + "'", data);
+        var polygon = turf.polygon([aux]);
+
+        var centroid = turf.centroid(polygon);
+        let centroidX = centroid.geometry.coordinates[0];
+
+        let centroidY = centroid.geometry.coordinates[1];
+
+        let myLatlng = new mapboxgl.LngLat(centroidX, centroidY);
+
+        var marker = new mapboxgl.Marker().setLngLat(myLatlng).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<h3> YOOOO </h3>'))
+            .addTo(map);
+    } catch (err) {
+        console.log(err);
+    }
+    map.addLayer({
+        'id': "'" + teste[0].name + "'",
+        'type': 'fill',
+        'source': "'" + teste[0].name + "'",
+        'layout': {},
+        'paint': {
+            'fill-color': '#088',
+            'fill-opacity': 0.8
+        }
     });
-    let block = "<input type='button' value='createevent' onclick='createNewEventForm()'> </input>";
-    document.getElementById("eventcreatebutton").innerHTML = block;
-}
+});
+let block = "<input type='button' value='createevent' onclick='createNewEventForm()'> </input>";
+document.getElementById("eventcreatebutton").innerHTML = block;
 
 
-async function eventMarkers(long, lat) {
-    var marker = new mapboxgl.Marker().setLngLat([-9.314149, 38.77295]).addTo(map);
-}
+
 
 
 async function getAllFields() {
@@ -217,7 +147,7 @@ async function createNewEventForm(map) {
     for (let i = 0; i < fields.length; i++) {
         block += "<option value=" + fields[i].id + ">" + fields[i].name + "</option>";
     }
-    block += "</select><input type='button' value='Create own field' onclick='testing(" + map + ")'></input><br>";
+    block += "</select><input type='button' value='Create own field' onclick='testing()'></input><br>";
     block += " <label><b>Choose your event privacy</b></label><br>";
     block += "<input type='radio' id='openEvent' name='privacy' value='openEvent'>";
     block += "<label for='openEvent'>Open event, anyone can join</label><br>";
@@ -243,4 +173,46 @@ async function createNewEventForm(map) {
 
 function closeMiddleBox() {
     document.getElementById("MiddleBox").innerHTML = "";
+}
+
+
+function testing() {
+    document.getElementById("MiddleBox").style.display = "none";
+    map.addControl(draw);
+    map.on('draw.create', updateArea);
+    map.on('draw.delete', updateArea);
+    map.on('draw.update', updateArea);
+
+    function updateArea(e) {
+
+        var data = draw.getAll();
+        if (data.features.length > 0) {
+
+            for (let i = 0; i < data.features[0].geometry.coordinates[0].length; i++) {
+
+                alert(JSON.stringify(data.features[0].geometry.coordinates[0][i]));
+            }
+            map.removeControl(draw);
+            document.getElementById("MiddleBox").style.display = "block";
+        }
+
+        //var center = e.layer.bounds.getCenter().addTo(map);;
+
+        // calcular area
+        var answer = document.getElementById('calculated-area');
+        if (data.features.length > 0) {
+
+            var area = turf.area(data);
+            // restrict to area to 2 decimal points
+            var rounded_area = Math.round(area * 100) / 100;
+            answer.innerHTML =
+                '<p><strong>' +
+                rounded_area +
+                '</strong></p><p>square meters</p>';
+        } else {
+            answer.innerHTML = '';
+            if (e.type !== 'draw.delete')
+                alert('Use the draw tools to draw a polygon!');
+        }
+    }
 }
