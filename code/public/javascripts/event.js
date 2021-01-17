@@ -19,8 +19,6 @@ function createEventUI() {
     block += "<span id='pluscontainer'><img id='plus' src='../images/plus.png'><span id='plusText'><p>search team</p><p>create team</p></span></span>";
     document.getElementById("eventDivItems").innerHTML = block;
 
-    
-
 }
 
 
