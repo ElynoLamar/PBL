@@ -16,7 +16,7 @@ window.onload = function () {
 function createEventUI() {
     let block = "";
     block += "<span id='myEvents' >1</span>";
-    block += "<img id='plus' src='../images/plus.png'>";
+    block += "<span id='pluscontainer'><img id='plus' src='../images/plus.png'><span id='plusText'><p>search team</p><p>create team</p></span></span>";
     document.getElementById("eventDivItems").innerHTML = block;
 
     
@@ -76,7 +76,7 @@ async function createMyEventsTable() {
 
     var events = await getMyEventsObj();
     let block = "";
-    block += "<h1 class='titles'>My Events <img src='../images/plus-sign.png' height=40 class='addPlus' onclick='createNewEventForm()'></h1>";
+    block += "<p class='titles'>My Events </p>";
     block += "<div class='tablediv'><table class='table'>";
     block += "<tr><th>Name</th><th>Field</th><th>Date</th></tr>";
     for (let i = 0; i < events.length; i++) {

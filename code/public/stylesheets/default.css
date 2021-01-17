@@ -62,31 +62,8 @@ main {
     margin-left: 20px;
 }
 
-.table {
-    font-family: Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-    overflow: hidden;
-    overflow-y: scroll;
-}
 
-.table td,
-.table th {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
 
-.table th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: black;
-    color: white;
-}
-
-.table tr {
-    background-color: #f2f2f2;
-}
 
 .notification {
     text-decoration: none;
@@ -207,7 +184,16 @@ span #plusimage {
 }
 
 .titles {
-    text-align: center;
+    position: relative;
+    font-family: 'army_rust';
+    color:white;
+    letter-spacing: 0.5vh;
+    font-size: 7.5vh;
+    z-index: 0;
+    margin-left: 85vh;
+    text-decoration: underline;
+
+
 }
 
 .tablediv {
@@ -250,6 +236,7 @@ header {
     text-align:center;
     position: relative;
     top:-1vh;
+    font-family: 'prestige';
 }
 
 .menu{
@@ -281,3 +268,40 @@ header {
     cursor: pointer;
 }
 
+table{
+    position: relative;
+    font-family: 'prestige';
+    align-items: center;
+    margin-left:57vh;
+    overflow-x: hidden;
+    
+}
+
+
+.table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    font-size:3.5vh;
+    background-color: #827725;
+    text-align:center;
+    color: white;
+    font-weight: normal;
+    padding-left:10vh;
+    padding-right: 10vh;
+}
+
+.table tr {
+    
+    font-size: 2.5vh;
+    text-align: center;
+    padding:2vh;
+    cursor: pointer;
+}
+
+.table tr:hover {
+    background-color: #353321;
+}
+
+tr:nth-child(even) {background: #DDDACC}
+tr:nth-child(odd) {background-color: #827725;}

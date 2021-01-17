@@ -39,8 +39,9 @@ body {
 #indexVideo {
     overflow-y: hidden;
     background-color: black;
-    min-width: 100%;
-    min-height: 90vh;
+    min-width: 200vh;
+    max-height: 100vh;
+    
 }
 
 .infoboxes {
@@ -52,20 +53,20 @@ body {
     height: 100%;
     min-width: 50%;
     background-color: black;
+    z-index: -3;
+    display: grid;
+    grid-template-areas: 'I I . . . .' '. . . . . .' 'L L L . . .' '. B B . . .';
+    
 }
 
 
 
 main {
     color: white;
-    max-height: 110vh;
-}
+    max-height: 100vh;
+}   
 
-.blackinfobox {
-    z-index: -3;
-    display: grid;
-    grid-template-areas: 'I I . . . .' '. . . . . .' 'L L L . . .' '. B B . . .';
-}
+
 
 .iconblackbox {
     
@@ -129,6 +130,8 @@ mark{
 
 .buttonblackbox {
     grid-area: B;
+    cursor:pointer;
+    z-index: 200;
 }
 
 footer {
@@ -185,6 +188,7 @@ header {
 
 .menu{
     padding-left: 5vh;
+    
 }
 
 .menu > a{
@@ -204,12 +208,14 @@ header {
     display:flex;
     flex-direction: column;
     margin-right: 10vh;
+
 }
 
 #userNameheader{
     text-align:center;
     position: relative;
     top:-1vh;
+    font-family: 'prestige';
 }
 
 #userImage{
@@ -220,8 +226,7 @@ header {
 .startButton{
     height:30vh;
     width:auto;
-    cursor:pointer;
-    z-index: 200;
+
 }
 
 #eventsPointer{

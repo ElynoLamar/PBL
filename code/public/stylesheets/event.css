@@ -1,14 +1,15 @@
 #eventDivItems{
     position: relative;
-    top:30vh;
+    top:24vh;
+    align-items: center;
     justify-content: center;
     align-items: center;
     overflow: hidden;
     flex-shrink: 0;
     min-width: 50%;
     min-height: 100%;
-    max-width:20vh;
-    margin-left: 30%;
+    
+    
 }
 
 #myEvents{
@@ -28,10 +29,26 @@
 }
 
 #plus{
-    width: 10%;
-    height:auto;
+    position: absolute;
+    width: 22vh;
+    left:80vh;
+    top:60.6vh;
+    cursor: pointer;
+    
 }
 
-.table{
-    background-color:#827725 ;
+#pluscontainer{
+    display:flex;
+    
 }
+
+#plusText{
+    font-family: 'prestige';
+    position:fixed;
+    top:85.5vh;
+    left:98vh;
+    
+    color:white;
+}
+
+
