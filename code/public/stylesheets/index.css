@@ -82,9 +82,9 @@ main {
 .headerBlackbox{
     font-family: 'prestige';
     position: relative;
-    right:195vh;
+    right:100%;
     top:25vh;
-    padding-left: 15vh;
+    margin-left: 15vh;
     font-size: 3vh;
     z-index: 30;
     min-width: 200vh;
