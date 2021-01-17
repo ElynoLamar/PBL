@@ -1,13 +1,14 @@
 #eventDivItems{
-    background-color:#4b623bff;
-    display: flex;
+    position: relative;
+    top:30vh;
     justify-content: center;
     align-items: center;
     overflow: hidden;
     flex-shrink: 0;
-    min-width: 100%;
-    min-height: 100%
-
+    min-width: 50%;
+    min-height: 100%;
+    max-width:20vh;
+    margin-left: 30%;
 }
 
 #myEvents{
@@ -26,3 +27,11 @@
     margin-left:10%;
 }
 
+#plus{
+    width: 10%;
+    height:auto;
+}
+
+.table{
+    background-color:#827725 ;
+}

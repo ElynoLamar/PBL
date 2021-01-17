@@ -1,9 +1,7 @@
 body {
-    display: grid;
+    
     height: 100%;
-    grid-template-columns: 10% auto;
-    grid-template-rows: 15% auto 5%;
-    grid-template-areas: 'h h h' 'n m m' 'f f f';
+   
     border: solid thick;
     overflow: hidden;
     margin: 0 !important;
@@ -11,25 +9,9 @@ body {
 }
 
 main {
-    grid-area: m;
+    background-color:#827725;
     overflow: hidden;
-    max-height: 60vh;
-}
-
-footer {
-    grid-area: f;
-}
-
-
-
-nav {
-    display: flex;
-    flex-direction: column;
-    background-color: #6b7f63;
-    color: white;
-    align-items: center;
-    overflow: hidden;
-    grid-area: n;
+    
 }
 
 .navContainer {
@@ -57,13 +39,6 @@ nav {
     cursor: pointer;
 }
 
-footer {
-    display: flex;
-    background-color: #62523b;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-}
 
 #map {
     display: flex;
@@ -305,3 +280,4 @@ header {
     margin-left: 1vh;
     cursor: pointer;
 }
+
