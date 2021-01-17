@@ -13,33 +13,14 @@ body {
 main {
     grid-area: m;
     overflow: hidden;
+    max-height: 60vh;
 }
 
 footer {
     grid-area: f;
 }
 
-header {
-    grid-area: h;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #62523b;
-    color: black;
-    padding-left: 30px;
-    padding-right: 30px;
-    /* background-image: url("../images/camobackground.jpg");
-    background-repeat: repeat-x;*/
-}
 
-#titleheader {
-    font-size: 90px;
-    font-family: 'army_rust';
-}
-
-#userNameHeader {
-    font-size: 35px;
-}
 
 nav {
     display: flex;
@@ -49,10 +30,6 @@ nav {
     align-items: center;
     overflow: hidden;
     grid-area: n;
-}
-
-nav>span {
-    flex: 1;
 }
 
 .navContainer {
@@ -104,9 +81,7 @@ footer {
     min-height: 100%
 }
 
-#userboxHeader {
-    margin-right: 20px;
-}
+
 
 #backpageheader {
     margin-left: 20px;
@@ -210,6 +185,18 @@ footer {
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'prestige';
+    src: url('fonts/2ndfont/ch702000-webfont.eot');
+    src: url('fonts/2ndfont/ch702000-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/2ndfont/ch702000-webfont.woff2') format('woff2'),
+         url('fonts/2ndfont/ch702000-webfont.woff') format('woff'),
+         url('fonts/2ndfont/ch702000-webfont.ttf') format('truetype'),
+         url('fonts/2ndfont/ch702000-webfont.svg#chey_1_silmanuscriptlregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
 
 .accept {
     color: #FFF;
@@ -257,3 +244,4 @@ span #plusimage {
     margin-left:55px;
     
 }
+
