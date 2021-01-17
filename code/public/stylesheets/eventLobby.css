@@ -42,3 +42,56 @@ Overflow-y:scroll;
     z-index: 1; /* por pela frente*/
     max-width: 500px;
 }
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {left:-300px; opacity:0} 
+    to {left:0; opacity:1}
+  }
+  
+  @keyframes animatetop {
+    from {left:-300px; opacity:0}
+    to {left:0; opacity:1}
+  }
+
+  #choiceHeader{
+    display: flex;
+    text-align: center;
+  }
+
+  .close {
+    color: #62523b;
+    float: right;
+    font-size: 10vh;
+    font-weight: bold;
+    padding-left: 10%;
+  }
+
+  #choiceTitle{
+    padding-left: 20%;
+  }
+
+  #buttonContainer{
+    display:flex;
+  }
+
+  .accept {
+    color: #FFF;
+    background: #44CC44;
+    padding: auto;
+    margin-left:38%;
+    margin-right:38%;
+    border-radius: 50%;
+  }
+
+  .form-container{
+    text-align: center;
+    
+  }
+  
+  #choiceFooter{
+    width: 100%;
+    height:10vh;
+  }
+
+  

@@ -13,33 +13,14 @@ body {
 main {
     grid-area: m;
     overflow: hidden;
+    max-height: 60vh;
 }
 
 footer {
     grid-area: f;
 }
 
-header {
-    grid-area: h;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #62523b;
-    color: black;
-    padding-left: 30px;
-    padding-right: 30px;
-    /* background-image: url("../images/camobackground.jpg");
-    background-repeat: repeat-x;*/
-}
 
-#titleheader {
-    font-size: 90px;
-    font-family: 'army_rust';
-}
-
-#userNameHeader {
-    font-size: 35px;
-}
 
 nav {
     display: flex;
@@ -49,10 +30,6 @@ nav {
     align-items: center;
     overflow: hidden;
     grid-area: n;
-}
-
-nav>span {
-    flex: 1;
 }
 
 .navContainer {
@@ -104,9 +81,7 @@ footer {
     min-height: 100%
 }
 
-#userboxHeader {
-    margin-right: 20px;
-}
+
 
 #backpageheader {
     margin-left: 20px;
@@ -199,6 +174,30 @@ footer {
     justify-content: space-between;
 }
 
+@font-face {
+    font-family: 'army_rust';
+    src: url('fonts/army_rust-webfont..eot');
+    src: url('fonts/army_rust-webfont..eot?#iefix') format('embedded-opentype'),
+        url('fonts/army_rust-webfont.woff') format('woff'),
+        url('fonts/army_rust-webfont.ttf') format('truetype'),
+        url('fonts/army_rust-webfont.svg#army_rust') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'prestige';
+    src: url('fonts/2ndfont/ch702000-webfont.eot');
+    src: url('fonts/2ndfont/ch702000-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/2ndfont/ch702000-webfont.woff2') format('woff2'),
+         url('fonts/2ndfont/ch702000-webfont.woff') format('woff'),
+         url('fonts/2ndfont/ch702000-webfont.ttf') format('truetype'),
+         url('fonts/2ndfont/ch702000-webfont.svg#chey_1_silmanuscriptlregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 .accept {
     color: #FFF;
     background: #44CC44;
@@ -239,4 +238,70 @@ span #plusimage {
 .tablediv {
     Overflow-y: auto;
     max-height: 50vh;
+}
+
+.addPlus{
+    margin-left:55px;
+    
+}
+
+
+
+header {
+    
+    display: flex;
+    background-color: #353321;
+    color: white;
+    padding-left: 30px;
+   
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 18vh;
+    z-index: 80;
+    padding-right: 40px;
+}
+
+#userboxHeader {
+    display:flex;
+    flex-direction: column;
+    margin-right: 10vh;
+}
+
+#userNameheader{
+    text-align:center;
+    position: relative;
+    top:-1vh;
+}
+
+.menu{
+    padding-left: 5vh;
+}
+
+.menu > a{
+    font-family: 'prestige';
+    color: white;
+    text-decoration: none;
+    padding-left: 7vh;
+    font-size: 2.9vh;
+    letter-spacing: 0.6vh;
+}
+
+.menu > a:hover{
+    color: #827725;
+}
+
+#logoheader{
+    position: relative;
+    right:11%;
+    top:5%;
+    width: 30vh;
+    height:auto;
+    z-index: 1;
+    
+    margin-left: 1vh;
+    cursor: pointer;
 }

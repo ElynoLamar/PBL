@@ -29,10 +29,13 @@
     <meta charset="utf-8" />
     <title>Show drawn polygon area</title>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+
     <script src="../javascripts/mapbox.js"></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="../stylesheets/map copy.css">
-
+    <link rel="stylesheet" href="../stylesheets/forms.css">
+    <link rel="stylesheet" href="../stylesheets/dropdown.css">
 
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css" rel="stylesheet" />
@@ -62,8 +65,10 @@
 
     <main>
         <div id="map"></div>
+        <span id='MiddleBox'></span>
         <pre id="info"></pre>
         <div class="calculation-box">
+            <div id='eventcreatebutton'></div>
             <p>Draw a polygon using the draw tools.</p>
             <div id="calculated-area"></div>
         </div>

@@ -30,55 +30,15 @@ function show(index) {
     }
 }
 
-
-/**
-    window.onload = async function() {
-        L.mapbox.accessToken = 'pk.eyJ1IjoiZWx5bm8iLCJhIjoiY2tqOG8waWE2MDd1ejJzcGVteHd1Y21vdSJ9.0K2deDMvBrkZXzoHjZvWCw';
-        var map = L.mapbox.map('map')
-            .setView([38.89399, -77.03659], 17)
-            .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v11'));
-    
-        var featureGroup = L.featureGroup().addTo(map);
-    
-        var drawControl = new L.Control.Draw({
-            edit: {
-                featureGroup: featureGroup
-            },
-            draw: {
-                polygon: true,
-                polyline: false,
-                rectangle: false,
-                circle: false,
-                marker: false
-            }
-        }).addTo(map);
-    
-        map.on('draw:created', showPolygonArea);
-        map.on('draw:edited', showPolygonAreaEdited);
-    
-        function showPolygonAreaEdited(e) {
-            e.layers.eachLayer(function(layer) {
-                showPolygonArea({ layer: layer });
-            });
-        }
-    
-        function showPolygonArea(e) {
-            featureGroup.clearLayers();
-            featureGroup.addLayer(e.layer);
-            e.layer.bindPopup((LGeo.area(e.layer) / 1000000).toFixed(2) + ' km<sup>2</sup>');
-            e.layer.openPopup();
-        }
-    }
-    
-    
-    
-*/
 /**
     async function createMap() {
+    
     
         return map;
     }
 */
+
+
 window.onload = async function() {
     mapboxgl.accessToken = 'pk.eyJ1IjoiZWx5bm8iLCJhIjoiY2tqOG8waWE2MDd1ejJzcGVteHd1Y21vdSJ9.0K2deDMvBrkZXzoHjZvWCw';
     var map = new mapboxgl.Map({
@@ -87,7 +47,7 @@ window.onload = async function() {
         center: [-9.314149, 38.77295], // starting position
         zoom: 16 // starting zoom
     });
-    // let map = createMap();
+    //let map = createMap();
     var draw = new MapboxDraw({
         displayControlsDefault: false,
         controls: {
@@ -111,23 +71,13 @@ window.onload = async function() {
             trackUserLocation: true
         })
     );
+
+
     map.addControl(draw);
 
     map.on('draw.create', updateArea);
     map.on('draw.delete', updateArea);
     map.on('draw.update', updateArea);
-    /**
-            async function createPolygon() {
-                alert("hrey");
-                var polygon;
-                for (let i = 0; i < data.features[0].geometry.coordinates[0].length; i++) {
-        
-                }
-        
-                var data = draw.deleteAll();
-                alert(JSON.stringify(data));
-            }
-    */
 
     function updateArea(e) {
 
@@ -135,7 +85,7 @@ window.onload = async function() {
         if (data.features.length > 0) {
             for (let i = 0; i < data.features[0].geometry.coordinates[0].length; i++) {
 
-                // alert(JSON.stringify(data.features[0].geometry.coordinates[0][i]));
+                alert(JSON.stringify(data.features[0].geometry.coordinates[0][i]));
             }
         }
         //var center = e.layer.bounds.getCenter().addTo(map);;
@@ -158,6 +108,7 @@ window.onload = async function() {
         }
     }
 
+
     map.on('mousemove', function(e) {
         document.getElementById('info').innerHTML =
             // e.point is the x, y coordinates of the mousemove event relative
@@ -167,31 +118,6 @@ window.onload = async function() {
             // e.lngLat is the longitude, latitude geographical position of the event
             JSON.stringify(e.lngLat.wrap());
     });
-
-
-    /**
-            //criar markers com BD
-            async function test() {
-                var teste = await getSpecificField();
-                alert(JSON.stringify(teste));
-                //for (let i = 0; i < teste.length; i++) {
-                let eventlng = 0;
-                let eventlat = 0;
-                $.each(teste, function(i, item) {
-                    eventlng += teste[i].lng;
-                    eventlat += teste[i].lat;
-                    let myLatlng = new mapboxgl.LngLat(teste[i].lng, teste[i].lat);
-                    var marker = new mapboxgl.Marker()
-                        .setLngLat(myLatlng)
-                        .setPopup(new mapboxgl.Popup({ offset: 25 })
-                            .setHTML('<h3>' + teste[i].name + '</h3>'))
-                        .addTo(map);
-                });
-                //}
-        
-            }
-    */
-
 
     //criar markers com BD
     map.on('load', async function() {
@@ -217,33 +143,20 @@ window.onload = async function() {
                 }
             }
             map.addSource("'" + teste[0].name + "'", data);
-
-            var polygon = turf.polygon([
-                aux
-                /**
-                     [
-                         [-81, 41],
-                         [-88, 36],
-                         [-84, 31],
-                         [-80, 33],
-                         [-77, 39],
-                         [-81, 41]
-                     ]
-                */
-            ]);
+            var polygon = turf.polygon([aux]);
 
             var centroid = turf.centroid(polygon);
             let centroidX = centroid.geometry.coordinates[0];
+
             let centroidY = centroid.geometry.coordinates[1];
+            alert(centroidX);
             let myLatlng = new mapboxgl.LngLat(centroidX, centroidY);
+            alert(myLatlng);
             var marker = new mapboxgl.Marker().setLngLat(myLatlng).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<h3> YOOOO </h3>'))
                 .addTo(map);
         } catch (err) {
             console.log(err);
         }
-        //[-9.314585,38.770270],[-9.306418,38.770481],[-9.314149, 38.772950],[-9.314585,38.770270]
-
-        //[{"lat":"38.770270","lng":"-9.314585","name":"Cacém field"},{"lat":"38.770481","lng":"-9.306418","name":"Cacém field"},{"lat":" 38.772950","lng":"-9.314149","name":"Cacém field"},{"lat":"38.770270","lng":"-9.314585","name":"Cacém field"}]
         map.addLayer({
             'id': "'" + teste[0].name + "'",
             'type': 'fill',
@@ -255,8 +168,8 @@ window.onload = async function() {
             }
         });
     });
-
-    //  test(map);
+    let block = "<input type='button' value='createevent' onclick='createNewEventForm()'> </input>";
+    document.getElementById("eventcreatebutton").innerHTML = block;
 }
 
 
@@ -265,26 +178,18 @@ async function eventMarkers(long, lat) {
 }
 
 
-
-/**
-    async function test(map) {
-    
-    
-        //for (let i = 0; i < teste.length; i++) {
-        let eventlng = 0;
-        let eventlat = 0;
-        $.each(teste, function(i, item) {
-            eventlng += parseInt(teste[i].lng);
-            eventlat += parseInt(teste[i].lat);
+async function getAllFields() {
+    try {
+        var fields = await $.ajax({
+            url: "/api/fields/",
+            method: "get",
+            dataType: "json"
         });
-        //}
-        eventlng = eventlng / (teste.length - 1);
-        eventlat = eventlat / (teste.length - 1);
-    
-        
+        return fields;
+    } catch (err) {
+        console.log(err);
     }
-    
-*/
+}
 async function getSpecificField() {
     try {
         var getField = await $.ajax({
@@ -298,11 +203,7 @@ async function getSpecificField() {
         console.log(err);
     }
 }
-async function createNewEventForm() {
-    /**
-        var popup = document.getElementById("eventForm");
-        popup.classList.toggle("show");
-    */
+async function createNewEventForm(map) {
     var fields = await getAllFields();
     let block = "";
     block += "<form class='form-container'>";
@@ -316,7 +217,7 @@ async function createNewEventForm() {
     for (let i = 0; i < fields.length; i++) {
         block += "<option value=" + fields[i].id + ">" + fields[i].name + "</option>";
     }
-    block += "</select><br>";
+    block += "</select><input type='button' value='Create own field' onclick='testing(" + map + ")'></input><br>";
     block += " <label><b>Choose your event privacy</b></label><br>";
     block += "<input type='radio' id='openEvent' name='privacy' value='openEvent'>";
     block += "<label for='openEvent'>Open event, anyone can join</label><br>";
@@ -333,8 +234,8 @@ async function createNewEventForm() {
     block += "<label for='eventdurationhours'>hours</label><br>"
     block += "<input type='number' id='eventdurationmins' name='eventdurationmins' min='0' max='59'></input>"
     block += "<label for='eventdurationmins'>mins</label><br><br>"
-    block += "<button type='button' class='btn' onclick='createNewEvent()'>Create</button>";
-    block += "<button type='button' class='btn cancel' onclick='closeMiddleBox()'>Cancel</button>";
+    block += "<input type='button' class='btn' onclick='createNewEvent()'>Create</input>";
+    block += "<input type='button' class='btn cancel' onclick='closeMiddleBox()'>Cancel</input>";
     block += "</form>";
     block += "</div>";
     document.getElementById("MiddleBox").innerHTML = block;

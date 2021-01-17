@@ -16,15 +16,23 @@
 
 <body>
   <header>
-    <span id='logoheader'><img src="../images/TCPlogo.png" height='100'></span>
-    <span id='titleheader'>TACTICAL COMBAT PLANNER</span>
+        
+    <headernav class='menu'>
+
+                <a id='navMap' href="map.html">map</a>
+            
+                <a id='navEvents' href="event.html">events</a>
+
+                <a style='color: #827725;' id='navTeam' href="team.html">team</a>
+
+    </headernav>
+    <img id='logoheader' onclick='show(0)' src="../images/LOGOsideways.png">
     <span id='userboxHeader'>
-      <span id='userimageHeader'><img src="../images/userImage.png" height='50'></span>
-      <span id='userNameHeader'>John Doe</span>
-      <span id='notifButton'></span>
-      <span id='logoutheader'><img src="../images/on-off-button.png" height='50'></span>
+        <span id='userimageHeader'><img id='userImage' src="../images/userImage.png" height='50px'></span>
+        <span id='userNameHeader'>John Doe</span>
     </span>
-  </header>
+
+</header>
   <nav id='navItems'>
 
   </nav>
