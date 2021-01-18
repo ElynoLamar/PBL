@@ -4,24 +4,34 @@
     display: flex;
 }
 
-body{grid-template-columns: 30vh auto;}
+body{
+  display:grid;
+  grid-template-areas: 'h h' 'nav m';
+  grid-template-rows: 15vh auto;
+  grid-template-columns: 36vh auto;
+}
+header{
+  grid-area: h;
+}
+nav{
+grid-area: nav;
 
-#eventlobbynav{
-background-color:  #6b7f63;
-Overflow-y:scroll;
-
+background-color:#827725;
+}
+main{
+  grid-area: m;
 }
 .lobbyGroup{
-    background-color: #62523b;
+    
     min-height: 40%;
-    width:20%;
+    width:36vh;
     margin-right:1%;
     margin-left:1%;
     
 }
 
 #eventlobbymain{
-  background-color:#4b623bff;
+  background-color:#827725;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -94,4 +104,32 @@ Overflow-y:scroll;
     height:10vh;
   }
 
-  
+  .titles{
+    margin-left: 0;
+    font-weight: normal;
+  }
+  .table{
+    margin-left: 0;
+    width:20%;
+  }
+
+  .table th {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    text-align: left;
+    font-size:3.5vh;
+    background-color: #827725;
+    text-align:center;
+    color: white;
+    font-weight: normal;
+    padding-left:2vh;
+    padding-right: 2vh;
+}
+
+.table tr {
+    
+    font-size: 2.5vh;
+    text-align: center;
+    padding:2vh;
+    cursor: pointer;
+}

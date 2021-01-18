@@ -17,7 +17,7 @@ function createEventUI() {
     let block = "";
     block+="<span id='MiddleBox'></span>";
     block += "<span id='myEvents' >1</span>";
-    block += "<span id='pluscontainer'><img onclick='createNewEventForm()' id='plus' src='../images/plus.png'><span id='plusText'><p>search team</p><p>create team</p></span></span>";
+    block += "<span id='pluscontainer'><img onclick='createNewEventForm()' id='plus' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png'><span id='plusText'><p>search event</p><p>create event</p></span></span>";
     document.getElementById("eventDivItems").innerHTML = block;
 
 }
@@ -178,7 +178,7 @@ async function createNewEvent() {
     } catch (err) {
         console.log(err);
     }
-    createAllEventsTable();
+    
     createMyEventsTable();
     closeMiddleBox();
 }
