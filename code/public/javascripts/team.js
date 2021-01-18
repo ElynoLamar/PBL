@@ -82,12 +82,12 @@ async function createAllTeamsTable(player) {
     var teams = await getAllTeamsObj();
     let block = "";
     block += "<h1 class='titles'>All Teams</h1>";
-    block += "<div class='tablediv'><table class='table'>";
-    block += "<tr><th>Name</th><th>Description</th></tr>";
+    block += "<div class='tablediv'><table><thead>";
+    block += "<tr><th>Name</th><th>Description</th></tr></thead><tbody>";
     for (let i = 0; i < teams.length; i++) {
         block += "<tr onclick='joinTeamForm(" + teams[i].id + "," + player + ")'><td>" + teams[i].name + "</td><td>" + teams[i].description + "</td></tr>";
     }
-    block += "</table></div>";
+    block += "</tbody></table></div>";
     document.getElementById("allTeams").innerHTML = block;
 
 }
@@ -98,12 +98,12 @@ async function createMyTeamsTable(player) {
     var teams = await getMyTeamsObj(player);
     let block = "";
     block += "<h1 class='titles'>My Teams</h1>";
-    block += "<div class='tablediv'><table class='table'>";
-    block += "<tr><th>Name</th><th>Description</th></tr>";
+    block += "<div class='tablediv'><table class='table'><thead>";
+    block += "<tr><th>Name</th><th>Description</th></tr></thead><tbody>";
     for (let i = 0; i < teams.length; i++) {
         block += "<tr onclick='changeToClickedTeam(" + teams[i].id + "," + player + ")'><td>" + teams[i].name + "</td><td>" + teams[i].description + "</td></tr>";
     }
-    block += "</table></div>";
+    block += "</tbody></table></div>";
     document.getElementById("myTeams").innerHTML = block;
 
 }
@@ -142,7 +142,7 @@ async function createNewTeam(playerID) {
 function createNewTeamForm() {
     let block = "";
     block += "<form class='form-container'>";
-    block +="<div class='form-content' onclick='closeMiddleBox()'>";
+    block +="<div class='form-content'>";
     block+="  <span class='close'>&times;</span>"
     block += "<h1>Create a new Team</h1>";
     block += " <label><b>Team name</b></label>";
@@ -162,16 +162,6 @@ function createNewTeamForm() {
 
 }
 
-function toggleTeamForm() {
-    let content = document.querySelector('.newteamform');
-
-    if (content.style.display === "") {
-        content.style.display = "block";
-    } else {
-
-        content.style.display = "";
-    }
-}
 
 function closeMiddleBox() {
     document.getElementById("MiddleBox").innerHTML = "";
