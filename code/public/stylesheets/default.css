@@ -11,7 +11,7 @@ body {
 main {
     background-color:#827725;
     overflow: hidden;
-    
+    height:100%;
 }
 
 .navContainer {
@@ -274,7 +274,8 @@ table{
     align-items: center;
     margin-left:57vh;
     overflow-x: hidden;
-    
+    overflow-y:scroll;
+    max-height: 20vh;
 }
 
 

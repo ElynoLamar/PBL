@@ -7,23 +7,17 @@ let loggedUser = 2; // assumir que o utilizador autenticado é o este id
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
 window.onload = async function() {
-    createNav();
+
+
     createTeamUI();
-    createAllTeamsTable(loggedUser);
+
     createMyTeamsTable(loggedUser);
     notifButton(loggedUser);
 }
 
 
 
-function createNav() {
-    let aux = "";
-    aux += "<span class='navContainer' onclick='show(0)'>" + arrayOfItems[0] + "</span>";
-    aux += "<span class='clickedNavContainer' onclick='show(1)'>" + arrayOfItems[1] + "</span>";
-    aux += "<span class='navContainer' onclick='show(2)'>" + arrayOfItems[2] + "</span>";
-    aux += "<span class='navContainer' onclick='show(3)'>" + arrayOfItems[3] + "</span>";
-    document.getElementById("navItems").innerHTML = aux;
-}
+
 
 function show(index) {
     switch (index) {
@@ -52,7 +46,7 @@ function createTeamUI() {
     let block = "";
     block += "<span id='myTeams'>1</span>";
     block += "<span id='MiddleBox'></span>";
-    block += "<span id='allTeams'>2</span>";
+    block += "<span id='pluscontainer'><img onclick='createNewTeamForm()' id='plus' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png'><span id='plusText'><p>search team</p><p>create team</p></span></span>";
     document.getElementById("teamDivItems").innerHTML = block;
 }
 
@@ -105,7 +99,7 @@ async function createMyTeamsTable(player) {
 
     var teams = await getMyTeamsObj(player);
     let block = "";
-    block += "<h1 class='titles'>My Teams<img src='../images/plus-sign.png' class='addPlus' height=40 onclick='createNewTeamForm()'></h1>";
+    block += "<h1 class='titles'>My Teams</h1>";
     block += "<div class='tablediv'><table class='table'>";
     block += "<tr><th>Name</th><th>Description</th></tr>";
     for (let i = 0; i < teams.length; i++) {
@@ -142,7 +136,7 @@ async function createNewTeam(playerID) {
     }
 
     //changeRank(playerID, teamID);
-    createAllTeamsTable(playerID);
+
     createMyTeamsTable(playerID);
     closeMiddleBox();
 }
@@ -206,7 +200,7 @@ async function joinTeam(teamID, playerID) {
         console.log(err);
     }
     closeMiddleBox();
-    createAllTeamsTable(loggedUser);
+
     createMyTeamsTable(loggedUser);
 }
 

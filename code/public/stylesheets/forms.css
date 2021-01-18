@@ -20,7 +20,7 @@
   bottom: 0;
   right: 15px;
   border: 3px solid #f1f1f1;
-  z-index: 9;
+  z-index: 100;
 }
 
 /* Add styles to the form container */
@@ -32,7 +32,7 @@
   top: 0;
   
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 100; /* Sit on top */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
   min-width: 100%; /* Full width */
@@ -41,12 +41,14 @@
 
 .form-content {
   position: relative;
-  background-color: #fefefe;
+  background-color: #353321;
+  color:white;
+  font-family: 'prestige';
   margin: auto;
   margin-top:10vh;
   padding: 0;
   border: 1px solid #888;
-  width: 50vh;
+  width: 66vh;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
   -webkit-animation-name: animatetop;
   -webkit-animation-duration: 0.4s;
@@ -71,7 +73,7 @@
 
 /* Set a style for the submit/login button */
 .form-container .btn {
-  background-color: #4CAF50;
+  background-color: #827725;
   color: white;
   padding: 16px 20px;
   border: none;

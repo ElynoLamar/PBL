@@ -1,7 +1,7 @@
 #myTeams{
-    background-color: #62523b;
+    
     min-height: 40%;
-    width:20%;
+    width:auto;
     margin-right:10%;
 }
 
@@ -13,7 +13,7 @@
 }
 
 #teamDivItems{
-    background-color:#4b623bff;
+    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,5 +24,48 @@
 
 }
 
+.titles{
+    margin-left: 30vh;
+    font-weight: normal;
+    text-align: center;
+  }
+
+  #plus{
+    position: absolute;
+    width: 22vh;
+    left:80vh;
+    top:80vh;
+    cursor: pointer;
+    
+}
+
+table{
+    position: relative;
+    font-family: 'prestige';
+    align-items: center;
+    margin-left:30vh;
+    overflow-x: hidden;
+    overflow-y:scroll;
+}
 
 
+.table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    font-size:3.5vh;
+    background-color: #827725;
+    text-align:center;
+    color: white;
+    font-weight: normal;
+    padding-left:10vh;
+    padding-right: 10vh;
+}
+
+.table tr {
+    
+    font-size: 2.5vh;
+    text-align: center;
+    padding:2vh;
+    cursor: pointer;
+}
