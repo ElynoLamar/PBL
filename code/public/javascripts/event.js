@@ -15,8 +15,9 @@ window.onload = function () {
 
 function createEventUI() {
     let block = "";
+    block+="<span id='MiddleBox'></span>";
     block += "<span id='myEvents' >1</span>";
-    block += "<span id='pluscontainer'><img id='plus' src='../images/plus.png'><span id='plusText'><p>search team</p><p>create team</p></span></span>";
+    block += "<span id='pluscontainer'><img onclick='createNewEventForm()' id='plus' src='../images/plus.png'><span id='plusText'><p>search team</p><p>create team</p></span></span>";
     document.getElementById("eventDivItems").innerHTML = block;
 
 }

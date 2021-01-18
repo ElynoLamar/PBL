@@ -8,7 +8,7 @@ arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
 window.onload = async function () {
 
-    createNav();
+ 
     createTeamUI();
     createAllTeamsTable(loggedUser);
     createMyTeamsTable(loggedUser);
@@ -17,14 +17,7 @@ window.onload = async function () {
 
 
 
-function createNav() {
-    let aux = "";
-    aux += "<span class='navContainer' onclick='show(0)'>" + arrayOfItems[0] + "</span>";
-    aux += "<span class='clickedNavContainer' onclick='show(1)'>" + arrayOfItems[1] + "</span>";
-    aux += "<span class='navContainer' onclick='show(2)'>" + arrayOfItems[2] + "</span>";
-    aux += "<span class='navContainer' onclick='show(3)'>" + arrayOfItems[3] + "</span>";
-    document.getElementById("navItems").innerHTML = aux;
-}
+
 
 function show(index) {
     switch (index) {
