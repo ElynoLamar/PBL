@@ -7,9 +7,8 @@ let loggedUser = 1;// assumir que o utilizador autenticado é o id=1
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
 window.onload = function () {
-    createNav();
     createEventUI();
-    createAllEventsTable();
+    
     createMyEventsTable();
 }
 
@@ -17,24 +16,13 @@ window.onload = function () {
 function createEventUI() {
     let block = "";
     block += "<span id='myEvents' >1</span>";
-    block += "<span id='MiddleBox'></span>";
-    block += "<span id='allEvents' >2</span>";
+    block += "<span id='pluscontainer'><img id='plus' src='../images/plus.png'><span id='plusText'><p>search team</p><p>create team</p></span></span>";
     document.getElementById("eventDivItems").innerHTML = block;
 
-    
-
 }
 
 
 
-function createNav() {
-    let aux = "";
-    aux += "<span class='navContainer' onclick='show(0)'>" + arrayOfItems[0] + "</span>";
-    aux += "<span class='navContainer' onclick='show(1)'>" + arrayOfItems[1] + "</span>";
-    aux += "<span class='clickedNavContainer' onclick='show(2)'>" + arrayOfItems[2] + "</span>";
-    aux += "<span class='navContainer' onclick='show(3)'>" + arrayOfItems[3] + "</span>";
-    document.getElementById("navItems").innerHTML = aux;
-}
 
 function show(index) {
     switch (index) {
@@ -86,7 +74,7 @@ async function createMyEventsTable() {
 
     var events = await getMyEventsObj();
     let block = "";
-    block += "<h1 class='titles'>My Events <img src='../images/plus-sign.png' height=40 class='addPlus' onclick='createNewEventForm()'></h1>";
+    block += "<p class='titles'>My Events </p>";
     block += "<div class='tablediv'><table class='table'>";
     block += "<tr><th>Name</th><th>Field</th><th>Date</th></tr>";
     for (let i = 0; i < events.length; i++) {

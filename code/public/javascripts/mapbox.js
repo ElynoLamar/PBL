@@ -38,8 +38,12 @@ map.addControl(
 );
 
 
-
-
+var el = document.createElement('div');
+el.className = 'marker';
+el.style.backgroundImage = '"../images/bulletMarker.png"';
+el.style.width = '80px';
+el.style.height = '30px';
+el.style.transform = 'skewY(20deg)';
 
 
 map.on('mousemove', function(e) {
@@ -59,7 +63,9 @@ map.on('load', async function() {
     let aux = [];
     for (let i = 0; i < teste.length; i++) {
         aux.push([parseFloat(teste[i].lng), parseFloat(teste[i].lat)]);
+
     }
+
 
 
     try {
@@ -174,10 +180,48 @@ async function createNewEventForm(map) {
 function closeMiddleBox() {
     document.getElementById("MiddleBox").innerHTML = "";
 }
-
+async function createNewEvent() {
+    try {
+        let eprivacy = 0;
+        if (document.getElementById("openEvent").checked) {
+            eprivacy = 1;
+        } else if (document.getElementById("privateEvent").checked) {
+            eprivacy = 2;
+        }
+        let hours = document.getElementById("eventdurationhours").value;
+        let mins = document.getElementById("eventdurationmins").value;
+        let duration = (hours * 3600) + (mins * 60);
+        let event = {
+            name: document.getElementById("ceventName").value,
+            field: document.getElementById("fields").value,
+            date: document.getElementById("eventdate").value,
+            duration: duration,
+            groupNum: document.getElementById("numofgroups").value,
+            teamsSize: document.getElementById("playerspergroup").value,
+            privacy: eprivacy,
+            player: loggedUser
+        }
+        let result = await $.ajax({
+            url: "/api/events/",
+            method: "post",
+            dataType: "json",
+            data: JSON.stringify(event),
+            contentType: "application/json"
+        });
+    } catch (err) {
+        console.log(err);
+    }
+}
 
 function testing() {
     document.getElementById("MiddleBox").style.display = "none";
+    var longlati = drawEventField();
+
+    alert(longlati);
+}
+
+function drawEventField() {
+
     map.addControl(draw);
     map.on('draw.create', updateArea);
     map.on('draw.delete', updateArea);
@@ -187,32 +231,43 @@ function testing() {
 
         var data = draw.getAll();
         if (data.features.length > 0) {
-
+            let aux = [];
             for (let i = 0; i < data.features[0].geometry.coordinates[0].length; i++) {
-
-                alert(JSON.stringify(data.features[0].geometry.coordinates[0][i]));
+                aux.push(data.features[0].geometry.coordinates[0][i]);
             }
-            map.removeControl(draw);
+            let lats = [];
+            let lngs = [];
+            for (let i = 0; i < aux.length; i++) {
+                lats.push(aux[i][0]);
+                lngs.push(aux[i][0]);
+            }
+            var lnglat = {
+                lat: lats,
+                lng: lngs
+            }
             document.getElementById("MiddleBox").style.display = "block";
-        }
+            map.removeControl(draw);
 
-        //var center = e.layer.bounds.getCenter().addTo(map);;
-
-        // calcular area
-        var answer = document.getElementById('calculated-area');
-        if (data.features.length > 0) {
-
-            var area = turf.area(data);
-            // restrict to area to 2 decimal points
-            var rounded_area = Math.round(area * 100) / 100;
-            answer.innerHTML =
-                '<p><strong>' +
-                rounded_area +
-                '</strong></p><p>square meters</p>';
-        } else {
-            answer.innerHTML = '';
-            if (e.type !== 'draw.delete')
-                alert('Use the draw tools to draw a polygon!');
         }
     }
+    /**
+        
+            //var center = e.layer.bounds.getCenter().addTo(map);;
+        
+            // calcular area
+            var answer = document.getElementById('calculated-area');
+            if (data.features.length > 0) {
+                var area = turf.area(data);
+                // restrict to area to 2 decimal points
+                var rounded_area = Math.round(area * 100) / 100;
+                answer.innerHTML =
+                    '<p><strong>' +
+                    rounded_area +
+                    '</strong></p><p>square meters</p>';
+            } else {
+                answer.innerHTML = '';
+                if (e.type !== 'draw.delete')
+                    alert('Use the draw tools to draw a polygon!');
+            }
+    */
 }
