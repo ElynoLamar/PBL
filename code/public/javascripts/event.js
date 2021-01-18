@@ -148,7 +148,7 @@ async function createNewEventForm() {
     document.getElementById("MiddleBox").innerHTML = block;
 }
 
-function createNewEvent() {
+async function createNewEvent() {
     try {
         let eprivacy = 0;
         if (document.getElementById("openEvent").checked) {

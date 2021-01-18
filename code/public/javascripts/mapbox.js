@@ -5,6 +5,7 @@
         return map;
     }
 */
+var latlng = {};
 mapboxgl.accessToken = 'pk.eyJ1IjoiZWx5bm8iLCJhIjoiY2tqOG8waWE2MDd1ejJzcGVteHd1Y21vdSJ9.0K2deDMvBrkZXzoHjZvWCw';
 var map = new mapboxgl.Map({
     container: 'map', // container id
@@ -141,7 +142,7 @@ async function getSpecificField() {
         console.log(err);
     }
 }
-async function createNewEventForm(map) {
+async function createNewEventForm() {
     var fields = await getAllFields();
     let block = "";
     block += "<form class='form-container'>";
@@ -195,12 +196,12 @@ function testing() {
     document.getElementById("MiddleBox").style.display = "none";
     document.getElementById("createdFields").style.display = "none";
     document.getElementById("fieldsarea").style.display = "block";
-    var longlati = drawEventField();
+    drawEventField();
 
 
 }
 
-async function createNewEvent(lnglat) {
+async function createNewEvent() {
     try {
         let eprivacy = 0;
         if (document.getElementById("openEvent").checked) {
@@ -212,21 +213,19 @@ async function createNewEvent(lnglat) {
         let mins = document.getElementById("eventdurationmins").value;
         let duration = (hours * 3600) + (mins * 60);
         let event = {};
-        console.log(lnglat.lat);
-        if (document.getElementById("cfieldName").value != "") {
-            console.log(lnglat.lat);
+
+        if (Object.keys(latlng).length != 0) {
             event = {
                 name: document.getElementById("ceventName").value,
-                fieldlats: lnglat.lat,
-                fieldlngs: lnglat.lng,
+                fieldlats: latlng.lat,
+                fieldlngs: latlng.lng,
                 date: document.getElementById("eventdate").value,
                 duration: duration,
                 groupNum: document.getElementById("numofgroups").value,
                 teamsSize: document.getElementById("playerspergroup").value,
                 privacy: eprivacy,
                 player: 1,
-                fieldName: document.getElementById("cfieldName").value,
-                newfield: true
+                fieldName: document.getElementById("cfieldName").value
             }
         } else {
             event = {
@@ -237,9 +236,9 @@ async function createNewEvent(lnglat) {
                 groupNum: document.getElementById("numofgroups").value,
                 teamsSize: document.getElementById("playerspergroup").value,
                 privacy: eprivacy,
-                player: 1,
-                newfield: false
+                player: 1
             }
+
         }
         console.log(JSON.stringify(event));
         let result = await $.ajax({
@@ -275,9 +274,10 @@ function drawEventField() {
             let lngs = [];
             for (let i = 0; i < aux.length; i++) {
                 lats.push(aux[i][0]);
-                lngs.push(aux[i][0]);
+                lngs.push(aux[i][1]);
             }
-            let lnglat = {
+
+            latlng = {
                 lat: lats,
                 lng: lngs
             }
@@ -285,8 +285,7 @@ function drawEventField() {
             document.getElementById("fieldsarea").style.display = "block";
             document.getElementById("MiddleBox").style.display = "block";
             map.removeControl(draw);
-            console.log("NEW LOG:" + JSON.stringify(lnglat));
-            createNewEvent(lnglat);
+
 
         }
     }
