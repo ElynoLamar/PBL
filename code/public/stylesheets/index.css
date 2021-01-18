@@ -1,16 +1,9 @@
-
-
 @font-face {
     font-family: 'prestige';
     src: url('fonts/2ndfont/ch702000-webfont.eot');
-    src: url('fonts/2ndfont/ch702000-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/2ndfont/ch702000-webfont.woff2') format('woff2'),
-         url('fonts/2ndfont/ch702000-webfont.woff') format('woff'),
-         url('fonts/2ndfont/ch702000-webfont.ttf') format('truetype'),
-         url('fonts/2ndfont/ch702000-webfont.svg#chey_1_silmanuscriptlregular') format('svg');
+    src: url('fonts/2ndfont/ch702000-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/2ndfont/ch702000-webfont.woff2') format('woff2'), url('fonts/2ndfont/ch702000-webfont.woff') format('woff'), url('fonts/2ndfont/ch702000-webfont.ttf') format('truetype'), url('fonts/2ndfont/ch702000-webfont.svg#chey_1_silmanuscriptlregular') format('svg');
     font-weight: normal;
     font-style: normal;
-
 }
 
 
@@ -26,17 +19,21 @@ body {
     overflow-y: scroll;
     overflow-x: hidden;
     scrollbar-width: none;
+    background-color: black;
     margin: 0;
     padding: 0;
 }
 
+main {
+    max-height: 66vh;
+}
 
 #indexVideo {
     overflow-y: hidden;
     background-color: black;
-    min-width: 100%;
+    min-width: 200vh;
     
-    
+    clip-path: polygon(0 0, 100% 0, 100% 33%, 0 78%);
 }
 
 .infoboxes {
@@ -51,35 +48,28 @@ body {
     z-index: 1;
     display: grid;
     grid-template-areas: 'I I . . . .' '. . . . . .' 'L L L . . .' '. B B . . .';
-    
 }
-
-
 
 main {
     color: white;
     max-height: 100vh;
-}   
-
-
+}
 
 .iconblackbox {
-    
     font-family: 'prestige';
-    color:white;
+    color: white;
     grid-area: I;
     font-size: 13vh;
     padding-top: 10vh;
     letter-spacing: 0.5vh;
     padding-left: 15vh;
-    
 }
 
-.headerBlackbox{
+.headerBlackbox {
     font-family: 'prestige';
     position: relative;
-    right:100%;
-    top:25vh;
+    right: 100%;
+    top: 25vh;
     margin-left: 15vh;
     font-size: 3vh;
     z-index: 30;
@@ -87,15 +77,13 @@ main {
     max-height: 20vh;
 }
 
-.headerBlackbox >h2{
-
+.headerBlackbox>h2 {
     color: black;
 }
 
-mark{
+mark {
     background-color: white;
 }
-
 
 .iconblackbox img {
     padding-top: 10%;
@@ -103,29 +91,23 @@ mark{
     width: 100%;
 }
 
-
-
 .listblackbox {
     grid-area: L;
-    
-    color:white;
+    color: white;
     font-family: 'prestige';
     padding-left: 16vh;
     padding-top: 14vh;
     font-size: 1.7vh;
-    
 }
 
-
-
-.listblackbox > p > span{
-    color:#827725;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+.listblackbox>p>span {
+    color: #827725;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .buttonblackbox {
     grid-area: B;
-    cursor:pointer;
+    cursor: pointer;
     z-index: 200;
 }
 
@@ -144,22 +126,15 @@ footer {
 @font-face {
     font-family: 'army_rust';
     src: url('fonts/army_rust-webfont..eot');
-    src: url('fonts/army_rust-webfont..eot?#iefix') format('embedded-opentype'),
-        url('fonts/army_rust-webfont.woff') format('woff'),
-        url('fonts/army_rust-webfont.ttf') format('truetype'),
-        url('fonts/army_rust-webfont.svg#army_rust') format('svg');
+    src: url('fonts/army_rust-webfont..eot?#iefix') format('embedded-opentype'), url('fonts/army_rust-webfont.woff') format('woff'), url('fonts/army_rust-webfont.ttf') format('truetype'), url('fonts/army_rust-webfont.svg#army_rust') format('svg');
     font-weight: normal;
     font-style: normal;
 }
 
-
-
-
-
-#logoheader{
+#logoheader {
     position: relative;
     width: 60vh;
-    height:auto;
+    height: auto;
     z-index: 1;
     top: -92vh;
     margin-left: 70vh;
@@ -167,12 +142,10 @@ footer {
 }
 
 header {
-    
     display: flex;
     background-color: #827725;
     color: white;
     padding-left: 30px;
-   
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -184,12 +157,11 @@ header {
     padding-right: 40px;
 }
 
-.menu{
+.menu {
     padding-left: 5vh;
-    
 }
 
-.menu > a{
+.menu>a {
     font-family: 'prestige';
     color: white;
     text-decoration: none;
@@ -203,41 +175,70 @@ header {
 }
 
 #userboxHeader {
-    display:flex;
+    display: flex;
     flex-direction: column;
     margin-right: 10vh;
-
 }
 
-#userNameheader{
-    text-align:center;
+#userNameheader {
+    text-align: center;
     position: relative;
-    top:-1vh;
+    top: -1vh;
     font-family: 'prestige';
 }
 
-#userImage{
-    height:10vh;
-    width:auto;
+#userImage {
+    height: 10vh;
+    width: auto;
 }
 
-.startButton{
-    height:30vh;
-    width:auto;
-
+.startButton {
+    height: 30vh;
+    width: auto;
+    cursor: pointer;
+    z-index: 200;
 }
 
-#eventsPointer{
-    right:230vh;
-    
+#eventsPointer {
+    right: 230vh;
 }
 
-#eventsTitle{
+#eventsTitle {
     position: relative;
     right: -20vh;
 }
 
-#eventsList{
+#eventsList {
     position: relative;
-    right:-40vh;
+    right: -40vh;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 20px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px#353321; 
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background:#353321; 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #1c1a11; 
+  }
+
+  a:link{
+      color:black;
+  }
+
+  a:hover{
+    color: white;
 }

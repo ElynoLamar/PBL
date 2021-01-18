@@ -2,15 +2,15 @@ var stringHome = "Home";
 var stringTeam = "Teams";
 var stringEvents = "Events";
 var stringMap = "Map";
-let loggedUser = 3;// assumir que o utilizador autenticado é o este id
+let loggedUser = 2; // assumir que o utilizador autenticado é o este id
 
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
-window.onload = async function () {
+window.onload = async function() {
 
- 
+
     createTeamUI();
-    
+
     createMyTeamsTable(loggedUser);
     notifButton(loggedUser);
 }
@@ -35,11 +35,13 @@ function show(index) {
             break;
     }
 }
+
 function changeToClickedTeam(team, player) {
     sessionStorage.setItem("teamid", team);
     sessionStorage.setItem("playerid", player);
     window.location = "selectedTeam.html"
 }
+
 function createTeamUI() {
     let block = "";
     block += "<span id='myTeams'>1</span>";
@@ -110,11 +112,11 @@ async function createMyTeamsTable(player) {
 
 async function createNewTeam(playerID) {
     try {
-        let tprivacy=0;
-        if(document.getElementById("openTeam").checked){
-            tprivacy =1;
-        }else if(document.getElementById("privateTeam").checked){
-            tprivacy =2;
+        let tprivacy = 0;
+        if (document.getElementById("openTeam").checked) {
+            tprivacy = 1;
+        } else if (document.getElementById("privateTeam").checked) {
+            tprivacy = 2;
         }
         let team = {
             name: document.getElementById("cteamName").value,
@@ -134,7 +136,7 @@ async function createNewTeam(playerID) {
     }
 
     //changeRank(playerID, teamID);
-    
+
     createMyTeamsTable(playerID);
     closeMiddleBox();
 }
@@ -188,7 +190,7 @@ async function joinTeam(teamID, playerID) {
         console.log(err);
     }
     closeMiddleBox();
-    
+
     createMyTeamsTable(loggedUser);
 }
 
@@ -211,7 +213,7 @@ async function requestToJoinTeam(teamID, loggedPlayer) {
         let request = {
             player: loggedPlayer,
             team: teamID,
-            text:"Player "+player.name+" is requesting to join your team."
+            text: "Player " + player.name + " is requesting to join your team."
         }
 
         let result = await $.ajax({
@@ -247,7 +249,7 @@ async function changeRank(playerID, teamID) {
 }
 
 async function getSpecificTeamObj(id) {
-    
+
     try {
         var getTeam = await $.ajax({
             url: "/api/teams/" + id,
@@ -270,8 +272,7 @@ async function joinTeamForm(teamID, player) {
     block += " <label><b>Team Description: " + team.description + " </b></label>";
     if (team.privacy == 2) {
         block += " <button type='button' class='btn' onclick='requestToJoinTeam(" + teamID + "," + player + ")'>Request to join</button>";
-    }
-    else if (team.privacy == 3) alert("team por pass")
+    } else if (team.privacy == 3) alert("team por pass")
     else if (team.privacy == 1) {
         block += " <button type='button' class='btn' onclick='joinTeam(" + teamID + "," + player + ")'>Join</button>";
     }
