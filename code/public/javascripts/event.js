@@ -2,20 +2,20 @@ var stringHome = "Home";
 var stringTeam = "Teams";
 var stringEvents = "Events";
 var stringMap = "Map";
-let loggedUser = 1;// assumir que o utilizador autenticado é o id=1
+let loggedUser = 1; // assumir que o utilizador autenticado é o id=1
 
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
-window.onload = function () {
+window.onload = function() {
     createEventUI();
-    
+
     createMyEventsTable();
 }
 
 
 function createEventUI() {
     let block = "";
-    block+="<span id='MiddleBox'></span>";
+    block += "<span id='MiddleBox'></span>";
     block += "<span id='myEvents' >1</span>";
     block += "<span id='pluscontainer'><img onclick='createNewEventForm()' id='plus' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png'><span id='plusText'><p>search event</p><p>create event</p></span></span>";
     document.getElementById("eventDivItems").innerHTML = block;
@@ -87,7 +87,7 @@ async function createMyEventsTable() {
 }
 
 async function getMyEventsObj() {
-    let loggedUser = 1;// assumir que o utilizador autenticado é o id=8
+    let loggedUser = 1; // assumir que o utilizador autenticado é o id=8
     try {
         var getmyevents = await $.ajax({
             url: "/api/events/player/" + loggedUser,
@@ -147,7 +147,8 @@ async function createNewEventForm() {
     block += "</div>";
     document.getElementById("MiddleBox").innerHTML = block;
 }
-async function createNewEvent() {
+
+function createNewEvent() {
     try {
         let eprivacy = 0;
         if (document.getElementById("openEvent").checked) {
@@ -157,7 +158,7 @@ async function createNewEvent() {
         }
         let hours = document.getElementById("eventdurationhours").value;
         let mins = document.getElementById("eventdurationmins").value;
-        let duration = (hours * 3600)+(mins*60);
+        let duration = (hours * 3600) + (mins * 60);
         let event = {
             name: document.getElementById("ceventName").value,
             field: document.getElementById("fields").value,
@@ -178,10 +179,11 @@ async function createNewEvent() {
     } catch (err) {
         console.log(err);
     }
-    
+
     createMyEventsTable();
     closeMiddleBox();
 }
+
 function closeMiddleBox() {
     document.getElementById("MiddleBox").innerHTML = "";
 }

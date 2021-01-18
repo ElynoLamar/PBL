@@ -30,12 +30,6 @@ main {
     text-align: center;
 }
 
-p {
-    font-family: 'Open Sans';
-    margin: 0;
-    font-size: 13px;
-}
-
 #info {
     display: block;
     position: relative;

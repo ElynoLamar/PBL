@@ -107,8 +107,10 @@ map.on('load', async function() {
         }
     });
 });
-let block = "<input type='button' value='createevent' onclick='createNewEventForm()'> </input>";
-document.getElementById("eventcreatebutton").innerHTML = block;
+let html = "<input type='button' value='createevent' onclick='createNewEventForm()'> </input>";
+document.getElementById("eventcreatebutton").innerHTML = html;
+let block = "";
+
 
 
 
@@ -148,12 +150,18 @@ async function createNewEventForm(map) {
     block += "<h1>Create a new Event</h1>";
     block += " <label><b>Event name</b></label>";
     block += "<input type='text' placeholder='Enter Event Name' id='ceventName' required>";
+
+    block += "<div id='fieldsarea'>";
+    block += "<label><b>New Event Field Name:  </b></label>";
+    block += "<input type='text' placeholder='Enter Field Name' id='cfieldName' required><br>";
+    block += "</div>";
+    block += "<div id='createdFields'>";
     block += " <label><b>Event Field:  </b></label>";
     block += "<select id='fields' name='fields'>";
     for (let i = 0; i < fields.length; i++) {
         block += "<option value=" + fields[i].id + ">" + fields[i].name + "</option>";
     }
-    block += "</select><input type='button' value='Create own field' onclick='testing()'></input><br>";
+    block += "</select><input type='button' value='Create own field' onclick='testing()'></input><br></div>";
     block += " <label><b>Choose your event privacy</b></label><br>";
     block += "<input type='radio' id='openEvent' name='privacy' value='openEvent'>";
     block += "<label for='openEvent'>Open event, anyone can join</label><br>";
@@ -175,12 +183,24 @@ async function createNewEventForm(map) {
     block += "</form>";
     block += "</div>";
     document.getElementById("MiddleBox").innerHTML = block;
+    document.getElementById("fieldsarea").style.display = "none";
 }
 
 function closeMiddleBox() {
-    document.getElementById("MiddleBox").innerHTML = "";
+    document.getElementById("MiddleBox").innerHTML = "none";
+    document.getElementById("fieldsarea").style.display = "none";
 }
-async function createNewEvent() {
+
+function testing() {
+    document.getElementById("MiddleBox").style.display = "none";
+    document.getElementById("createdFields").style.display = "none";
+    document.getElementById("fieldsarea").style.display = "block";
+    var longlati = drawEventField();
+
+
+}
+
+async function createNewEvent(lnglat) {
     try {
         let eprivacy = 0;
         if (document.getElementById("openEvent").checked) {
@@ -191,16 +211,37 @@ async function createNewEvent() {
         let hours = document.getElementById("eventdurationhours").value;
         let mins = document.getElementById("eventdurationmins").value;
         let duration = (hours * 3600) + (mins * 60);
-        let event = {
-            name: document.getElementById("ceventName").value,
-            field: document.getElementById("fields").value,
-            date: document.getElementById("eventdate").value,
-            duration: duration,
-            groupNum: document.getElementById("numofgroups").value,
-            teamsSize: document.getElementById("playerspergroup").value,
-            privacy: eprivacy,
-            player: loggedUser
+        let event = {};
+        console.log(lnglat.lat);
+        if (document.getElementById("cfieldName").value != "") {
+            console.log(lnglat.lat);
+            event = {
+                name: document.getElementById("ceventName").value,
+                fieldlats: lnglat.lat,
+                fieldlngs: lnglat.lng,
+                date: document.getElementById("eventdate").value,
+                duration: duration,
+                groupNum: document.getElementById("numofgroups").value,
+                teamsSize: document.getElementById("playerspergroup").value,
+                privacy: eprivacy,
+                player: 1,
+                fieldName: document.getElementById("cfieldName").value,
+                newfield: true
+            }
+        } else {
+            event = {
+                name: document.getElementById("ceventName").value,
+                field: document.getElementById("fields").value,
+                date: document.getElementById("eventdate").value,
+                duration: duration,
+                groupNum: document.getElementById("numofgroups").value,
+                teamsSize: document.getElementById("playerspergroup").value,
+                privacy: eprivacy,
+                player: 1,
+                newfield: false
+            }
         }
+        console.log(JSON.stringify(event));
         let result = await $.ajax({
             url: "/api/events/",
             method: "post",
@@ -213,12 +254,7 @@ async function createNewEvent() {
     }
 }
 
-function testing() {
-    document.getElementById("MiddleBox").style.display = "none";
-    var longlati = drawEventField();
 
-    alert(longlati);
-}
 
 function drawEventField() {
 
@@ -241,33 +277,37 @@ function drawEventField() {
                 lats.push(aux[i][0]);
                 lngs.push(aux[i][0]);
             }
-            var lnglat = {
+            let lnglat = {
                 lat: lats,
                 lng: lngs
             }
+
+            document.getElementById("fieldsarea").style.display = "block";
             document.getElementById("MiddleBox").style.display = "block";
             map.removeControl(draw);
+            console.log("NEW LOG:" + JSON.stringify(lnglat));
+            createNewEvent(lnglat);
 
         }
     }
-    /**
-        
-            //var center = e.layer.bounds.getCenter().addTo(map);;
-        
-            // calcular area
-            var answer = document.getElementById('calculated-area');
-            if (data.features.length > 0) {
-                var area = turf.area(data);
-                // restrict to area to 2 decimal points
-                var rounded_area = Math.round(area * 100) / 100;
-                answer.innerHTML =
-                    '<p><strong>' +
-                    rounded_area +
-                    '</strong></p><p>square meters</p>';
-            } else {
-                answer.innerHTML = '';
-                if (e.type !== 'draw.delete')
-                    alert('Use the draw tools to draw a polygon!');
-            }
-    */
 }
+/**
+    
+        //var center = e.layer.bounds.getCenter().addTo(map);;
+    
+        // calcular area
+        var answer = document.getElementById('calculated-area');
+        if (data.features.length > 0) {
+            var area = turf.area(data);
+            // restrict to area to 2 decimal points
+            var rounded_area = Math.round(area * 100) / 100;
+            answer.innerHTML =
+                '<p><strong>' +
+                rounded_area +
+                '</strong></p><p>square meters</p>';
+        } else {
+            answer.innerHTML = '';
+            if (e.type !== 'draw.delete')
+                alert('Use the draw tools to draw a polygon!');
+        }
+*/
