@@ -38,7 +38,7 @@ map.addControl(
     })
 );
 
-
+// not used, costumização de um marker
 var el = document.createElement('div');
 el.className = 'marker';
 el.style.backgroundImage = '"../images/bulletMarker.png"';
@@ -59,54 +59,84 @@ map.on('mousemove', function(e) {
 
 //criar markers com BD
 map.on('load', async function() {
-    var teste = await getSpecificField();
-    //  alert(JSON.stringify(teste));
-    let aux = [];
-    for (let i = 0; i < teste.length; i++) {
-        aux.push([parseFloat(teste[i].lng), parseFloat(teste[i].lat)]);
+    var fields = await getAllFields();
+    let coords = [];
+    let nextInObj = 0;
+    let data = {};
+    for (let i = 0; i < fields.length; i++) {
+        nextInObj = i + 1;
+        coords.push([parseFloat(fields[i].lng), parseFloat(fields[i].lat)]);
+        if (nextInObj < fields.length) {
+            if (fields[i].id != fields[nextInObj].id) {
 
-    }
-
-
-
-    try {
-        let data = {
-            'type': 'geojson',
-            'data': {
-                'type': 'Feature',
-                'geometry': {
-                    'type': 'Polygon',
-                    'coordinates': [
-                        aux
-                    ]
+                data = {
+                    'type': 'geojson',
+                    'data': {
+                        'type': 'Feature',
+                        'geometry': {
+                            'type': 'Polygon',
+                            'coordinates': [
+                                coords
+                            ]
+                        }
+                    }
+                }
+                map.addSource("'" + fields[i].id + "'", data);
+                var polygon = turf.polygon([coords]);
+                var centroid = turf.centroid(polygon);
+                let centroidX = centroid.geometry.coordinates[0];
+                let centroidY = centroid.geometry.coordinates[1];
+                let myLatlng = new mapboxgl.LngLat(centroidX, centroidY);
+                let marker = new mapboxgl.Marker().setLngLat(myLatlng).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML("<h3>" + fields[i].name + "</h3>"))
+                    .addTo(map);
+                map.addLayer({
+                    'id': "'" + fields[i].id + "'",
+                    'type': 'fill',
+                    'source': "'" + fields[i].id + "'",
+                    'layout': {},
+                    'paint': {
+                        'fill-color': '#827725',
+                        'fill-opacity': 0.8
+                    }
+                });
+                coords = [];
+            }
+        } else if (nextInObj == fields.length) {
+            data = {
+                'type': 'geojson',
+                'data': {
+                    'type': 'Feature',
+                    'geometry': {
+                        'type': 'Polygon',
+                        'coordinates': [
+                            coords
+                        ]
+                    }
                 }
             }
+            map.addSource("'" + fields[i].id + "'", data);
+            var polygon = turf.polygon([coords]);
+            var centroid = turf.centroid(polygon);
+            let centroidX = centroid.geometry.coordinates[0];
+            let centroidY = centroid.geometry.coordinates[1];
+            let myLatlng = new mapboxgl.LngLat(centroidX, centroidY);
+            let marker = new mapboxgl.Marker().setLngLat(myLatlng).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML("<h3>" + fields[i].name + "</h3>"))
+                .addTo(map);
+            map.addLayer({
+                'id': "'" + fields[i].id + "'",
+                'type': 'fill',
+                'source': "'" + fields[i].id + "'",
+                'layout': {},
+                'paint': {
+                    'fill-color': '#827725',
+                    'fill-opacity': 0.8
+                }
+            });
         }
-        map.addSource("'" + teste[0].name + "'", data);
-        var polygon = turf.polygon([aux]);
 
-        var centroid = turf.centroid(polygon);
-        let centroidX = centroid.geometry.coordinates[0];
-
-        let centroidY = centroid.geometry.coordinates[1];
-
-        let myLatlng = new mapboxgl.LngLat(centroidX, centroidY);
-
-        var marker = new mapboxgl.Marker().setLngLat(myLatlng).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<h3> YOOOO </h3>'))
-            .addTo(map);
-    } catch (err) {
-        console.log(err);
     }
-    map.addLayer({
-        'id': "'" + teste[0].name + "'",
-        'type': 'fill',
-        'source': "'" + teste[0].name + "'",
-        'layout': {},
-        'paint': {
-            'fill-color': '#088',
-            'fill-opacity': 0.8
-        }
-    });
+
+
 });
 let html = "<input type='button' value='createevent' onclick='createNewEventForm()'> </input>";
 document.getElementById("eventcreatebutton").innerHTML = html;
@@ -143,6 +173,7 @@ async function getSpecificField() {
     }
 }
 async function createNewEventForm() {
+    latlng = {};
     var fields = await getAllFields();
     let block = "";
     block += "<form class='form-container'>";
@@ -248,6 +279,8 @@ async function createNewEvent() {
             data: JSON.stringify(event),
             contentType: "application/json"
         });
+        document.getElementById("MiddleBox").innerHTML = "none";
+        document.getElementById("fieldsarea").style.display = "none";
     } catch (err) {
         console.log(err);
     }
@@ -273,8 +306,9 @@ function drawEventField() {
             let lats = [];
             let lngs = [];
             for (let i = 0; i < aux.length; i++) {
-                lats.push(aux[i][0]);
-                lngs.push(aux[i][1]);
+                lats.push(aux[i][1]);
+                lngs.push(aux[i][0]);
+
             }
 
             latlng = {

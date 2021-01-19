@@ -2,7 +2,7 @@ var pool = require("../models/connection");
 
 module.exports.getAllFields = async function() {
     try {
-        var query = "SELECT id_field as id, name_field as name FROM Field ";
+        var query = "select id_field as id, lat,lng, name_field as name from Coordinates, Field where Field.id_field = Coordinates.field ORDER by Coordinates.id_coord asc";
         const fields = await pool.query(query);
         console.log(query);
         return fields;
