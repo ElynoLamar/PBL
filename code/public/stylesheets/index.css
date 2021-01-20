@@ -56,7 +56,7 @@ main {
 }
 
 .iconblackbox {
-    font-family: 'prestige';
+    font-family: 'army_rust';
     color: white;
     grid-area: I;
     font-size: 13vh;
@@ -69,7 +69,7 @@ main {
     font-family: 'prestige';
     position: relative;
     right: 100%;
-    top: 25vh;
+    top: 17.5vh;
     margin-left: 15vh;
     font-size: 3vh;
     z-index: 30;
@@ -138,7 +138,7 @@ footer {
     z-index: 1;
     top: -92vh;
     margin-left: 70vh;
-    cursor: pointer;
+   
 }
 
 header {
@@ -178,6 +178,11 @@ header {
     display: flex;
     flex-direction: column;
     margin-right: 10vh;
+    cursor:pointer;
+}
+
+#userboxHeader:hover{
+    color:black;
 }
 
 #userNameheader {
@@ -205,7 +210,7 @@ header {
 
 #eventsTitle {
     position: relative;
-    right: -20vh;
+    right: -32vh;
 }
 
 #eventsList {
@@ -241,4 +246,45 @@ header {
 
   a:hover{
     color: white;
+}
+
+#logo{
+    position:fixed;
+    z-index: 300;
+    -webkit-animation-name: animatetop !;
+    -webkit-animation-duration: 1s;
+    animation-name: animatetop;
+    animation-duration: 1s;
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+  }
+
+  @keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+  }
+  
+  .run-animation {
+    position: relative;
+    animation: animatetop 1s ease;
+  }
+
+  #miniLogo{
+      max-width: 10vh;
+    padding-left: 3vh;
+    cursor:pointer;
+  }
+
+#TCPdescription{
+    color:white;
+    z-index:50;
+    position:absolute;
+    font-family: 'prestige';
+    font-size:2.1vh;
+    top:85vh;
+    left:130vh;
 }
