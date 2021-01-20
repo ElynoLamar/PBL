@@ -314,11 +314,13 @@ table > tbody >tr {
     text-align: center;
     padding:2vh;
     cursor: pointer;
+    
 }
 
 table >tbody>tr>td{
-    padding-left:2.5vh;
-    padding-right: 2.5vh;
+    min-width: 30vh;
+    max-width:30vh;
+    padding: 0.2vh 1vh 0.2vh;
 }
 
 table >tbody>tr:hover {

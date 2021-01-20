@@ -33,3 +33,10 @@
     position: relative;
     top:0vh;
   }
+
+  table >tbody>tr>td{
+    min-width: 34vh;
+    max-width:34vh;
+    padding: 0.2vh 1vh 0.2vh;
+}
+

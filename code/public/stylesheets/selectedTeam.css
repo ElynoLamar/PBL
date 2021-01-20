@@ -1,66 +1,52 @@
 body{
     display: grid;
     height:100%;    
-    grid-template-columns: 10% auto;
-    grid-template-rows:15% auto 5%;
-    grid-template-areas: 'h h h' 'm m m' 'f f f';
+    
+    grid-template-rows: 15vh 85vh ;
+    grid-template-areas: 'h h h' 'm m m';
     border: solid thick;
     overflow: hidden;
     margin: 0 !important;
     padding: 0 !important;
 }
 #teamDivItems{
-    background-color:white;
+    
+    background-color:#353321;
     height:100%;
     display: grid;
     grid-template-areas: 'me bo ma';
     grid-template-columns: 25% auto 25%;
+
 }
 
 #teamMembers {
-    background-color: #48623b;
+    background-color: #827725;
     grid-area: me;
     margin: 10px 5px 10px 10px;
 }
 #actionTeamBox{
-    background-color:  #48623b;
+    background-color:  #827725;
     grid-area: bo;
     margin: 10px 5px 10px 5px;
-
+    font-family: 'prestige';
+    font-weight: normal;
+    text-align: center;
 }
 #teamMaps{
-    background-color:  #48623b;
+    background-color:  #827725;
     grid-area: ma;
     margin: 10px 10px 10px 5px;
 }
 
-.table{
-	font-family: Arial, Helvetica, sans-serif;
-	border-collapse: collapse;
-	width: 100%;
+.plusimage{
+    cursor:pointer;
 }
 
-.table td, .table th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
 
-.table th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: black;
-  color: white;
-}
-
-.table tr{background-color: #f2f2f2;}
-
-#titles{
+.titles{
     text-align: center;
 }
-#teamDivItems{
-    background-color: black;
-}
+
 #playerBox{
     display:grid;
     width: 100%; 
@@ -149,4 +135,41 @@ body{
 }
 .removeTeammate:hover {
     background: rgb(255, 147, 128);
+}
+
+main{
+    grid-area: m;
+}
+
+table > tbody{
+    min-height:200vh;
+}
+
+table >thead>tr>th {
+    min-width: 15.2vh;
+    max-width:15.2vh;
+    padding: 0.2vh 0vh 0.2vh;
+}
+
+table >tbody>tr>td{
+    
+    min-width: 100%;
+    max-width:100%;
+    padding: 0.2vh 2vh 0.2vh;
+}
+
+header{
+    grid-area: h;
+}
+
+.titles{
+    margin-left:0vh;
+}
+
+#edit{
+    position: relative;
+    top:7vh;
+    cursor: pointer;
+    
+    height:7vh;
 }
