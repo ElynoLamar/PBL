@@ -38,7 +38,7 @@ module.exports.getPlayerJoinedEvents = async function(index) {
 
 module.exports.getEventMembers = async function(id_event) {
     try {
-        var query = "select Player.name_player as name, Team.name_team as team from EventMember Left join Player ON EventMember.player=Player.id_player Left join Team on EventMember.team=Team.id_team Left OUTER join EventGroup ON EventMember.player = EventGroup.player where EventMember.event=? and EventGroup.player is null";
+        var query = "select Player.id_player as id, Player.name_player as name, Team.name_team as team from EventMember Left join Player ON EventMember.player=Player.id_player Left join Team on EventMember.team=Team.id_team Left OUTER join EventGroup ON EventMember.player = EventGroup.player where EventMember.event=? and EventGroup.player is null";
         const member = await pool.query(query, id_event);
         console.log(query);
         return member;
@@ -51,7 +51,7 @@ module.exports.getEventMembers = async function(id_event) {
 
 module.exports.getEventGroupMembers = async function(id_event, groupNumber) {
     try {
-        var query = "select Player.name_player as name, Team.name_team as team from EventMember Left join Player ON EventMember.player=Player.id_player Left join Team on EventMember.team=Team.id_team Left OUTER join EventGroup ON EventMember.player = EventGroup.player where EventMember.event=? and EventGroup.groupNumber=?";
+        var query = "select Player.name_player as name, Team.name_team as team from EventMember, Player, Team, EventGroup, Event where Event.id_event=? and Event.id_event=EventMember.event and EventMember.player= Player.id_player and EventMember.team = Team.id_team and EventGroup.event = Event.id_event and EventGroup.player=Player.id_player AND EventGroup.groupNumber=?;";
         const groupMember = await pool.query(query, [id_event, groupNumber]);
         console.log(query);
         return groupMember;
@@ -109,5 +109,16 @@ module.exports.newEvent = async function(event) {
             console.log(err);
             return err;
         }
+    }
+}
+
+module.exports.insertPlayerIntoGroup = async function(newGroupMember) {
+    try {
+        var query = "insert into EventGroup (groupNumber,player,event) values(?,?,?);";
+        const result2 = await pool.query(query, [newGroupMember.group, newGroupMember.player, newGroupMember.event]);
+        return { status: 200, data: result2 };
+    } catch (err) {
+        console.log(err);
+        return err;
     }
 }

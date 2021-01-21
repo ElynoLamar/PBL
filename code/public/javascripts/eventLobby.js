@@ -1,8 +1,8 @@
 var numOfGroups = 0;
-
+var eventid = 0;
 var loggedUser = 9; // assumir que o utilizador autenticado é o este id
 window.onload = async function() {
-    let eventid = sessionStorage.getItem("id");
+    eventid = sessionStorage.getItem("id");
     let group = await getEventGroups(eventid);
     numOfGroups = group.group_num;
     notifButton(loggedUser);
@@ -24,7 +24,7 @@ async function createNav(eventid) {
         } else {
             block += "<td>" + eventMembers[i].team + "</td>";
         }
-        block += "<td><div id='buttonCell' onClick='createGroupChoiceUI(" + i + ")'>";
+        block += "<td><div id='buttonCell' onClick='createGroupChoiceUI(" + eventMembers[i].id + ")'>";
         block += "<img src='../images/plus-sign.png' height='50'>"
         block += "</tr>";
     }
@@ -66,6 +66,7 @@ function show(index) {
 }
 
 async function createEventLobbyUI(event_id) {
+
     let block = "";
     block += "<div id='ChoiceBox' ></div></td>";
     block += "<div id='PlayerBox' ></div></td>";
@@ -73,11 +74,13 @@ async function createEventLobbyUI(event_id) {
     block += "<img id='edit' onClick='show(" + 4 + ")' onmouseover='this.src=\"../images/editHover.png\"' onmouseout='this.src=\"../images/edit.png\"' src='../images/edit.png'>";
     for (let i = 1; i <= numOfGroups; i++) {
         let groupMembers = await getGroupMembersObj(event_id, i);
+        alert(JSON.stringify(groupMembers));
         block += "<span class='lobbyGroup' id='group" + i + "'>";
         block += "<h1 class='titles'>Group " + i + "</h1>";
         block += "<div class='tablediv'><table class='table'>";
         block += "<tr><th>Name</th><th>Team</th></tr>";
         for (let i = 0; i < groupMembers.length; i++) {
+
             block += "<tr><td>" + groupMembers[i].name + "</td><td>" + groupMembers[i].team + "</td></tr>";
         }
         block += "</table></div></span>";
@@ -100,7 +103,9 @@ async function getGroupMembersObj(id_event, group_id) {
 }
 
 async function createGroupChoiceUI(eventMember) {
-    eventMember = eventMember + 1;
+
+    //eventMember = eventMember + 1;
+
     let block = "";
     block += "<div  class='form-container'>";
     block += "<div class='form-content'>";
@@ -110,7 +115,7 @@ async function createGroupChoiceUI(eventMember) {
     block += "</boxHeader>";
 
     for (let i = 1; i <= numOfGroups; i++) {
-        block += "<div onClick=insertIntoGroup(" + i + ")>Group " + i;
+        block += "<div onClick=insertIntoGroup(" + i + "," + eventMember + ")>Group " + i;
         block += "<div class='accept'>✔</div>";
         block += "</div>";
     }
@@ -120,7 +125,26 @@ async function createGroupChoiceUI(eventMember) {
     document.getElementById("ChoiceBox").innerHTML = block;
 }
 
-function insertIntoGroup(groupNum) {
+async function insertIntoGroup(groupNum, eventMember) {
+
+    try {
+        let newGroupMember = {
+            event: eventid,
+            player: eventMember,
+            group: groupNum
+        }
+
+        let result = await $.ajax({
+            url: "/api/events/group",
+            method: "post",
+            dataType: "json",
+            data: JSON.stringify(newGroupMember),
+            contentType: "application/json"
+        });
+
+    } catch (err) {
+        console.log(err);
+    }
 
 }
 
