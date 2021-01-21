@@ -59,13 +59,17 @@ function show(index) {
       case 3:
           window.location = "map.html";
           break;
-  }
-}
+      case 4:
+          window.location = "tactic.html";
+          break;
+  }}
 
 async function createEventLobbyUI(event_id){
   let block="";
   block+="<div id='ChoiceBox' ></div></td>";
   block+="<div id='PlayerBox' ></div></td>";
+  block+="<img id='mapIcon' onClick='show("+4+")' onmouseover='this.src=\"../images/mapIcon.png\"' onmouseout='this.src=\"../images/mapIcon.png\"' src='../images/mapIcon.png'>";
+  block+="<img id='edit' onClick='show("+4+")' onmouseover='this.src=\"../images/editHover.png\"' onmouseout='this.src=\"../images/edit.png\"' src='../images/edit.png'>";
   for(let i = 1; i <=numOfGroups; i++){
     let groupMembers = await getGroupMembersObj(event_id, i);
     block+="<span class='lobbyGroup' id='group"+i+"'>";
@@ -104,7 +108,7 @@ async function createGroupChoiceUI(eventMember){
     block+="<span class='close' onclick='closeChoice()'>&times;</span>";
     block+="</boxHeader>";
     
-        for (let i = 1; i <= numOfGroups; i++) {
+    for (let i = 1; i <= numOfGroups; i++) {
         block += "<div onClick=insertIntoGroup("+i+")>Group " + i;
         block +="<div class='accept'>✔</div>";
         block += "</div>";
@@ -162,7 +166,7 @@ function closePlayers() {
 
 async function createNewInvite(teamID, clickedPlayerID, loggedPlayer) {
     
-  var event = await getTeamObj(teamID);
+  var event = await getTeamObj(eventID);
 
   try {
       let newInvite = {
@@ -171,11 +175,9 @@ async function createNewInvite(teamID, clickedPlayerID, loggedPlayer) {
           team: team.id,
           text: "You have been invited to " + event.name + " event"
       }
-     
-// AQUI AJUDA WHAT BRO? FAZER INVITE PARA EVENTO
 
       let result = await $.ajax({
-          url: "/api/notifications/team/" + teamID + "/player/" + clickedPlayerID,
+          url: "/api/notifications/event/" + eventID + "/player/" + clickedPlayerID,
           method: "post",
           dataType: "json",
           data: JSON.stringify(newInvite),
