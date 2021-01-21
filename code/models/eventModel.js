@@ -2,10 +2,10 @@ var pool = require("../models/connection");
 
 module.exports.getSpecificEvent = async function(index) {
     try {
-        var query = "SELECT * from Event where id_event = ?";
+        var query = "SELECT id_event as id, name_event as name, field_event as field, date_event as date, duration_event as duration, team_size_event as team_size, group_num, privacy from Event where id_event = ?";
         const event = await pool.query(query, index);
         console.log(query);
-        return event;
+        return event[0];
     } catch (err) {
         console.log(err);
         return err;
