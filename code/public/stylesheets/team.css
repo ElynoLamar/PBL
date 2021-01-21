@@ -1,71 +1,42 @@
-#myTeams{
-    
-    min-height: 40%;
-    width:auto;
-    margin-right:10%;
-}
-
-#allTeams{
-    background-color: #62523b;
-    width:20%;
-    height: 300%;
-    margin-left:10%;
-}
-
-#teamDivItems{
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    flex-shrink: 0;
-    min-width: 100%;
-    min-height: 100%
-
-}
-
-.titles{
-    margin-left: 30vh;
-    font-weight: normal;
-    text-align: center;
-  }
 
   #plus{
     position: absolute;
     width: 22vh;
     left:80vh;
-    top:80vh;
+    top:60.6vh;
     cursor: pointer;
     
 }
 
-table{
-    position: relative;
+#pluscontainer{
+    display:flex;
+    
+}
+
+#plusText{
     font-family: 'prestige';
-    align-items: center;
-    margin-left:30vh;
-    overflow-x: hidden;
-    overflow-y:scroll;
-}
-
-
-.table th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    font-size:3.5vh;
-    background-color: #827725;
-    text-align:center;
-    color: white;
-    font-weight: normal;
-    padding-left:10vh;
-    padding-right: 10vh;
-}
-
-.table tr {
+    position:fixed;
+    top:85.5vh;
+    left:98vh;
     
-    font-size: 2.5vh;
-    text-align: center;
-    padding:2vh;
-    cursor: pointer;
+    color:white;
 }
+
+
+#myTeams{
+    position: absolute;
+    margin-top: 2vh;
+    width:100%;
+}
+
+.tablediv{
+    position: relative;
+    top:0vh;
+  }
+
+  table >tbody>tr>td{
+    min-width: 34vh;
+    max-width:34vh;
+    padding: 0.2vh 1vh 0.2vh;
+}
+

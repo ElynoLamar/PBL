@@ -20,6 +20,7 @@ background-color:#827725;
 }
 main{
   grid-area: m;
+  height: 83.7vh;
 }
 .lobbyGroup{
     
@@ -132,4 +133,10 @@ main{
     text-align: center;
     padding:2vh;
     cursor: pointer;
+}
+
+table >tbody>tr>td{
+  min-width: 12vh;
+  max-width:12vh;
+  
 }

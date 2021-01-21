@@ -1,32 +1,4 @@
-#eventDivItems{
-    position: relative;
-    top:24vh;
-    align-items: center;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    flex-shrink: 0;
-    min-width: 50%;
-    min-height: 100%;
-    
-    
-}
 
-#myEvents{
-    background-color: #62523b;
-    min-height: 40%;
-    width:20%;
-    margin-right:10%;
-}
-
-
-
-#allEvents{
-    background-color: #62523b;
-    width:20%;
-    height: 300%;
-    margin-left:10%;
-}
 
 #plus{
     position: absolute;

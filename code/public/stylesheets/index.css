@@ -6,19 +6,15 @@
     font-style: normal;
 }
 
-.test {
-    height: auto;
-    max-width: 50%;
-}
+
 
 .testImg {
-    position: relative;
     max-width: 98vh;
-    min-width: 60vh;
-    z-index: -1;
+    z-index:0;
 }
 
 body {
+    
     width: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
@@ -36,8 +32,8 @@ main {
     overflow-y: hidden;
     background-color: black;
     min-width: 200vh;
-    max-height: 100vh;
-    clip-path: polygon(0 0, 100% 0, 100% 66%, 0 58%);
+    
+    clip-path: polygon(0 0, 100% 0, 100% 33%, 0 78%);
 }
 
 .infoboxes {
@@ -49,7 +45,7 @@ main {
     height: 100%;
     min-width: 50%;
     background-color: black;
-    z-index: 0;
+    z-index: 1;
     display: grid;
     grid-template-areas: 'I I . . . .' '. . . . . .' 'L L L . . .' '. B B . . .';
 }
@@ -60,7 +56,7 @@ main {
 }
 
 .iconblackbox {
-    font-family: 'prestige';
+    font-family: 'army_rust';
     color: white;
     grid-area: I;
     font-size: 13vh;
@@ -73,7 +69,7 @@ main {
     font-family: 'prestige';
     position: relative;
     right: 100%;
-    top: 25vh;
+    top: 17.5vh;
     margin-left: 15vh;
     font-size: 3vh;
     z-index: 30;
@@ -116,12 +112,15 @@ mark {
 }
 
 footer {
-    color: white;
-    background-image: linear-gradient( black, #121212);
+    font-family: 'prestige';
+    text-align: center;
+    color:white;
+    background-color:#827725;
     margin: auto;
     padding: auto;
     width: 100%;
-    height: 10vh;
+    padding: 4vh;
+    
 }
 
 @font-face {
@@ -139,7 +138,7 @@ footer {
     z-index: 1;
     top: -92vh;
     margin-left: 70vh;
-    cursor: pointer;
+   
 }
 
 header {
@@ -171,14 +170,19 @@ header {
     letter-spacing: 0.6vh;
 }
 
-.menu>a:hover {
-    color: black;
+.menu > a:hover{
+    color:black !important;
 }
 
 #userboxHeader {
     display: flex;
     flex-direction: column;
     margin-right: 10vh;
+    cursor:pointer;
+}
+
+#userboxHeader:hover{
+    color:black;
 }
 
 #userNameheader {
@@ -206,10 +210,81 @@ header {
 
 #eventsTitle {
     position: relative;
-    right: -20vh;
+    right: -32vh;
 }
 
 #eventsList {
     position: relative;
     right: -40vh;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 20px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px#353321; 
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background:#353321; 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #1c1a11; 
+  }
+
+  a:link{
+      color:black;
+  }
+
+  a:hover{
+    color: white;
+}
+
+#logo{
+    position:fixed;
+    z-index: 300;
+    -webkit-animation-name: animatetop !;
+    -webkit-animation-duration: 1s;
+    animation-name: animatetop;
+    animation-duration: 1s;
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+  }
+
+  @keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+  }
+  
+  .run-animation {
+    position: relative;
+    animation: animatetop 1s ease;
+  }
+
+  #miniLogo{
+      max-width: 10vh;
+    padding-left: 3vh;
+    cursor:pointer;
+  }
+
+#TCPdescription{
+    color:white;
+    z-index:50;
+    position:absolute;
+    font-family: 'prestige';
+    font-size:2.1vh;
+    top:85vh;
+    left:130vh;
 }

@@ -56,14 +56,14 @@ async function createTeammatesTable(teamid, player) {
     let block = "";
     if (Object.keys(teammember).length != 0) {
         block += "<div class='flex-container'>";
-        block += "<span></span><h1 class='titles'>Team members</h1><span><img id='plusimage' src='../images/plus-sign.png' height=30 onclick=changeMiddleBox_AllPlayers(" + teamid + "," + player + ")></span>";
+        block += "<span></span><h1 class='titles'>Team members</h1><span><img class='plusimage' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png' height='50vh;' onclick=changeMiddleBox_AllPlayers(" + teamid + "," + player + ")></span>";
         block += "</div>";
         block += "<table class='table'>";
-        block += "<tr><th>Name</th><th>Rank</th><th>Role</th></tr>";
+        block += "<thead><tr><th>Name</th><th>Rank</th><th>Role</th></tr></thead><tbody>";
         for (let i = 0; i < teammember.length; i++) {
             block += "<tr onclick='changeMiddleBox_Player(" + teammember[i].id + "," + teamid + "," + player + ")'><td>" + teammember[i].name + "</td><td>" + teammember[i].Ranking + "</td><td>" + teammember[i].Role + "</td></tr>";
         }
-        block += "</table>";
+        block += "</tbody></table>";
     } else {
         block = "<h1 class='titles'> No teammembers found</h1>";
     }
@@ -88,13 +88,15 @@ async function createTacticsTable(id) {
     var tactics = await getTeamTactics(id);
     let block = "";
     if (Object.keys(tactics).length != 0) {
-        block += "<h1 class='titles'>Map tactics</h1>";
+        block += "<div class='flex-container'>";
+        block += "<span></span><h1 class='titles'>Map Tactics</h1><span><img onclick='show(" + 4 + ")' class='plusimage' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png' height='50vh;' ></span>";
+        block += "</div>";
         block += "<table class='table'>";
-        block += "<tr><th>Name</th><th>Field</th></tr>";
+        block += "<thead><tr><th>Name</th><th>Field</th></tr></thead><tbody>";
         for (let i = 0; i < tactics.length; i++) {
             block += "<tr onclick=changeMiddleBox_Tactics(" + id + ",\'" + tactics[i].image + "\')><td>" + tactics[i].name + "</td><td>" + tactics[i].field + "</td></tr>";
         }
-        block += "</table>";
+        block += "</tbody></table>";
     } else {
         block = "<h1 class='titles'> No tactics found</h1>";
     }
@@ -213,8 +215,8 @@ async function changeMiddleBox_Tactics(teamid, tacticmap) {
     block += "<h2>Tactic location: HEHEHE </h2>";
     block += "<h2>Team id:" + teamid + "</h2>";
     block += "<img src='../images/" + tacticmap + "' height='450'></img>";
-    block += "<span>";
-    block += "</span>";
+    block += "<img id='edit' onClick='show("+4+")' onmouseover='this.src=\"../images/editHover.png\"' onmouseout='this.src=\"../images/edit.png\"' src='../images/edit.png'>";
+    
     document.getElementById("actionTeamBox").innerHTML = block;
 }
 
@@ -353,6 +355,9 @@ function show(index) {
             break;
         case 3:
             window.location = "map.html";
+            break;
+        case 4:
+            window.location = "tactic.html";
             break;
     }
 }

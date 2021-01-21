@@ -48,9 +48,11 @@ async function createAllEventsTable() {
     block += "<h1 class='titles'>All Events</h1>";
     block += "<div class='tablediv'><table class='table'>";
     block += "<tr><th>Name</th><th>Field</th><th>Date</th></tr>";
+    block += "<div class='tablebody'>";
     for (let i = 0; i < events.length; i++) {
         block += "<tr><td>" + events[i].name + "</td><td>" + events[i].field + "</td><td>" + events[i].date + "</td></tr>";
     }
+    block += "</div>";
     block += "</table></div>";
     document.getElementById("allEvents").innerHTML = block;
 }
@@ -77,11 +79,12 @@ async function createMyEventsTable() {
     let block = "";
     block += "<p class='titles'>My Events </p>";
     block += "<div class='tablediv'><table class='table'>";
-    block += "<tr><th>Name</th><th>Field</th><th>Date</th></tr>";
+    block += "<thead><tr><th>Name</th><th>Field</th><th>Date</th></tr></thead>";
+    block += "<tbody>";
     for (let i = 0; i < events.length; i++) {
         block += "<tr onclick='changeToEventLobby(" + events[i].id + ")'><td>" + events[i].name + "</td><td>" + events[i].field + "</td><td>" + events[i].date + "</td></tr>";
     }
-    block += "</table></div>";
+    block += "</tbody></table></div>";
     document.getElementById("myEvents").innerHTML = block;
 
 }
