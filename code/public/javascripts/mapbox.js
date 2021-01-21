@@ -6,12 +6,14 @@
     }
 */
 var latlng = {};
+
 mapboxgl.accessToken = 'pk.eyJ1IjoiZWx5bm8iLCJhIjoiY2tqOG8waWE2MDd1ejJzcGVteHd1Y21vdSJ9.0K2deDMvBrkZXzoHjZvWCw';
 var map = new mapboxgl.Map({
     container: 'map', // container id
     style: 'mapbox://styles/mapbox/satellite-v9', //hosted style id
     center: [-9.314149, 38.77295], // starting position
-    zoom: 11 // starting zoom
+    zoom: 11, // starting zoom
+    preserveDrawingBuffer: true
 });
 
 var draw = new MapboxDraw({
@@ -37,6 +39,7 @@ map.addControl(
         trackUserLocation: true
     })
 );
+
 
 // not used, costumização de um marker
 var el = document.createElement('div');
@@ -87,7 +90,7 @@ map.on('load', async function() {
                 let centroidX = centroid.geometry.coordinates[0];
                 let centroidY = centroid.geometry.coordinates[1];
                 let myLatlng = new mapboxgl.LngLat(centroidX, centroidY);
-                let marker = new mapboxgl.Marker().setLngLat(myLatlng).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML("<h3>" + fields[i].name + "</h3>"))
+                let marker = new mapboxgl.Marker().setLngLat(myLatlng).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML("<h3>" + fields[i].name + "</h3><input type='button' value='ZOOM' onclick='zoomToField(" + JSON.stringify(coords) + ")'> </input><br>"))
                     .addTo(map);
                 map.addLayer({
                     'id': "'" + fields[i].id + "'",
@@ -96,7 +99,7 @@ map.on('load', async function() {
                     'layout': {},
                     'paint': {
                         'fill-color': '#827725',
-                        'fill-opacity': 0.8
+                        'fill-opacity': 0.3
                     }
                 });
                 coords = [];
@@ -114,22 +117,32 @@ map.on('load', async function() {
                     }
                 }
             }
+
             map.addSource("'" + fields[i].id + "'", data);
             var polygon = turf.polygon([coords]);
             var centroid = turf.centroid(polygon);
             let centroidX = centroid.geometry.coordinates[0];
             let centroidY = centroid.geometry.coordinates[1];
             let myLatlng = new mapboxgl.LngLat(centroidX, centroidY);
-            let marker = new mapboxgl.Marker().setLngLat(myLatlng).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML("<h3>" + fields[i].name + "</h3>"))
-                .addTo(map);
+            console.log(coords);
+            try {
+                let marker = new mapboxgl.Marker().setLngLat(myLatlng)
+                    .setPopup(new mapboxgl.Popup({ offset: 25 })
+                        .setHTML("<h3>" + fields[i].name + "</h3><input type='button' value='ZOOM' onclick='zoomToField(" + JSON.stringify(coords) + ")'> </input><br>"))
+                    .addTo(map);
+            } catch (err) {
+                console.log(err);
+            }
             map.addLayer({
                 'id': "'" + fields[i].id + "'",
                 'type': 'fill',
                 'source': "'" + fields[i].id + "'",
-                'layout': {},
+                'layout': {
+
+                },
                 'paint': {
                     'fill-color': '#827725',
-                    'fill-opacity': 0.8
+                    'fill-opacity': 0.3
                 }
             });
         }
@@ -139,6 +152,8 @@ map.on('load', async function() {
 
 });
 let html = "<input type='button' value='createevent' onclick='createNewEventForm()'> </input>";
+html += "";
+
 document.getElementById("eventcreatebutton").innerHTML = html;
 let block = "";
 
@@ -231,6 +246,8 @@ function testing() {
 
 
 }
+
+
 
 async function createNewEvent() {
     try {
@@ -344,3 +361,14 @@ function drawEventField() {
                 alert('Use the draw tools to draw a polygon!');
         }
 */
+
+
+function zoomToField(cur) {
+    var bounds = cur.reduce(function(bounds, coord) {
+        return bounds.extend(coord);
+    }, new mapboxgl.LngLatBounds(cur[0], cur[0]));
+    console.log("Bounds:   " + bounds);
+    map.fitBounds(bounds, {
+        padding: 20
+    });
+}
