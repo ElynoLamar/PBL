@@ -288,7 +288,6 @@ async function createNewEvent() {
             }
 
         }
-        console.log(JSON.stringify(event));
         let result = await $.ajax({
             url: "/api/events/",
             method: "post",

@@ -1,81 +1,81 @@
 <html>
 
 <head>
-    
+
     <link rel="stylesheet" href="stylesheets/index.css">
-    
+
     <script src="javascripts/index.js"></script>
 
     <link rel="icon" href="images/on-off-button.png" type="image/x-icon">
 </head>
 
-<body  onscroll="onscrollCheck()">
+<body onscroll="onscrollCheck()">
     <span id=logo></span>
     <header>
-        
+
         <headernav class='menu'>
 
-                    <a id='navMap' href="Links/map.html">map</a>
-                
-                    <a id='navEvents' href="Links/event.html">events</a>
+            <a id='navMap' href="Links/map.html">map</a>
 
-                    <a id='navTeam' href="Links/team.html">team</a>
- 
+            <a id='navEvents' href="Links/event.html">events</a>
+
+            <a id='navTeam' href="Links/team.html">team</a>
+
         </headernav>
 
         <span id='userboxHeader'>
             <span id='userimageHeader'><img id='userImage' src="images/userImage.png" height='50px'></span>
-            <span id='userNameHeader'>John Doe</span>
+        <span id='userNameHeader'>John Doe</span>
         </span>
 
     </header>
     <main>
-        <video  id="indexVideo" autoplay loop muted playsinline>
+        <video id="indexVideo" autoplay loop muted playsinline>
         <source src="images/video_preview_h264.mp4" type="video/mp4">
         </video>
         <p id='TCPdescription'>TCP will allow you to take your airsoft game to <br>the next level! Create Events, Teams and more <br>importantly, Tactics for your favorite fields !</p>
 
         <img id='logoheader' src="images/TCPlogo.png">
-       
+
     </main>
     <div class='infoboxes' id='mapinfo'>
         <div id='mapinfo' class='blackinfobox'>
             <div class='iconblackbox'>map</div>
-            
+
             <div class='listblackbox'>
                 <h3>You can also:</h3>
-                    <p><span>>></span>  Create and join events</p>
-                    <p><span>>></span>  Train your tactic creation skills</p>
-                    <p><span>>></span>  See all the airsoft fields around the world</p>
-        
+                <p><span>>></span> Create and join events</p>
+                <p><span>>></span> Train your tactic creation skills</p>
+                <p><span>>></span> See all the airsoft fields around the world</p>
+
             </div>
             <div class='buttonblackbox' onclick="show(1)"><img class='startButton' onmouseover="this.src='images/GoButtonHover.png'" onmouseout="this.src='images/GoButton.png'" src='images/GoButton.png'></div>
-                
-            </div>
-       
-            <img class='testImg' src="images/airsoftteams.png">
-        
+
+        </div>
+
+        <img class='testImg' src="images/airsoftteams.png">
+
         <div id='mapPointer' class='headerblackbox'>
             <h2><mark>Here is where you can see the events near you<br> and around the world!</mark></h2>
         </div>
     </div>
     <div class='infoboxes' id='eventinfo'>
-        
-            <img class='testImg' src="images/airsoftteams.png">
-        
+
+        <img class='testImg' src="images/airsoftteams.png">
+
         <div id='eventinfo' class='blackinfobox'>
             <div id='eventsTitle' class='iconblackbox'>events</div>
-            
-            <div id='eventsList'class='listblackbox'>
+
+            <div id='eventsList' class='listblackbox'>
                 <h3>You can also:</h3>
-                    <p><span>>></span>  Create new events</p>
-                    <p><span>>></span>  Sign up for events</p>
-                    <p><span>>></span>  Contact the organizer</p>
-                
+                <p><span>>></span> Create new events</p>
+                <p><span>>></span> Sign up for events</p>
+                <p><span>>></span> Contact the organizer</p>
+
             </div>
             <div class='buttonblackbox' onclick="show(2)"><img class='startButton' onmouseover="this.src='images/GoButtonHover.png'" onmouseout="this.src='images/GoButton.png'" src='images/GoButton.png'></div>
-              
-            </div>
+
+        </div>
         <div id='eventsPointer' class='headerblackbox'>
             <h2 style='text-align: right;'><mark>Here is where you can manage your events near you<br>and around the world!</mark></h2>
         </div>
@@ -83,21 +83,21 @@
     <div class='infoboxes' id='teaminfo'>
         <div id='teaminfo' class='blackinfobox'>
             <div class='iconblackbox'>team</div>
-            
+
             <div class='listblackbox'>
                 <h3>You can also:</h3>
-                
-                    <p><span>>></span>  Create new teams</p>
-                    <p><span>>></span>  Sign up for a team</p>
-                    <p><span>>></span>  Contact the team leader</p>
-                
+
+                <p><span>>></span> Create new teams</p>
+                <p><span>>></span> Sign up for a team</p>
+                <p><span>>></span> Contact the team leader</p>
+
             </div>
             <div class='buttonblackbox' onclick="show(3)"><img class='startButton' onmouseover="this.src='images/GoButtonHover.png'" onmouseout="this.src='images/GoButton.png'" src='images/GoButton.png'></div>
-              
-            </div>
-        
-            <img class='testImg' src="images/airsoftteams.png">
-        
+
+        </div>
+
+        <img class='testImg' src="images/airsoftteams.png">
+
         <div id='teamPointer' class='headerblackbox'>
             <h2><mark>Here is where you can find your very own <br>Airsoft team !</mark></h2>
         </div>
