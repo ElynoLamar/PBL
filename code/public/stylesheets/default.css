@@ -95,12 +95,13 @@ main {
 
 .badge {
     position: absolute;
-    top: -7px;
-    right: -7px;
+    left:8vh;
+    top:-10vh;
     padding: 5px 10px;
     border-radius: 50%;
     background: red;
     color: white;
+    z-index:400;
 }
 
 .notif-content {
@@ -131,11 +132,9 @@ main {
     background-color: #f1f1f1
 }
 
-.flex-notif-container {
-    display: none;
-}
 
-.notif-content a:hover .flex-notif-container {
+
+ .flex-notif-container {
     display: flex;
     justify-content: space-between;
 }
@@ -241,6 +240,7 @@ header {
     display:flex;
     flex-direction: column;
     margin-right: 10vh;
+    cursor: pointer;
 }
 
 #userNameheader{
@@ -333,7 +333,7 @@ tr:nth-child(odd) {background-color: #827725;}
 
 #userboxHeader:hover{
     color:#827725;
-    cursor: pointer;
+    
 }
 
 /* width */

@@ -2,13 +2,14 @@ var stringHome = "Home";
 var stringTeam = "Teams";
 var stringEvents = "Events";
 var stringMap = "Map";
-let loggedUser = 1; // assumir que o utilizador autenticado é o id=1
+
+let loggedUser = 2; // assumir que o utilizador autenticado é o este id
 
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
 window.onload = function() {
     createEventUI();
-
+    notifButton(loggedUser);
     createMyEventsTable();
 }
 

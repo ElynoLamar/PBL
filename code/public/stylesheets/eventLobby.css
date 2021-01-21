@@ -140,3 +140,23 @@ table >tbody>tr>td{
   max-width:12vh;
   
 }
+
+#navTitle{
+  display:flex;
+}
+
+.allPlayerSpecificInfo{
+  display:flex;
+  justify-content: center;
+  margin-top:1vh;
+  margin-bottom: 1vh;
+
+}
+
+.invite{
+  cursor:pointer;
+  background-color: green;
+  color:black;
+  margin-left: 2vh;
+  
+}

@@ -1,3 +1,9 @@
+
+let loggedUser = 2; // assumir que o utilizador autenticado é o este id
+window.onload = function() {
+    notifButton(loggedUser);
+}
+
 function show(index) {
     switch (index) {
         case 0:

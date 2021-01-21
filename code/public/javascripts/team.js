@@ -2,17 +2,17 @@ var stringHome = "Home";
 var stringTeam = "Teams";
 var stringEvents = "Events";
 var stringMap = "Map";
+
 let loggedUser = 2; // assumir que o utilizador autenticado é o este id
 
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
 window.onload = async function() {
 
-
     createTeamUI();
-
-    createMyTeamsTable(loggedUser);
     notifButton(loggedUser);
+    createMyTeamsTable(loggedUser);
+  
 }
 
 
@@ -264,7 +264,7 @@ async function getSpecificTeamObj(id) {
 async function joinTeamForm(teamID, player) {
     closeMiddleBox();
     var team = await getSpecificTeamObj(teamID);
-    alert(JSON.stringify(team));
+    
     let block = "";
     block += "<form class='form-container'>";
     block += "<h1>Join this team?</h1>";
@@ -282,58 +282,8 @@ async function joinTeamForm(teamID, player) {
     document.getElementById("MiddleBox").innerHTML = block;
 }
 
-async function notifButton(player) {
-    var notif = await getPlayersNotif(player);
-    var notifCount = await getNotifCount(player);
-    let block = "";
-    block += "<div class='dropdown' onclick=toggleNotif()>";
-    block += "<img src='../images/notif.png' height='50'><span class='badge'>" + notifCount.num + "</span><div class='notif-content'>";
-    for (let i = 0; i < notif.length; i++) {
-        block += "<a>" + notif[i].text_notif;
-        if (notif[i].invite == 1) {
-            if (Number.isInteger(notif[i].teamInv)) {
-                block += "<span class='flex-notif-container'><div class='accept' onclick=changeStatus(" + notif[i].id_notif + "," + 2 + "," + notif[i].teamInv + "," + notif[i].receiver + ")>✔</div><div class='deny' onclick=changeStatus(" + notif[i].id_notif + "," + 3 + "," + notif[i].teamInv + "," + notif[i].receiver + ")>✖</div></span>";
-            } else {
-                // entrar em evento
-            }
-        } else if (notif[i].invite == 0) {
-            if (Number.isInteger(notif[i].teamInv)) {
-                block += "<span class='flex-notif-container'><div class='accept' onclick=changeStatus(" + notif[i].id_notif + "," + 2 + "," + notif[i].teamInv + "," + notif[i].sender + ")>✔</div><div class='deny' onclick=changeStatus(" + notif[i].id_notif + "," + 3 + "," + notif[i].teamInv + "," + notif[i].receiver + ")>✖</div></span>";
-            } else {
-                // entrar em evento
-            }
-        }
 
-        block += "</a>";
-    }
-    block += "</div>";
-    block += "</div>";
-    document.getElementById("notifButton").innerHTML = block;
-}
 
-function toggleNotif() {
-    let content = document.querySelector('.notif-content');
-    if (content.style.display === "") {
-        content.style.display = "block";
-    } else {
-        content.style.display = "";
-    }
-}
-
-async function getPlayersNotif(player) {
-
-    try {
-        var getmyNotif = await $.ajax({
-            url: "/api/notifications/player/" + player,
-            method: "get",
-            dataType: "json"
-        });
-
-        return getmyNotif;
-    } catch (err) {
-        console.log(err);
-    }
-}
 
 /**
     async function getInviteInfo(invNum) {
@@ -353,41 +303,3 @@ async function getPlayersNotif(player) {
 */
 
 
-async function changeStatus(idNotif, newstatus, team, player) {
-    {
-        try {
-            let updatedInv = {
-                id: idNotif,
-                status: newstatus
-            }
-
-            let result = await $.ajax({
-                url: "/api/notifications/" + idNotif,
-                method: "post",
-                dataType: "json",
-                data: JSON.stringify(updatedInv),
-                contentType: "application/json"
-            });
-            if (newstatus == 2) {
-                joinTeam(team, player);
-            }
-
-            notifButton(player);
-        } catch (err) {
-            console.log(err);
-        }
-    }
-}
-
-async function getNotifCount(player) {
-    try {
-        var notifCount = await $.ajax({
-            url: "/api/notifications/player/" + player + "/count",
-            method: "get",
-            dataType: "json"
-        });
-        return notifCount;
-    } catch (err) {
-        console.log(err);
-    }
-}

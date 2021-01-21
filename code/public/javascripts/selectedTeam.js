@@ -4,6 +4,7 @@ var stringTeam = "Teams";
 var stringEvents = "Events";
 var stringMap = "Map";
 
+let loggedUser = 2; // assumir que o utilizador autenticado é o este id
 
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
@@ -14,6 +15,7 @@ window.onload = async function () {
     createTeammatesTable(teamid, loggedUser);
     createTacticsTable(teamid);
     createMiddleBox(teamid);
+    notifButton(loggedUser);
     //notifButton();
 }
 // buscar obj da team usando o teamid
@@ -77,7 +79,6 @@ async function getTeamTactics(id) {
             method: "get",
             dataType: "json"
         });
-
         return teamtacts;
     } catch (err) {
         console.log(err);
@@ -259,7 +260,7 @@ async function changeMiddleBox_AllPlayers(teamid, player) {
 }
 
 async function createNewInvite(teamID, clickedPlayerID, loggedPlayer) {
-
+    
     var player = await getPlayer(loggedPlayer);
 
     var team = await getTeamObj(teamID);
@@ -269,7 +270,7 @@ async function createNewInvite(teamID, clickedPlayerID, loggedPlayer) {
             playerRec: clickedPlayerID,
             playerSend: player.id,
             team: team.id,
-            text: "You have been invited to join " + team.name + " by the player " + player.name
+            text: "You have been invited to join " + team.name + " by " + player.name
         }
 
         let result = await $.ajax({

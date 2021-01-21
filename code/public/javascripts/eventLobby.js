@@ -1,10 +1,11 @@
 var numOfGroups=0;
 
+let loggedUser = 2; // assumir que o utilizador autenticado é o este id
 window.onload= async function(){
     let eventid = sessionStorage.getItem("id");
     let group= await getEventGroups(eventid);
     numOfGroups = group.group_num;
-
+    notifButton(loggedUser);
     createNav(eventid);
     createEventLobbyUI(eventid);
 }
@@ -12,7 +13,7 @@ window.onload= async function(){
 async function createNav(eventid){
   var eventMembers = await getEventMembersObj(eventid);
   let block="";
-  block+="<h1 class='titles'>Players</h1>";
+  block+="<h1 class='titles' id='navTitle'>Players <img class='plusimage' onClick='showPlayers("+eventid+","+ loggedUser+")' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png' height='50vh;' ></h1>";
   block+="<table class='table'>";
   block+="<tr><th>Name</th><th>Team</th><th>Add</th></tr>";
   for(let i = 0; i <eventMembers.length; i++){
@@ -24,7 +25,7 @@ async function createNav(eventid){
       block+="<td>"+eventMembers[i].team+"</td>";
     }
     block+="<td><div id='buttonCell' onClick='createGroupChoiceUI("+i+")'>";
-    block += "<img src='../images/plus-sign.png' height='50'><span class='badge'>3</span>"
+    block += "<img src='../images/plus-sign.png' height='50'>"
     block+="</tr>";
   }
   block+="</table>" ;
@@ -64,6 +65,7 @@ function show(index) {
 async function createEventLobbyUI(event_id){
   let block="";
   block+="<div id='ChoiceBox' ></div></td>";
+  block+="<div id='PlayerBox' ></div></td>";
   for(let i = 1; i <=numOfGroups; i++){
     let groupMembers = await getGroupMembersObj(event_id, i);
     block+="<span class='lobbyGroup' id='group"+i+"'>";
@@ -104,7 +106,7 @@ async function createGroupChoiceUI(eventMember){
     
         for (let i = 1; i <= numOfGroups; i++) {
         block += "<div onClick=insertIntoGroup("+i+")>Group " + i;
-        block +="<div class='accept'>✔</div>"
+        block +="<div class='accept'>✔</div>";
         block += "</div>";
     }
   
@@ -136,3 +138,76 @@ async function getEventGroups(event_id){
     }
     
  }
+
+async function showPlayers(eventid, player){
+  var playersinfo = await getAllPlayers();
+  block="";
+  block += "<div  class='form-container'>";
+    block += "<div class='form-content'>";
+    block+="<boxHeader id='choiceHeader'>";
+    block+="<h1 id='choiceTitle'>All players:</h1>";
+    block+="<span class='close' onclick='closePlayers()'>&times;</span>";
+    block+="</boxHeader>";
+  block += "<span id='allPlayerInfo'>";
+  for (let i = 0; i < playersinfo.length; i++) {
+      block += "<span class='allPlayerSpecificInfo'><a>" + playersinfo[i].name + "</a><div class='invite' onclick=createNewInvite(" + eventid + "," + playersinfo[i].id + "," + player + ")>Invite</div></span>";
+  }
+  block += "</div></div>";
+  document.getElementById("PlayerBox").innerHTML = block;
+}
+
+function closePlayers() {
+  document.getElementById("PlayerBox").innerHTML = "";
+}
+
+async function createNewInvite(teamID, clickedPlayerID, loggedPlayer) {
+    
+  var event = await getTeamObj(teamID);
+
+  try {
+      let newInvite = {
+          playerRec: clickedPlayerID,
+          playerSend: player.id,
+          team: team.id,
+          text: "You have been invited to " + event.name + " event"
+      }
+     
+// AQUI AJUDA WHAT BRO? FAZER INVITE PARA EVENTO
+
+      let result = await $.ajax({
+          url: "/api/notifications/team/" + teamID + "/player/" + clickedPlayerID,
+          method: "post",
+          dataType: "json",
+          data: JSON.stringify(newInvite),
+          contentType: "application/json"
+      });
+  } catch (err) {
+      console.log(err);
+  }
+}
+
+async function getEventObj(id) {
+  try {
+      var team = await $.ajax({
+          url: "/api/events/" + id,
+          method: "get",
+          dataType: "json"
+      });
+      return team;
+  } catch (err) {
+      console.log(err);
+  }
+}
+
+async function getAllPlayers() {
+  try {
+      var players = await $.ajax({
+          url: "/api/players/",
+          method: "get",
+          dataType: "json"
+      });
+      return players;
+  } catch (err) {
+      console.log(err);
+  }
+}
