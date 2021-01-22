@@ -15,10 +15,6 @@ window.onload = async function() {
   
 }
 
-
-
-
-
 function show(index) {
     switch (index) {
         case 0:
@@ -33,8 +29,39 @@ function show(index) {
         case 3:
             window.location = "map.html";
             break;
+        case 4:
+            window.location = "eventSearch.html";
+            break;
     }
 }
+
+function createChoice(){
+    let block = "";
+    block += "<div  class='form-container'>";
+    block += "<div class='form-content'>";
+    block+="<boxHeader id='choiceHeader'>";
+    block+="<h1 id='choiceTitle'>Create / Search</h1>";
+    block+="<span id='choiceClose' class='close' onclick='closeChoice()'>&times;</span>";
+    block+="</boxHeader>";
+
+        block += "<div class='aceptBox' onClick='createNewTeamForm(); closeChoice()'";
+        block += "<a>Create</a>";
+        block += "<div class='accept'>✔</div>";
+        block += "</div>";
+
+        
+        block += "<div class='aceptBox' onClick='show(4)'";
+        block += "<a>Search</a>";
+        block += "<div class='accept'>✔</div>";
+        block += "</div>";
+    block += "</div>";
+    block += "</div>";
+    document.getElementById("ChoiceBox").innerHTML = block;
+}
+function closeChoice() {
+    document.getElementById("ChoiceBox").innerHTML = "";
+}
+
 
 function changeToClickedTeam(team, player) {
     sessionStorage.setItem("teamid", team);
@@ -46,23 +73,9 @@ function createTeamUI() {
     let block = "";
     block += "<span id='myTeams'>1</span>";
     block += "<span id='MiddleBox'></span>";
-    block += "<span id='pluscontainer'><img onclick='createNewTeamForm()' id='plus' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png'><span id='plusText'><p>search team</p><p>create team</p></span></span>";
+    block+="<div id='ChoiceBox' ></div></td>";
+    block += "<span id='pluscontainer'><img onclick='createChoice()' id='plus' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png'><span id='plusText'><p>search team</p><p>create team</p></span></span>";
     document.getElementById("teamDivItems").innerHTML = block;
-}
-
-async function getAllTeamsObj() {
-
-    try {
-        var getallteams = await $.ajax({
-            url: "/api/teams",
-            method: "get",
-            dataType: "json"
-        });
-        return getallteams;
-    } catch (err) {
-        console.log(err);
-    }
-
 }
 
 async function getMyTeamsObj(player) {
@@ -78,22 +91,6 @@ async function getMyTeamsObj(player) {
         console.log(err);
     }
 }
-
-async function createAllTeamsTable(player) {
-
-    var teams = await getAllTeamsObj();
-    let block = "";
-    block += "<h1 class='titles'>All Teams</h1>";
-    block += "<div class='tablediv'><table><thead>";
-    block += "<tr><th>Name</th><th>Description</th></tr></thead><tbody>";
-    for (let i = 0; i < teams.length; i++) {
-        block += "<tr onclick='joinTeamForm(" + teams[i].id + "," + player + ")'><td>" + teams[i].name + "</td><td>" + teams[i].description + "</td></tr>";
-    }
-    block += "</tbody></table></div>";
-    document.getElementById("allTeams").innerHTML = block;
-
-}
-
 
 async function createMyTeamsTable(player) {
 
@@ -141,11 +138,16 @@ async function createNewTeam(playerID) {
     closeMiddleBox();
 }
 
+function closeMiddleBox() {
+    document.getElementById("MiddleBox").innerHTML = "";
+}
+
 function createNewTeamForm() {
     let block = "";
     block += "<form class='form-container'>";
     block +="<div class='form-content'>";
-    block+="  <span class='close'>&times;</span>"
+    
+    block+="  <span class='close' onclick='closeMiddleBox()'>&times;</span>"
     block += "<h1>Create a new Team</h1>";
     block += " <label><b>Team name</b></label>";
     block += "<input type='text' placeholder='Enter Team Name' id='cteamName' required>";

@@ -165,13 +165,13 @@ main {
 
 .accept {
     color: #FFF;
-    background: #44CC44;
+    background: #827725;
     padding: 15px 20px;
     border-radius: 50%;
 }
 
 .accept:hover {
-    background: #6FE76F;
+    background: #ad9f32;
 }
 
 .deny {
