@@ -1,4 +1,3 @@
-
 var stringHome = "Home";
 var stringTeam = "Teams";
 var stringEvents = "Events";
@@ -8,17 +7,17 @@ let loggedUser = 2; // assumir que o utilizador autenticado é o este id
 
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
-window.onload = async function () {
-    let teamid = sessionStorage.getItem("teamid");
-    let loggedUser = sessionStorage.getItem("playerid");
-    createTeamUI();
-    createTeammatesTable(teamid, loggedUser);
-    createTacticsTable(teamid);
-    createMiddleBox(teamid);
-    notifButton(loggedUser);
-    //notifButton();
-}
-// buscar obj da team usando o teamid
+window.onload = async function() {
+        let teamid = sessionStorage.getItem("teamid");
+        let loggedUser = sessionStorage.getItem("playerid");
+        createTeamUI();
+        createTeammatesTable(teamid, loggedUser);
+        createTacticsTable(teamid);
+        createMiddleBox(teamid);
+        notifButton(loggedUser);
+        //notifButton();
+    }
+    // buscar obj da team usando o teamid
 async function getTeamObj(id) {
     try {
         var team = await $.ajax({
@@ -105,7 +104,7 @@ async function createTacticsTable(id) {
 }
 // buscar informação do jogador NESTA equipa(roles e rankings especificos desta equipa) na middle box
 async function getPlayerInfo(player, team) {
-    try {//fixar isto para /api/team/id/player/id
+    try { //fixar isto para /api/team/id/player/id
         var playerinfo = await $.ajax({
             url: "/api/players/" + player + "/team/" + team,
             method: "get",
@@ -161,14 +160,14 @@ async function changeMiddleBox_Player(player, team, loggedPlayer) {
     block += "<span id='deadSpace'></span>"
     block += "</span>"
     block += "<span id='playerDesc'><img src='../images/pistol.png' height='10'> Description: " + playerinfo.description + "</span>";
-    if (loggedPlayerinfo.ranking == 'Leader' && loggedPlayerinfo.id!=playerinfo.id) {
+    if (loggedPlayerinfo.ranking == 'Leader' && loggedPlayerinfo.id != playerinfo.id) {
         block += "<span id='removeOrGiveLeaderFlex'>";
         block += "<div class='promote' onclick=promoteToLeader(" + playerinfo.id + "," + team + "," + loggedPlayer + ")>Promote to Leader</div>";
         block += "<div class='removeTeammate' onclick='removeThisPlayer(" + playerinfo.id + "," + team + "," + loggedPlayer + ")'> Remove Teammate </div> </span>";
-    } else if(loggedPlayerinfo.id==playerinfo.id && loggedPlayerinfo.ranking != 'Leader'){
+    } else if (loggedPlayerinfo.id == playerinfo.id && loggedPlayerinfo.ranking != 'Leader') {
         block += "<span id='removeOrGiveLeaderFlex'>";
         block += "<div class='removeTeammate' onclick='removeThisPlayer(" + playerinfo.id + "," + team + "," + loggedPlayer + ")'> Leave team </div> </span>";
-        
+
     }
     document.getElementById("actionTeamBox").innerHTML = block;
 }
@@ -190,7 +189,7 @@ async function changeRole(roleID, playerID, teamID, loggedPlayer) {
             contentType: "application/json"
         });
         changeMiddleBox_Player(playerID, teamID, loggedPlayer);
-        createTeammatesTable(teamID,loggedPlayer);
+        createTeammatesTable(teamID, loggedPlayer);
     } catch (err) {
         console.log(err);
     }
@@ -216,8 +215,8 @@ async function changeMiddleBox_Tactics(teamid, tacticmap) {
     block += "<h2>Tactic location: HEHEHE </h2>";
     block += "<h2>Team id:" + teamid + "</h2>";
     block += "<img src='../images/" + tacticmap + "' height='450'></img>";
-    block += "<img id='edit' onClick='show("+4+")' onmouseover='this.src=\"../images/editHover.png\"' onmouseout='this.src=\"../images/edit.png\"' src='../images/edit.png'>";
-    
+    block += "<img id='edit' onClick='show(" + 4 + ")' onmouseover='this.src=\"../images/editHover.png\"' onmouseout='this.src=\"../images/edit.png\"' src='../images/edit.png'>";
+
     document.getElementById("actionTeamBox").innerHTML = block;
 }
 
@@ -260,7 +259,7 @@ async function changeMiddleBox_AllPlayers(teamid, player) {
 }
 
 async function createNewInvite(teamID, clickedPlayerID, loggedPlayer) {
-    
+
     var player = await getPlayer(loggedPlayer);
 
     var team = await getTeamObj(teamID);
@@ -274,7 +273,7 @@ async function createNewInvite(teamID, clickedPlayerID, loggedPlayer) {
         }
 
         let result = await $.ajax({
-            url: "/api/notifications/team/" + teamID + "/player/" + clickedPlayerID,
+            url: "/api/notifications/player/invite",
             method: "post",
             dataType: "json",
             data: JSON.stringify(newInvite),
@@ -300,7 +299,7 @@ async function removeThisPlayer(playerID, teamID, loggedPlayer) {
         });
         createTeammatesTable(teamID, loggedPlayer);
         createMiddleBox(teamID);
-        if(playerID==loggedPlayer){
+        if (playerID == loggedPlayer) {
             window.location = "team.html";
             return;
         }
@@ -362,6 +361,3 @@ function show(index) {
             break;
     }
 }
-
-
-

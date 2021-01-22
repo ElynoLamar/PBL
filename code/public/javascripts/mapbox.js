@@ -1,10 +1,3 @@
-/**
-    async function createMap() {
-    
-    
-        return map;
-    }
-*/
 var latlng = {};
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZWx5bm8iLCJhIjoiY2tqOG8waWE2MDd1ejJzcGVteHd1Y21vdSJ9.0K2deDMvBrkZXzoHjZvWCw';
