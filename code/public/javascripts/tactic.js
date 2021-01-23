@@ -1,5 +1,5 @@
 let loggedUser = 2; // assumir que o utilizador autenticado é o este id
-var x = document.getElementById("main");
+var x = document.getElementById("canvas");
 window.onload = function() {
     //notifButton(loggedUser);
     createPaint(x);
@@ -42,7 +42,7 @@ function elt(name, attributes) {
 var controls = Object.create(null);
 
 function createPaint(parent) {
-    var canvas = elt("canvas", { width: 500, height: 300 });
+    var canvas = elt("canvas", { width: 1000, height: 500 });
     var cx = canvas.getContext("2d");
     var toolbar = elt("div", { class: "toolbar" });
     for (var name in controls)
@@ -152,11 +152,16 @@ controls.save = function(cx) {
 function loadImageURL(cx, url) {
     var image = document.createElement("img");
     image.addEventListener("load", function() {
+
         var color = cx.fillStyle,
             size = cx.lineWidth;
-        cx.canvas.width = image.width;
-        cx.canvas.height = image.height;
-        cx.drawImage(image, 0, 0);
+        /**
+                        cx.canvas.width = image.width;
+                    cx.canvas.height = image.height;
+        */
+        cx.canvas.width = '1000';
+        cx.canvas.height = '500';
+        cx.drawImage(image, 0, 0, 1000, 500);
         cx.fillStyle = color;
         cx.strokeStyle = color;
         cx.lineWidth = size;

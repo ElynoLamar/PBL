@@ -92,7 +92,7 @@ map.on('load', async function() {
                     'layout': {},
                     'paint': {
                         'fill-color': '#827725',
-                        'fill-opacity': 0.3
+                        'fill-opacity': 0.5
                     }
                 });
                 coords = [];
@@ -135,7 +135,7 @@ map.on('load', async function() {
                 },
                 'paint': {
                     'fill-color': '#827725',
-                    'fill-opacity': 0.3
+                    'fill-opacity': 0.5
                 }
             });
         }
@@ -145,11 +145,34 @@ map.on('load', async function() {
 
 });
 let html = "<input type='button' value='createevent' onclick='createNewEventForm()'> </input>";
-html += "";
+html += "<input type='button' value='download' onclick='printMap()'> </input>";
 
 document.getElementById("eventcreatebutton").innerHTML = html;
 let block = "";
 
+
+/**
+    $('#downloadLink').click(function() {
+        var img = map.getCanvas().toDataURL('image/png')
+        this.href = img
+    })
+*/
+function printMap() {
+    map.getCanvas().toBlob(function(blob) {
+        saveAs(blob, 'map.png');
+    })
+}
+/**
+    function screenshot() {
+        alert("test");
+        try {
+            var img = map.getCanvas().toDataURL('image/png')
+            this.href = img
+        } catch (err) {
+            console.log(err);
+        }
+    }
+*/
 
 
 
@@ -308,28 +331,20 @@ function drawEventField() {
 
         var data = draw.getAll();
         if (data.features.length > 0) {
-            let aux = [];
-            for (let i = 0; i < data.features[0].geometry.coordinates[0].length; i++) {
-                aux.push(data.features[0].geometry.coordinates[0][i]);
-            }
             let lats = [];
             let lngs = [];
-            for (let i = 0; i < aux.length; i++) {
-                lats.push(aux[i][1]);
-                lngs.push(aux[i][0]);
-
+            alert(data.features[0].geometry.coordinates[0][i])
+            for (let i = 0; i < data.features[0].geometry.coordinates[0].length; i++) {
+                lats.push(data.features[0].geometry.coordinates[0][i][1]);
+                lngs.push(data.features[0].geometry.coordinates[0][i][0]);
             }
-
             latlng = {
                 lat: lats,
                 lng: lngs
             }
-
             document.getElementById("fieldsarea").style.display = "block";
             document.getElementById("MiddleBox").style.display = "block";
             map.removeControl(draw);
-
-
         }
     }
 }

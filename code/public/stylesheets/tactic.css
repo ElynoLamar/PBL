@@ -3,10 +3,6 @@ body {
     overflow: hidden;
 }
 
-#hello {
-    background-color: red;
-}
-
 .canvas-wrapper {
     width: 100%;
     height: 60vh;
@@ -14,13 +10,16 @@ body {
 
 main {
     overflow: auto;
+    margin-top: 20vh;
+    margin-left: 2vh;
+    margin-right: 2vh;
+    display: flex;
+    justify-content: space-between;
 }
 
 canvas {
-    border: 1px solid brown;
+    border: 3px solid black;
     background-color: white;
-    /*margin-top: 30vh;
-*/
 }
 
 input[type="range"] {
