@@ -271,7 +271,7 @@ header {
 #logoheader{
     position: relative;
     right:11%;
-    top:5%;
+    top:0%;
     width: 30vh;
     height:auto;
     z-index: 1;
@@ -292,6 +292,7 @@ table > thead{
 table > tbody{
   display:block;
   overflow:auto;
+  overflow-x: hidden;
   height:30vh;
   
 }
