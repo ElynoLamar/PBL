@@ -121,7 +121,7 @@ map.on('load', async function() {
             try {
                 let marker = new mapboxgl.Marker().setLngLat(myLatlng)
                     .setPopup(new mapboxgl.Popup({ offset: 25 })
-                        .setHTML("<h3>" + fields[i].name + "</h3><input type='button' value='ZOOM' onclick='zoomToField(" + JSON.stringify(coords) + ")'> </input><br>"))
+                        .setHTML("<b>Field Name:</b>: " + fields[i].name + "<br> <b>Field Name:</b>: BRU/BRUV/BRU <br>Check events<br><input type='button' value='ZOOM' onclick='zoomToField(" + JSON.stringify(coords) + ")'> </input><br><input type='button' value='Save field' onclick='printMap()'> </input>"))
                     .addTo(map);
             } catch (err) {
                 console.log(err);
@@ -145,23 +145,22 @@ map.on('load', async function() {
 
 });
 let html = "<input type='button' value='createevent' onclick='createNewEventForm()'> </input>";
-html += "<input type='button' value='download' onclick='printMap()'> </input>";
+html += "";
 
 document.getElementById("eventcreatebutton").innerHTML = html;
 let block = "";
 
-
+function printMap() {
+    map.getCanvas().toBlob(function(blob) {
+        saveAs(blob, 'map.png');
+    })
+}
 /**
     $('#downloadLink').click(function() {
         var img = map.getCanvas().toDataURL('image/png')
         this.href = img
     })
 */
-function printMap() {
-    map.getCanvas().toBlob(function(blob) {
-        saveAs(blob, 'map.png');
-    })
-}
 /**
     function screenshot() {
         alert("test");
@@ -190,6 +189,19 @@ async function getAllFields() {
         console.log(err);
     }
 }
+async function getAllDistinctFields() {
+    try {
+        var fields = await $.ajax({
+            url: "/api/fields/distinct",
+            method: "get",
+            dataType: "json"
+        });
+        return fields;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 async function getSpecificField() {
     try {
         var getField = await $.ajax({
@@ -205,7 +217,7 @@ async function getSpecificField() {
 }
 async function createNewEventForm() {
     latlng = {};
-    var fields = await getAllFields();
+    var fields = await getAllDistinctFields();
     let block = "";
     block += "<form class='form-container'>";
     block += "<div class='form-content'>";
@@ -259,8 +271,6 @@ function testing() {
     document.getElementById("createdFields").style.display = "none";
     document.getElementById("fieldsarea").style.display = "block";
     drawEventField();
-
-
 }
 
 
@@ -333,7 +343,7 @@ function drawEventField() {
         if (data.features.length > 0) {
             let lats = [];
             let lngs = [];
-            alert(data.features[0].geometry.coordinates[0][i])
+
             for (let i = 0; i < data.features[0].geometry.coordinates[0].length; i++) {
                 lats.push(data.features[0].geometry.coordinates[0][i][1]);
                 lngs.push(data.features[0].geometry.coordinates[0][i][0]);

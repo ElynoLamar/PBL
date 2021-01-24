@@ -7,6 +7,11 @@ router.get('/', async function(req, res, next) {
     res.send(fields);
 });
 
+router.get('/distinct', async function(req, res, next) {
+    let fields = await mfield.getAllFieldsDistinct();
+    res.send(fields);
+});
+
 router.get('/:pos/coordinates', async function(req, res, next) {
     let pos = req.params.pos;
     let fieldsCoords = await mfield.getSpecificFieldCoords(pos);
