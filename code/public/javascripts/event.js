@@ -3,11 +3,10 @@ var stringTeam = "Teams";
 var stringEvents = "Events";
 var stringMap = "Map";
 
-let loggedUser = 2; // assumir que o utilizador autenticado é o este id
-
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
-
+var loggedUser;
 window.onload = function() {
+    loggedUser= sessionStorage.getItem("loggedUser");
     createEventUI();
     notifButton(loggedUser);
     createMyEventsTable();
@@ -75,6 +74,7 @@ function show(index) {
 async function createMyEventsTable() {
 
     var events = await getMyEventsObj();
+    
     let block = "";
     block += "<p class='titles'>My Events </p>";
     block += "<div class='tablediv'><table class='table'>";
@@ -89,7 +89,7 @@ async function createMyEventsTable() {
 }
 
 async function getMyEventsObj() {
-    let loggedUser = 1; // assumir que o utilizador autenticado é o id=8
+    
     try {
         var getmyevents = await $.ajax({
             url: "/api/events/player/" + loggedUser,
@@ -104,8 +104,10 @@ async function getMyEventsObj() {
 
 
 function changeToEventLobby(id) {
-    sessionStorage.setItem("id", id);
-    window.location = "eventLobby.html"
+    array=[id, loggedUser]
+    sessionStorage.setItem("eventAndLoggedUserID", JSON.stringify(array));
+    
+    window.location = "eventLobby.html";
 }
 
 async function createNewEventForm() {

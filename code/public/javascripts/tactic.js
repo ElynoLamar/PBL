@@ -1,6 +1,7 @@
-let loggedUser = 2; // assumir que o utilizador autenticado é o este id
+var loggedUser;
 var x = document.getElementById("canvas");
 window.onload = function() {
+    loggedUser= sessionStorage.getItem("loggedUser");
     //notifButton(loggedUser);
     createPaint(x);
 }

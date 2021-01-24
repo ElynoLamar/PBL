@@ -105,7 +105,7 @@ async function changeStatus(idNotif, newstatus, teamORevent, player) {
                 contentType: "application/json"
             });
             if (newstatus == 2) {
-                alert("HEY");
+               
             }
             notifButton(player);
         } catch (err) {

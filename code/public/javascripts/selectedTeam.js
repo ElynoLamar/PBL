@@ -3,13 +3,16 @@ var stringTeam = "Teams";
 var stringEvents = "Events";
 var stringMap = "Map";
 
-let loggedUser = 2; // assumir que o utilizador autenticado é o este id
+let loggedUser;
 
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
 window.onload = async function() {
-        let teamid = sessionStorage.getItem("teamid");
-        let loggedUser = sessionStorage.getItem("playerid");
+    let JSONarray = sessionStorage.getItem("teamAndLoggedUserID");
+    let array = JSON.parse(JSONarray);
+    loggedUser= array[1];
+    teamid = array[0];
+        
         createTeamUI();
         createTeammatesTable(teamid, loggedUser);
         createTacticsTable(teamid);
@@ -311,8 +314,7 @@ async function removeThisPlayer(playerID, teamID, loggedPlayer) {
 
 
 async function promoteToLeader(playerID, teamID, loggedPlayer) {
-    alert("logged player: " + loggedPlayer);
-    alert("player escolhido: " + playerID);
+    
     try {
         let teammate = {
             newLeader: playerID,

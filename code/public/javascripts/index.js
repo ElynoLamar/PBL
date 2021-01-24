@@ -1,7 +1,15 @@
 var counter=-1;
+var loggedUser;
 window.onload = function() {
+   fakeLogin();
    counter=0;
    let logo = document.getElementById('logoheader');
+   
+}
+
+function fakeLogin(){
+  loggedUser=3;
+  sessionStorage.setItem("loggedUser", loggedUser);
 }
 
 

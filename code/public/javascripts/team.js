@@ -2,13 +2,11 @@ var stringHome = "Home";
 var stringTeam = "Teams";
 var stringEvents = "Events";
 var stringMap = "Map";
-
-let loggedUser = 2; // assumir que o utilizador autenticado é o este id
-
+var loggedUser;
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
 window.onload = async function() {
-
+    loggedUser= sessionStorage.getItem("loggedUser");
     createTeamUI();
     notifButton(loggedUser);
     createMyTeamsTable(loggedUser);
@@ -62,10 +60,9 @@ function closeChoice() {
     document.getElementById("ChoiceBox").innerHTML = "";
 }
 
-
 function changeToClickedTeam(team, player) {
-    sessionStorage.setItem("teamid", team);
-    sessionStorage.setItem("playerid", player);
+    array=[team, player]
+    sessionStorage.setItem("teamAndLoggedUserID", JSON.stringify(array));
     window.location = "selectedTeam.html"
 }
 
@@ -274,8 +271,9 @@ async function joinTeamForm(teamID, player) {
     block += " <label><b>Team Description: " + team.description + " </b></label>";
     if (team.privacy == 2) {
         block += " <button type='button' class='btn' onclick='requestToJoinTeam(" + teamID + "," + player + ")'>Request to join</button>";
-    } else if (team.privacy == 3) alert("team por pass")
-    else if (team.privacy == 1) {
+    } else if (team.privacy == 3){
+        //
+    } else if (team.privacy == 1) {
         block += " <button type='button' class='btn' onclick='joinTeam(" + teamID + "," + player + ")'>Join</button>";
     }
     block += "  <button type='button' class='btn cancel' onclick='closeMiddleBox()'>Cancel</button>";

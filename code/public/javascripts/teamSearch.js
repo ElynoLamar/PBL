@@ -2,17 +2,14 @@ var stringHome = "Home";
 var stringTeam = "Teams";
 var stringEvents = "Events";
 var stringMap = "Map";
-
-let loggedUser = 2; // assumir que o utilizador autenticado é o este id
-
+var loggedUser;
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
 window.onload = async function() {
-
+    loggedUser= sessionStorage.getItem("loggedUser");
     createTeamUI();
     notifButton(loggedUser);
     createAllTeamsTable(loggedUser);
-  
 }
 
 

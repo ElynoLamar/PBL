@@ -1,8 +1,11 @@
 var numOfGroups = 0;
 var eventid = 0;
-var loggedUser = 9; // assumir que o utilizador autenticado é o este id
+var loggedUser;
 window.onload = async function() {
-    eventid = sessionStorage.getItem("id");
+    let JSONarray = sessionStorage.getItem("eventAndLoggedUserID");
+    let array = JSON.parse(JSONarray);
+    loggedUser= array[1];
+    eventid = array[0];
     let group = await getEventGroups(eventid);
     numOfGroups = group.group_num;
     notifButton(loggedUser);
@@ -74,7 +77,6 @@ async function createEventLobbyUI(event_id) {
     block += "<img id='edit' onClick='show(" + 4 + ")' onmouseover='this.src=\"../images/editHover.png\"' onmouseout='this.src=\"../images/edit.png\"' src='../images/edit.png'>";
     for (let i = 1; i <= numOfGroups; i++) {
         let groupMembers = await getGroupMembersObj(event_id, i);
-        alert(JSON.stringify(groupMembers));
         block += "<span class='lobbyGroup' id='group" + i + "'>";
         block += "<h1 class='titles'>Group " + i + "</h1>";
         block += "<div class='tablediv'><table class='table'>";

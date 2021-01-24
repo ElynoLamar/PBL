@@ -164,6 +164,7 @@ main {
 }
 
 .accept {
+    position: relative;
     color: #FFF;
     background: #827725;
     padding: 15px 20px;
@@ -175,6 +176,7 @@ main {
 }
 
 .deny {
+    position: relative;
     color: #FFF;
     background: tomato;
     padding: 15px 20px;
