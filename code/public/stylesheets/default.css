@@ -165,13 +165,13 @@ main {
 
 .accept {
     color: #FFF;
-    background: #44CC44;
+    background: #827725;
     padding: 15px 20px;
     border-radius: 50%;
 }
 
 .accept:hover {
-    background: #6FE76F;
+    background: #ad9f32;
 }
 
 .deny {
@@ -271,7 +271,7 @@ header {
 #logoheader{
     position: relative;
     right:11%;
-    top:5%;
+    top:0%;
     width: 30vh;
     height:auto;
     z-index: 1;
@@ -292,6 +292,7 @@ table > thead{
 table > tbody{
   display:block;
   overflow:auto;
+  overflow-x: hidden;
   height:30vh;
   
 }

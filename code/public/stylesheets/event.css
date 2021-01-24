@@ -24,3 +24,19 @@
 }
 
 
+.close{
+    position:relative;
+    top: -12vh;
+}
+
+.aceptBox{
+    cursor:pointer;
+    max-width: 12%;
+    margin-left:45%;
+    text-align: center;
+    margin-bottom: 2vh;
+}
+
+#choiceTitle{
+    text-align: center;
+}

@@ -17,13 +17,38 @@ window.onload = function() {
 function createEventUI() {
     let block = "";
     block += "<span id='MiddleBox'></span>";
+    block+="<div id='ChoiceBox' ></div></td>";
     block += "<span id='myEvents' >1</span>";
-    block += "<span id='pluscontainer'><img onclick='createNewEventForm()' id='plus' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png'><span id='plusText'><p>search event</p><p>create event</p></span></span>";
+    block += "<span id='pluscontainer'><img onclick='createChoice()' id='plus' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png'><span id='plusText'><p>search event</p><p>create event</p></span></span>";
     document.getElementById("eventDivItems").innerHTML = block;
-
 }
 
+function createChoice(){
+    let block = "";
+    block += "<div  class='form-container'>";
+    block += "<div class='form-content'>";
+    block+="<boxHeader id='choiceHeader'>";
+    block+="<h1 id='choiceTitle'>Create / Search</h1>";
+    block+="<span class='close' onclick='closeChoice()'>&times;</span>";
+    block+="</boxHeader>";
 
+        block += "<div class='aceptBox' onClick='createNewEventForm(); closeChoice()'";
+        block += "<a>Create</a>";
+        block += "<div class='accept'>✔</div>";
+        block += "</div>";
+
+        
+        block += "<div class='aceptBox' onClick='show(4)'";
+        block += "<a>Search</a>";
+        block += "<div class='accept'>✔</div>";
+        block += "</div>";
+    block += "</div>";
+    block += "</div>";
+    document.getElementById("ChoiceBox").innerHTML = block;
+}
+function closeChoice() {
+    document.getElementById("ChoiceBox").innerHTML = "";
+}
 
 
 function show(index) {
@@ -40,37 +65,10 @@ function show(index) {
         case 3:
             window.location = "map.html";
             break;
+        case 4:
+            window.location = "eventSearch.html";
+            break;
     }
-}
-
-async function createAllEventsTable() {
-    var events = await getAllEventsObj();
-    let block = "";
-    block += "<h1 class='titles'>All Events</h1>";
-    block += "<div class='tablediv'><table class='table'>";
-    block += "<tr><th>Name</th><th>Field</th><th>Date</th></tr>";
-    block += "<div class='tablebody'>";
-    for (let i = 0; i < events.length; i++) {
-        block += "<tr><td>" + events[i].name + "</td><td>" + events[i].field + "</td><td>" + events[i].date + "</td></tr>";
-    }
-    block += "</div>";
-    block += "</table></div>";
-    document.getElementById("allEvents").innerHTML = block;
-}
-
-async function getAllEventsObj() {
-
-    try {
-        var getallevents = await $.ajax({
-            url: "/api/events",
-            method: "get",
-            dataType: "json"
-        });
-        return getallevents;
-    } catch (err) {
-        console.log(err);
-    }
-
 }
 
 
