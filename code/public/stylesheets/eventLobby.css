@@ -96,14 +96,6 @@ table > tbody{
     display:flex;
   }
 
-  .accept {
-    color: #FFF;
-    background: #44CC44;
-    padding: auto;
-    margin-left:38%;
-    margin-right:38%;
-    border-radius: 50%;
-  }
 
   .form-container{
     text-align: center;

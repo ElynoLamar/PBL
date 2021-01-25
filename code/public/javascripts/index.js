@@ -3,7 +3,6 @@ var loggedUser;
 window.onload = function() {
    fakeLogin();
    counter=0;
-   let logo = document.getElementById('logoheader');
    
 }
 

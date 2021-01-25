@@ -12,10 +12,6 @@ window.onload = async function() {
     createAllTeamsTable(loggedUser);
 }
 
-
-
-
-
 function show(index) {
     switch (index) {
         case 0:

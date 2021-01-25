@@ -28,7 +28,7 @@ function show(index) {
             window.location = "map.html";
             break;
         case 4:
-            window.location = "eventSearch.html";
+            window.location = "teamSearch.html";
             break;
     }
 }
