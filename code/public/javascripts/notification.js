@@ -152,3 +152,26 @@ async function joinEvent(eventID, playerID) {
     }
     closeMiddleBox();
 }
+
+async function joinTeam(teamID, playerID) {
+    try {
+        let newMember = {
+            player: playerID,
+            team: teamID,
+            ranking: 2,
+            role: 1
+        }
+
+        let result = await $.ajax({
+            url: "/api/teams/newmember",
+            method: "post",
+            dataType: "json",
+            data: JSON.stringify(newMember),
+            contentType: "application/json"
+        });
+    } catch (err) {
+        console.log(err);
+    }
+    closeMiddleBox();
+        
+}

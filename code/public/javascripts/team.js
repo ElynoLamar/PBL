@@ -169,64 +169,6 @@ function closeMiddleBox() {
     document.getElementById("MiddleBox").innerHTML = "";
 }
 
-
-async function joinTeam(teamID, playerID) {
-    try {
-        let newMember = {
-            player: playerID,
-            team: teamID,
-            ranking: 2,
-            role: 1
-        }
-
-        let result = await $.ajax({
-            url: "/api/teams/newmember",
-            method: "post",
-            dataType: "json",
-            data: JSON.stringify(newMember),
-            contentType: "application/json"
-        });
-    } catch (err) {
-        console.log(err);
-    }
-    closeMiddleBox();
-
-    createMyTeamsTable(loggedUser);
-}
-
-//not used
-async function getPlayer(id) {
-    try {
-        var player = await $.ajax({
-            url: "/api/players/" + id,
-            method: "get",
-            dataType: "json"
-        });
-        return player;
-    } catch (err) {
-        console.log(err);
-    }
-}
-async function requestToJoinTeam(teamID, loggedPlayer) {
-    var player = await getPlayer(loggedPlayer);
-    try {
-        let request = {
-            player: loggedPlayer,
-            team: teamID,
-            text: "Player " + player.name + " is requesting to join your team."
-        }
-
-        let result = await $.ajax({
-            url: "/api/notifications/player/:pos/team/:pos2/request/",
-            method: "post",
-            dataType: "json",
-            data: JSON.stringify(request),
-            contentType: "application/json"
-        });
-    } catch (err) {
-        console.log(err);
-    }
-}
 //not used
 async function changeRank(playerID, teamID) {
     try {

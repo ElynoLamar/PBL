@@ -333,9 +333,6 @@ table >tbody>tr:hover {
     background-color: #353321;
 }
 
-table >tbody>tr:clicked {
-    background-color: #353321;
-}
 
 tr:nth-child(even) {background: #DDDACC}
 tr:nth-child(odd) {background-color: #827725;}

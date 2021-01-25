@@ -106,3 +106,39 @@ async function getSpecificTeamObj(id) {
 function closeMiddleBox() {
     document.getElementById("MiddleBox").innerHTML = "";
 }
+
+async function requestToJoinTeam(teamID, loggedPlayer) {
+    var player = await getPlayer(loggedPlayer);
+    try {
+        let request = {
+            player: loggedPlayer,
+            team: teamID,
+            text: "Player " + player.name + " is requesting to join your team."
+        }
+
+        let result = await $.ajax({
+            url: "/api/notifications/player/:pos/team/:pos2/request/",
+            method: "post",
+            dataType: "json",
+            data: JSON.stringify(request),
+            contentType: "application/json"
+            
+        });
+        closeMiddleBox();
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+async function getPlayer(id) {
+    try {
+        var player = await $.ajax({
+            url: "/api/players/" + id,
+            method: "get",
+            dataType: "json"
+        });
+        return player;
+    } catch (err) {
+        console.log(err);
+    }
+}

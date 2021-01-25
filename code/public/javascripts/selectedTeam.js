@@ -265,7 +265,7 @@ async function changeMiddleBox_AllPlayers(teamid, player) {
 }
 
 async function createNewInvite(teamID, clickedPlayerID, loggedPlayer) {
-
+    document.getElementById('id1').style.color = 'red'
     var player = await getPlayer(loggedPlayer);
 
     var team = await getTeamObj(teamID);
