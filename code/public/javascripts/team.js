@@ -248,43 +248,6 @@ async function changeRank(playerID, teamID) {
     }
 }
 
-async function getSpecificTeamObj(id) {
-
-    try {
-        var getTeam = await $.ajax({
-            url: "/api/teams/" + id,
-            method: "get",
-            dataType: "json"
-        });
-        return getTeam;
-    } catch (err) {
-        console.log(err);
-    }
-}
-async function joinTeamForm(teamID, player) {
-    closeMiddleBox();
-    var team = await getSpecificTeamObj(teamID);
-
-    let block = "";
-    block += "<form class='form-container'>";
-    block += "<h1>Join this team?</h1>";
-    block += " <label><b>Team name: " + team.name + " </b></label>";
-    block += " <label><b>Team Description: " + team.description + " </b></label>";
-    if (team.privacy == 2) {
-        block += " <button type='button' class='btn' onclick='requestToJoinTeam(" + teamID + "," + player + ")'>Request to join</button>";
-    } else if (team.privacy == 3) {
-        //
-    } else if (team.privacy == 1) {
-        block += " <button type='button' class='btn' onclick='joinTeam(" + teamID + "," + player + ")'>Join</button>";
-    }
-    block += "  <button type='button' class='btn cancel' onclick='closeMiddleBox()'>Cancel</button>";
-    block += "</form>";
-    block += "</div>";
-    document.getElementById("MiddleBox").innerHTML = block;
-}
-
-
-
 
 /**
     async function getInviteInfo(invNum) {

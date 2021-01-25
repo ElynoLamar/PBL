@@ -327,7 +327,13 @@ table >tbody>tr>td{
     padding: 0.2vh 1vh 0.2vh;
 }
 
+
+
 table >tbody>tr:hover {
+    background-color: #353321;
+}
+
+table >tbody>tr:clicked {
     background-color: #353321;
 }
 

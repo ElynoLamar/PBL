@@ -254,9 +254,12 @@ async function changeMiddleBox_AllPlayers(teamid, player) {
     var playersinfo = await getAllPlayers();
     block += "<h2>All players: </h2>";
     block += "<span id='allPlayerInfo'>";
+    block += "<table class='table'>";
+    block += "<thead><tr><th>INVITE:</th></tr></thead><tbody>";
     for (let i = 0; i < playersinfo.length; i++) {
-        block += "<span id='allPlayerSpecificInfo'><a>" + playersinfo[i].name + "</a><div onclick=createNewInvite(" + teamid + "," + playersinfo[i].id + "," + player + ")>Invite</div></span>";
+        block += "<tr><td><span id='allPlayerSpecificInfo' onclick=createNewInvite(" + teamid + "," + playersinfo[i].id + "," + player + ")><a>" + playersinfo[i].name + "</a></span></td></tr>";
     }
+    block += "</tbody></table>";
     block += "</span>";
     document.getElementById("actionTeamBox").innerHTML = block;
 }
