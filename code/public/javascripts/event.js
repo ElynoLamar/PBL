@@ -6,45 +6,47 @@ var stringMap = "Map";
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 var loggedUser;
 window.onload = function() {
-    loggedUser= sessionStorage.getItem("loggedUser");
+    loggedUser = sessionStorage.getItem("loggedUser");
     createEventUI();
     notifButton(loggedUser);
     createMyEventsTable();
+
 }
 
 
 function createEventUI() {
     let block = "";
     block += "<span id='MiddleBox'></span>";
-    block+="<div id='ChoiceBox' ></div></td>";
+    block += "<div id='ChoiceBox' ></div></td>";
     block += "<span id='myEvents' >1</span>";
     block += "<span id='pluscontainer'><img onclick='createChoice()' id='plus' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png'><span id='plusText'><p>search event</p><p>create event</p></span></span>";
     document.getElementById("eventDivItems").innerHTML = block;
 }
 
-function createChoice(){
+function createChoice() {
     let block = "";
     block += "<div  class='form-container'>";
     block += "<div class='form-content'>";
-    block+="<boxHeader id='choiceHeader'>";
-    block+="<h1 id='choiceTitle'>Create / Search</h1>";
-    block+="<span class='close' onclick='closeChoice()'>&times;</span>";
-    block+="</boxHeader>";
+    block += "<boxHeader id='choiceHeader'>";
+    block += "<h1 id='choiceTitle'>Create / Search</h1>";
+    block += "<span class='close' onclick='closeChoice()'>&times;</span>";
+    block += "</boxHeader>";
 
-        block += "<div class='aceptBox' onClick='createNewEventForm(); closeChoice()'";
-        block += "<a>Create</a>";
-        block += "<div class='accept'>✔</div>";
-        block += "</div>";
+    block += "<div class='aceptBox' onClick='createNewEventForm(); closeChoice()'";
+    block += "<a>Create</a>";
+    block += "<div class='accept'>✔</div>";
+    block += "</div>";
 
-        
-        block += "<div class='aceptBox' onClick='show(4)'";
-        block += "<a>Search</a>";
-        block += "<div class='accept'>✔</div>";
-        block += "</div>";
+
+    block += "<div class='aceptBox' onClick='show(4)'";
+    block += "<a>Search</a>";
+    block += "<div class='accept'>✔</div>";
+    block += "</div>";
     block += "</div>";
     block += "</div>";
     document.getElementById("ChoiceBox").innerHTML = block;
 }
+
 function closeChoice() {
     document.getElementById("ChoiceBox").innerHTML = "";
 }
@@ -74,7 +76,7 @@ function show(index) {
 async function createMyEventsTable() {
 
     var events = await getMyEventsObj();
-    
+
     let block = "";
     block += "<p class='titles'>My Events </p>";
     block += "<div class='tablediv'><table class='table'>";
@@ -89,7 +91,7 @@ async function createMyEventsTable() {
 }
 
 async function getMyEventsObj() {
-    
+
     try {
         var getmyevents = await $.ajax({
             url: "/api/events/player/" + loggedUser,
@@ -104,9 +106,9 @@ async function getMyEventsObj() {
 
 
 function changeToEventLobby(id) {
-    array=[id, loggedUser]
+    array = [id, loggedUser]
     sessionStorage.setItem("eventAndLoggedUserID", JSON.stringify(array));
-    
+
     window.location = "eventLobby.html";
 }
 
