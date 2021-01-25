@@ -122,3 +122,16 @@ module.exports.insertPlayerIntoGroup = async function(newGroupMember) {
         return err;
     }
 }
+
+
+module.exports.newEventMember = async function(newMember) {
+    try {
+        var query = "insert into EventMember(player, event,ranking) values(?, ?, ?);";
+        const result = await pool.query(query, [newMember.player, newMember.event, newMember.ranking]);
+        console.log(query);
+        return { status: 200, data: result };
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}

@@ -52,3 +52,9 @@ router.post('/group', async function(req, res, next) {
 });
 
 module.exports = router;
+
+router.put("/newmember", async function(req, res, next) {
+    let event = req.body;
+    let newMember = await mevent.newEventMember(event);
+    res.send(newMember);
+});

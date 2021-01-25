@@ -4,7 +4,7 @@ var loggedUser;
 window.onload = async function() {
     let JSONarray = sessionStorage.getItem("eventAndLoggedUserID");
     let array = JSON.parse(JSONarray);
-    loggedUser= array[1];
+    loggedUser = array[1];
     eventid = array[0];
     let group = await getEventGroups(eventid);
     numOfGroups = group.group_num;
@@ -177,6 +177,7 @@ async function showPlayers(eventid, player) {
     block += "<div class='form-content'>";
     block += "<boxHeader id='choiceHeader'>";
     block += "<h1 id='choiceTitle'>All players:</h1>";
+    block += "<input type='button' value='inviteWholeTeam' onclick='inviteWholeTeam()'></input>";
     block += "<span class='close' onclick='closePlayers()'>&times;</span>";
     block += "</boxHeader>";
     block += "<span id='allPlayerInfo'>";
@@ -186,6 +187,7 @@ async function showPlayers(eventid, player) {
     block += "</div></div>";
     document.getElementById("PlayerBox").innerHTML = block;
 }
+
 
 function closePlayers() {
     document.getElementById("PlayerBox").innerHTML = "";
@@ -249,4 +251,9 @@ async function getAllPlayers() {
     } catch (err) {
         console.log(err);
     }
+}
+
+function inviteWholeTeam() {
+    alert("test");
+    document.getElementById("form-content").innerHTML = block;
 }

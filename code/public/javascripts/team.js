@@ -6,11 +6,11 @@ var loggedUser;
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
 window.onload = async function() {
-    loggedUser= sessionStorage.getItem("loggedUser");
+    loggedUser = sessionStorage.getItem("loggedUser");
     createTeamUI();
     notifButton(loggedUser);
     createMyTeamsTable(loggedUser);
-  
+
 }
 
 function show(index) {
@@ -33,35 +33,36 @@ function show(index) {
     }
 }
 
-function createChoice(){
+function createChoice() {
     let block = "";
     block += "<div  class='form-container'>";
     block += "<div class='form-content'>";
-    block+="<boxHeader id='choiceHeader'>";
-    block+="<h1 id='choiceTitle'>Create / Search</h1>";
-    block+="<span id='choiceClose' class='close' onclick='closeChoice()'>&times;</span>";
-    block+="</boxHeader>";
+    block += "<boxHeader id='choiceHeader'>";
+    block += "<h1 id='choiceTitle'>Create / Search</h1>";
+    block += "<span id='choiceClose' class='close' onclick='closeChoice()'>&times;</span>";
+    block += "</boxHeader>";
 
-        block += "<div class='aceptBox' onClick='createNewTeamForm(); closeChoice()'";
-        block += "<a>Create</a>";
-        block += "<div class='accept'>✔</div>";
-        block += "</div>";
+    block += "<div class='aceptBox' onClick='createNewTeamForm(); closeChoice()'";
+    block += "<a>Create</a>";
+    block += "<div class='accept'>✔</div>";
+    block += "</div>";
 
-        
-        block += "<div class='aceptBox' onClick='show(4)'";
-        block += "<a>Search</a>";
-        block += "<div class='accept'>✔</div>";
-        block += "</div>";
+
+    block += "<div class='aceptBox' onClick='show(4)'";
+    block += "<a>Search</a>";
+    block += "<div class='accept'>✔</div>";
+    block += "</div>";
     block += "</div>";
     block += "</div>";
     document.getElementById("ChoiceBox").innerHTML = block;
 }
+
 function closeChoice() {
     document.getElementById("ChoiceBox").innerHTML = "";
 }
 
 function changeToClickedTeam(team, player) {
-    array=[team, player]
+    array = [team, player]
     sessionStorage.setItem("teamAndLoggedUserID", JSON.stringify(array));
     window.location = "selectedTeam.html"
 }
@@ -70,7 +71,7 @@ function createTeamUI() {
     let block = "";
     block += "<span id='myTeams'>1</span>";
     block += "<span id='MiddleBox'></span>";
-    block+="<div id='ChoiceBox' ></div></td>";
+    block += "<div id='ChoiceBox' ></div></td>";
     block += "<span id='pluscontainer'><img onclick='createChoice()' id='plus' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png'><span id='plusText'><p>search team</p><p>create team</p></span></span>";
     document.getElementById("teamDivItems").innerHTML = block;
 }
@@ -142,9 +143,9 @@ function closeMiddleBox() {
 function createNewTeamForm() {
     let block = "";
     block += "<form class='form-container'>";
-    block +="<div class='form-content'>";
-    
-    block+="  <span class='close' onclick='closeMiddleBox()'>&times;</span>"
+    block += "<div class='form-content'>";
+
+    block += "  <span class='close' onclick='closeMiddleBox()'>&times;</span>"
     block += "<h1>Create a new Team</h1>";
     block += " <label><b>Team name</b></label>";
     block += "<input type='text' placeholder='Enter Team Name' id='cteamName' required>";
@@ -179,7 +180,7 @@ async function joinTeam(teamID, playerID) {
         }
 
         let result = await $.ajax({
-            url: "/api/teams/" + teamID + "/members",
+            url: "/api/teams/newmember",
             method: "post",
             dataType: "json",
             data: JSON.stringify(newMember),
@@ -263,7 +264,7 @@ async function getSpecificTeamObj(id) {
 async function joinTeamForm(teamID, player) {
     closeMiddleBox();
     var team = await getSpecificTeamObj(teamID);
-    
+
     let block = "";
     block += "<form class='form-container'>";
     block += "<h1>Join this team?</h1>";
@@ -271,7 +272,7 @@ async function joinTeamForm(teamID, player) {
     block += " <label><b>Team Description: " + team.description + " </b></label>";
     if (team.privacy == 2) {
         block += " <button type='button' class='btn' onclick='requestToJoinTeam(" + teamID + "," + player + ")'>Request to join</button>";
-    } else if (team.privacy == 3){
+    } else if (team.privacy == 3) {
         //
     } else if (team.privacy == 1) {
         block += " <button type='button' class='btn' onclick='joinTeam(" + teamID + "," + player + ")'>Join</button>";
@@ -301,5 +302,3 @@ async function joinTeamForm(teamID, player) {
         }
     }
 */
-
-

@@ -71,7 +71,7 @@ async function getSpecificNotification(notifID) {
 async function changeStatus(idNotif, newstatus, teamORevent, player) {
     let notification = await getSpecificNotification(idNotif);
     if (notification.teamInv != null) {
-        console.log("entrei na team");
+
         try {
             let updatedInv = {
                 id: idNotif,
@@ -105,7 +105,9 @@ async function changeStatus(idNotif, newstatus, teamORevent, player) {
                 contentType: "application/json"
             });
             if (newstatus == 2) {
-               
+
+                joinEvent(teamORevent, player);
+
             }
             notifButton(player);
         } catch (err) {
@@ -126,4 +128,27 @@ async function getNotifCount(player) {
     } catch (err) {
         console.log(err);
     }
+}
+
+
+async function joinEvent(eventID, playerID) {
+    try {
+        let newMember = {
+            player: playerID,
+            event: eventID,
+            ranking: 2
+        }
+
+        let result = await $.ajax({
+            url: "/api/events/newmember",
+            method: "put",
+            dataType: "json",
+            data: JSON.stringify(newMember),
+            contentType: "application/json"
+        });
+
+    } catch (err) {
+        console.log(err);
+    }
+    closeMiddleBox();
 }
