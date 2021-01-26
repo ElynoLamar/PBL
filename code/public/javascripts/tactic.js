@@ -1,9 +1,11 @@
 var loggedUser;
 var x = document.getElementById("canvas");
 window.onload = function() {
-    loggedUser= sessionStorage.getItem("loggedUser");
+    loggedUser = sessionStorage.getItem("loggedUser");
+    alert(loggedUser);
     //notifButton(loggedUser);
     createPaint(x);
+    createNewEventForm();
 }
 
 function show(index) {
@@ -132,7 +134,12 @@ controls.brushSize = function(cx) {
 };
 
 controls.save = function(cx) {
-    var link = elt("a", { href: "/" }, "Save");
+    var link = elt("button", { type: "submit" }, "Create Tactic");
+
+
+    function ahahaha() {
+        createTact(cx.canvas.toDataURL());
+    }
 
     function update() {
         try {
@@ -147,6 +154,7 @@ controls.save = function(cx) {
     }
     link.addEventListener("mouseover", update);
     link.addEventListener("focus", update);
+    link.addEventListener("click", ahahaha);
     return link;
 };
 
@@ -169,24 +177,7 @@ function loadImageURL(cx, url) {
     });
     image.src = url;
 }
-controls.save = function(cx) {
-    var link = elt("a", { href: "/" }, "Save");
 
-    function update() {
-        try {
-            link.href = cx.canvas.toDataURL();
-        } catch (e) {
-            if (e instanceof SecurityError)
-                link.href = "javascript:alert(" +
-                JSON.stringify("Can't save: " + e.toString()) + ")";
-            else
-                throw e;
-        }
-    }
-    link.addEventListener("mouseover", update);
-    link.addEventListener("focus", update);
-    return link;
-};
 controls.openFile = function(cx) {
     var input = elt("input", { type: "file" });
     input.addEventListener("change", function() {
@@ -244,5 +235,77 @@ function randomPointInRadius(radius) {
         var y = Math.random() * 2 - 1;
         if (x * x + y * y <= 1)
             return { x: x * radius, y: y * radius };
+    }
+}
+
+async function getTeamsAndGroups(id) {
+    try {
+        var leads = await $.ajax({
+            url: "/api/players/" + id + "/leaderships",
+            method: "get",
+            dataType: "json"
+        });
+        return leads;
+    } catch (err) {
+        console.log(err);
+    }
+}
+async function getAllDistinctFields() {
+    try {
+        var fields = await $.ajax({
+            url: "/api/fields/distinct",
+            method: "get",
+            dataType: "json"
+        });
+        return fields;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+async function createNewEventForm() {
+    var leads = await getTeamsAndGroups(loggedUser);
+    var fields = await getAllDistinctFields();
+    block = "";
+    block += "<h1>Create Tactic:</h1>";
+    block += "<form class='form-container'>";
+    block += " <label><b>Tactic name</b></label><br>";
+    block += "<input type='text' placeholder='Enter your Tactic Name' id='ctactName' required><br><br>";
+    block += " <label><b>Save for:  </b>(select your team or group)</label><br>";
+    block += "<select id='teamsGroups' name='teamsGroups'>";
+    for (let i = 0; i < leads.length; i++) {
+        block += "<option value=" + leads[i].id + "> TEAM: " + leads[i].name + "</option>";
+    }
+    block += "</select><br><br>";
+    block += " <label><b>Select field:  </b>(select the field this image represents)</label><br>";
+    block += "<select id='fields' name='fields'>";
+    for (let i = 0; i < fields.length; i++) {
+        block += "<option value=" + fields[i].id + ">" + fields[i].name + "</option>";
+    }
+    document.getElementById("tactCreation").innerHTML = block;
+}
+
+
+async function createTact(image) {
+
+    try {
+        let tactic = {
+            name: document.getElementById("ctactName").value,
+            team_or_group: document.getElementById("teamsGroups").value,
+            field: document.getElementById("fields").value,
+            player: loggedUser, // not used, just incase we wanna keep track of who created
+            image_path: image
+        }
+        console.log(JSON.stringify(tactic));
+        let result = await $.ajax({
+            url: "/api/tactics/",
+            method: "post",
+            dataType: "json",
+            data: JSON.stringify(tactic),
+            contentType: "application/json"
+        });
+        console.log(JSON.stringify(tactic));
+    } catch (err) {
+        console.log(err);
     }
 }

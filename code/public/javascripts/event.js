@@ -147,8 +147,8 @@ async function createNewEventForm() {
     block += "<label for='eventdurationhours'>hours</label><br>"
     block += "<input type='number' id='eventdurationmins' name='eventdurationmins' min='0' max='59'></input>"
     block += "<label for='eventdurationmins'>mins</label><br><br>"
-    block += "<button type='button' class='btn' onclick='createNewEvent()'>Create</button>";
-    block += "<button type='button' class='btn cancel' onclick='closeMiddleBox()'>Cancel</button>";
+    block += "<input type='button' class='btn' onclick='createNewEvent()'>Create</input>";
+    block += "<input type='button' class='btn cancel' onclick='closeMiddleBox()'>Cancel</input>";
     block += "</form>";
     block += "</div>";
     document.getElementById("MiddleBox").innerHTML = block;

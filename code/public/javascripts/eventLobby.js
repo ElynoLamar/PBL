@@ -177,7 +177,7 @@ async function showPlayers(eventid, player) {
     block += "<div class='form-content'>";
     block += "<boxHeader id='choiceHeader'>";
     block += "<h1 id='choiceTitle'>All players:</h1>";
-    block += "<input type='button' value='inviteWholeTeam' onclick='inviteWholeTeam()'></input>";
+    block += "<input type='button' value='inviteWholeTeam' onclick='inviteWholeTeamDiv()'></input>";
     block += "<span class='close' onclick='closePlayers()'>&times;</span>";
     block += "</boxHeader>";
     block += "<span id='allPlayerInfo'>";
@@ -204,6 +204,7 @@ async function getPlayer(id) {
         console.log(err);
     }
 }
+
 async function createNewInvite(eventID, clickedPlayerID) {
     var event = await getEventObj(eventID);
     var player = await getPlayer(loggedUser);
@@ -252,8 +253,81 @@ async function getAllPlayers() {
         console.log(err);
     }
 }
+async function getAllTeamsObj() {
 
-function inviteWholeTeam() {
-    alert("test");
-    document.getElementById("form-content").innerHTML = block;
+    try {
+        var getallteams = await $.ajax({
+            url: "/api/teams",
+            method: "get",
+            dataType: "json"
+        });
+        return getallteams;
+    } catch (err) {
+        console.log(err);
+    }
+
+}
+
+async function inviteWholeTeamDiv() {
+    var teams = await getAllTeamsObj();
+    block = "";
+    block += "<div  class='form-container'>";
+    block += "<div class='form-content'>";
+    block += "<boxHeader id='choiceHeader'>";
+    block += "<h1 id='choiceTitle'>All players:</h1>";
+
+    block += "<span class='close' onclick='closePlayers()'>&times;</span>";
+    block += "</boxHeader>";
+    block += "<span id='allPlayerInfo'>";
+    for (let i = 0; i < teams.length; i++) {
+        block += "<span class='allPlayerSpecificInfo'><a>" + teams[i].name + "</a><div class='invite' onclick='inviteWholeTeam(" + teams[i].id + ")'>Invite</div></span>";
+    }
+    block += "</div></div>";
+    document.getElementById("PlayerBox").innerHTML = block;
+
+}
+async function getTeamMembersObj(id) {
+    try {
+        var getteammembers = await $.ajax({
+            url: "/api/teams/" + id + "/members",
+            method: "get",
+            dataType: "json"
+        });
+        return getteammembers;
+    } catch (err) {
+        console.log(err);
+    }
+}
+async function inviteWholeTeam(teamID) {
+    let teamMember = await getTeamMembersObj(teamID);
+    alert("t")
+    alert(JSON.stringify(teamMember));
+    alert(teamMember[0].id);
+    for (let i = 0; i < teamMember.length; i++) {
+        alert(teamMember[i].id);
+        createNewInvite(eventid, teamMember[i].id);
+    }
+}
+
+async function createNewInvite(eventID, clickedPlayerID) {
+    var event = await getEventObj(eventID);
+    var player = await getPlayer(loggedUser);
+    try {
+        let newInvite = {
+            playerRec: clickedPlayerID,
+            playerSend: player.id,
+            event: event.id,
+            text: "You have been invited to '" + event.name + "' event by the player: '" + player.name + "'"
+        }
+
+        let result = await $.ajax({
+            url: "/api/notifications/player/invite",
+            method: "post",
+            dataType: "json",
+            data: JSON.stringify(newInvite),
+            contentType: "application/json"
+        });
+    } catch (err) {
+        console.log(err);
+    }
 }

@@ -8,11 +8,11 @@ let loggedUser;
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
 window.onload = async function() {
-    let JSONarray = sessionStorage.getItem("teamAndLoggedUserID");
-    let array = JSON.parse(JSONarray);
-    loggedUser= array[1];
-    teamid = array[0];
-        
+        let JSONarray = sessionStorage.getItem("teamAndLoggedUserID");
+        let array = JSON.parse(JSONarray);
+        loggedUser = array[1];
+        teamid = array[0];
+
         createTeamUI();
         createTeammatesTable(teamid, loggedUser);
         createTacticsTable(teamid);
@@ -317,7 +317,7 @@ async function removeThisPlayer(playerID, teamID, loggedPlayer) {
 
 
 async function promoteToLeader(playerID, teamID, loggedPlayer) {
-    
+
     try {
         let teammate = {
             newLeader: playerID,
@@ -362,6 +362,7 @@ function show(index) {
             window.location = "map.html";
             break;
         case 4:
+            sessionStorage.setItem("loggedUser", loggedUser);
             window.location = "tactic.html";
             break;
     }
