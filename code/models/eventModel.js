@@ -51,7 +51,7 @@ module.exports.getEventMembers = async function(id_event) {
 
 module.exports.getEventGroupMembers = async function(id_event, groupNumber) {
     try {
-        var query = "select Player.name_player as name, Team.name_team as team from EventMember, Player, Team, EventGroup, Event where Event.id_event=? and Event.id_event=EventMember.event and EventMember.player= Player.id_player and EventMember.team = Team.id_team and EventGroup.event = Event.id_event and EventGroup.player=Player.id_player AND EventGroup.groupNumber=?;";
+        var query = "select Player.name_player, EventMember.team from Player, EventGroup , EventMember where EventGroup.event = EventMember.event and EventGroup.player = EventMember.player and EventMember.player = Player.id_player and EventGroup.event =?  AND EventGroup.groupNumber=?  ;";
         const groupMember = await pool.query(query, [id_event, groupNumber]);
         console.log(query);
         return groupMember;
