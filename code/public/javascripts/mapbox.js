@@ -1,13 +1,40 @@
-var latlng = {};
-
 mapboxgl.accessToken = 'pk.eyJ1IjoiZWx5bm8iLCJhIjoiY2tqOG8waWE2MDd1ejJzcGVteHd1Y21vdSJ9.0K2deDMvBrkZXzoHjZvWCw';
 var map = new mapboxgl.Map({
-    container: 'map', // container id
+    container: 'mapmap', // container id
     style: 'mapbox://styles/mapbox/satellite-v9', //hosted style id
     center: [-9.314149, 38.77295], // starting position
     zoom: 11, // starting zoom
     preserveDrawingBuffer: true
+    
 });
+
+var loggedUser;
+window.onload = function() {
+    loggedUser = sessionStorage.getItem("loggedUser");
+    notifButton(loggedUser);
+    map.resize();
+}
+
+
+function show(index) {
+    switch (index) {
+        case 0:
+            window.location = "../index.html";
+            break;
+        case 1:
+            window.location = "team.html";
+            break;
+        case 2:
+            window.location = "event.html";
+            break;
+        case 3:
+            window.location = "map.html";
+            break;
+}}
+
+var latlng = {};
+
+
 
 var draw = new MapboxDraw({
     displayControlsDefault: false,
@@ -56,6 +83,7 @@ map.on('mousemove', function(e) {
 //criar markers com BD
 map.on('load', async function() {
     var fields = await getAllFields();
+    
     let coords = [];
     let nextInObj = 0;
     let data = {};

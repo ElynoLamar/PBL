@@ -1,27 +1,43 @@
 
-#eventlobbymain{
-    background-color: #4b623bff;
-    display: flex;
-}
-
 body{
   display:grid;
-  grid-template-areas: 'h h' 'nav m';
+  grid-template-areas: 'h' 'nm';
   grid-template-rows: 15vh auto;
-  grid-template-columns: 36vh auto;
+  
+  background-color: #827725;
 }
 header{
   grid-area: h;
 }
-nav{
-grid-area: nav;
 
+#navmain{
+  grid-area: nm;
+  display:flex;
+  
+}
+
+#groupDiv{
+  display:flex;
+  min-width: 140vh;
+  justify-content: center;
+
+}
+
+nav{
 background-color:#827725;
+position:fixed;
+z-index: 30;
 }
+
+
 main{
-  grid-area: m;
-  height: 83.7vh;
+  height: 100%;
+  margin-left:40vh;
+  
 }
+
+
+
 .lobbyGroup{
     position:relative;
    
@@ -36,7 +52,7 @@ table > tbody{
   display:block;
   overflow:auto;
   overflow-x:hidden;
-  height:64vh;
+  height:35vh;
   
   
 }
@@ -44,12 +60,13 @@ table > tbody{
 #eventlobbymain{
   background-color:#827725;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    flex-shrink: 0;
-    min-width: 100%;
-    min-height: 100%
+    
+    
+    
+    
+    min-height: 100%;
+   max-width: 100%;
+    overflow: auto;
 }
 
 #group_choice{
@@ -145,6 +162,7 @@ table >tbody>tr>td{
 
 #navTitle{
   display:flex;
+  padding-left: 4vh;
 }
 
 .allPlayerSpecificInfo{
@@ -170,6 +188,8 @@ table >tbody>tr>td{
  right:5vh;
  bottom:5vh;
  cursor: pointer;
+ display:block;
+ position:fixed;
 }
 
 #edit{
@@ -179,4 +199,10 @@ table >tbody>tr>td{
  right:5vh;
  bottom:15vh;
  cursor: pointer;
+ position:fixed;
+}
+
+.form-content{
+  align-items: center;
+  justify-content: center;
 }

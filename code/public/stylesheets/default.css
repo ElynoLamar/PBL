@@ -1,9 +1,7 @@
 
 
 body {
-    
 
-    border: solid thick;
     
     margin: 0 !important;
     padding: 0 !important;
@@ -11,7 +9,7 @@ body {
 
 main {
     background-color:#827725;
-    overflow: hidden;
+    overflow-y: hidden;
     height:100%;
     
 }

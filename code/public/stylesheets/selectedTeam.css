@@ -65,7 +65,7 @@ body{
     justify-content: space-between;
     flex-direction: column;
 }
-#allPlayerSpecificInfo {
+.allPlayerSpecificInfo {
     display: flex;
     flex-direction: row;
     margin-top: 10px;

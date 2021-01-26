@@ -257,15 +257,15 @@ async function changeMiddleBox_AllPlayers(teamid, player) {
     block += "<table class='table'>";
     block += "<thead><tr><th>INVITE:</th></tr></thead><tbody>";
     for (let i = 0; i < playersinfo.length; i++) {
-        block += "<tr><td><span id='allPlayerSpecificInfo' onclick=createNewInvite(" + teamid + "," + playersinfo[i].id + "," + player + ")><a>" + playersinfo[i].name + "</a></span></td></tr>";
+        block += "<tr><td id='td"+i+"'><span class='allPlayerSpecificInfo' onclick=createNewInvite(" + teamid + "," + playersinfo[i].id + "," + player +","+ i+ ")><a>" + playersinfo[i].name + "</a></span></td></tr>";
     }
     block += "</tbody></table>";
     block += "</span>";
     document.getElementById("actionTeamBox").innerHTML = block;
 }
 
-async function createNewInvite(teamID, clickedPlayerID, loggedPlayer) {
-    document.getElementById('id1').style.color = 'red'
+async function createNewInvite(teamID, clickedPlayerID, loggedPlayer, clickedTableRow) {
+    document.getElementById('td'+clickedTableRow).style.backgroundColor = '#353321';
     var player = await getPlayer(loggedPlayer);
 
     var team = await getTeamObj(teamID);
