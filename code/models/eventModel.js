@@ -135,3 +135,16 @@ module.exports.newEventMember = async function(newMember) {
         return err;
     }
 }
+
+
+module.exports.getEventsOnField = async function(fieldID) {
+    try {
+        var query = "select name_event as name, date_event as date , duration_event as duration, team_size_event as numOfTeams, group_num from Event , Field where Event.field_event = Field.id_field and id_field = ?;";
+        const result = await pool.query(query, [fieldID]);
+        console.log(query);
+        return result;
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}

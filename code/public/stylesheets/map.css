@@ -153,3 +153,30 @@ header {
 .mapboxgl-map.mode-draw_polygon .mapboxgl-canvas-container.mapboxgl-interactive {
     cursor: crosshair;
 }
+
+#form-content2 {
+    background-color: #827725;
+    WIDTH: 80%;
+}
+
+#form-content2>.close {
+    padding-right: 2vh;
+}
+
+#form-content2>h2 {
+    padding-top: 2vh;
+    text-align: center;
+}
+
+table>thead>tr {
+    max-width: 50%;
+}
+
+table>tbody>tr>td {
+    width: 100%;
+    color: blacK;
+}
+
+#ceventName {
+    width: 90%;
+}

@@ -1,119 +1,154 @@
 /* Button used to open the contact form - fixed at the bottom of the page */
 
 .open-button {
-  background-color: #555;
-  color: white;
-  padding: 16px 20px;
-  border: none;
-  cursor: pointer;
-  opacity: 0.8;
-  position: fixed;
-  bottom: 23px;
-  right: 28px;
-  width: 280px;
+    background-color: #555;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+    position: fixed;
+    bottom: 23px;
+    right: 28px;
+    width: 280px;
 }
+
 
 /* The popup form - hidden by default */
+
 .form-popup {
-  display: none;
-  position: fixed;
-  bottom: 0;
-  right: 15px;
-  border: 3px solid #f1f1f1;
-  z-index: 100;
+    display: none;
+    position: fixed;
+    bottom: 0;
+    right: 15px;
+    border: 3px solid #f1f1f1;
+    z-index: 100;
 }
 
+
 /* Add styles to the form container */
+
 .form-container {
-  display: block;
-  
-  padding: 10px;
-  left: 0;
-  top: 0;
-  
-  position: fixed; /* Stay in place */
-  z-index: 100; /* Sit on top */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  min-width: 100%; /* Full width */
-  height: 100%; /* Full height */
+    display: block;
+    padding: 10px;
+    left: 0;
+    top: 0;
+    position: fixed;
+    /* Stay in place */
+    z-index: 100;
+    /* Sit on top */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+    min-width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
 }
 
 .form-content {
-  position: relative;
-  background-color: #353321;
-  color:white;
-  font-family: 'prestige';
-  margin: auto;
-  margin-top:10vh;
-  padding: 0;
-  border: 1px solid #888;
-  width: 66vh;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-  -webkit-animation-name: animatetop;
-  -webkit-animation-duration: 0.4s;
-  animation-name: animatetop;
-  animation-duration: 0.4s
+    position: relative;
+    background-color: #353321;
+    color: white;
+    font-family: 'prestige';
+    margin: auto;
+    margin-top: 10vh;
+    padding: 1vh;
+    border: 1px solid #888;
+    width: 66vh;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
 }
+
 
 /* Full-width input fields */
-.form-container input[type=text], .form-container input[type=password] {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  border: none;
-  background: #f1f1f1;
+
+.form-container input[type=text],
+.form-container input[type=password] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
 }
+
 
 /* When the inputs get focus, do something */
-.form-container input[type=text]:focus, .form-container input[type=password]:focus {
-  background-color: #ddd;
-  outline: none;
+
+.form-container input[type=text]:focus,
+.form-container input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
 }
+
 
 /* Set a style for the submit/login button */
+
 .form-container .btn {
-  background-color: #827725;
-  color: white;
-  padding: 16px 20px;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  margin-bottom:10px;
-  opacity: 0.8;
+    background-color: #827725;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+    opacity: 0.8;
 }
+
 
 /* Add a red background color to the cancel button */
+
 .form-container .cancel {
-  background-color: #822e25;
+    background-color: #822e25;
 }
+
 
 /* Add some hover effects to buttons */
-.form-container .btn:hover, .open-button:hover {
-  opacity: 1;
+
+.form-container .btn:hover,
+.open-button:hover {
+    opacity: 1;
 }
 
+
 /* Add Animation */
+
 @-webkit-keyframes animatetop {
-  from {top:-300px; opacity:0} 
-  to {top:0; opacity:1}
+    from {
+        top: -300px;
+        opacity: 0
+    }
+    to {
+        top: 0;
+        opacity: 1
+    }
 }
 
 @keyframes animatetop {
-  from {top:-300px; opacity:0}
-  to {top:0; opacity:1}
+    from {
+        top: -300px;
+        opacity: 0
+    }
+    to {
+        top: 0;
+        opacity: 1
+    }
 }
 
 .close {
-  color: #822e25;
-  float: right;
-  font-size: 10vh;
-  font-weight: bold;
+    color: #822e25;
+    float: right;
+    font-size: 10vh;
+    font-weight: bold;
 }
 
 .close:hover,
 .close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }

@@ -115,7 +115,8 @@ map.on('load', async function() {
                 let centroidX = centroid.geometry.coordinates[0];
                 let centroidY = centroid.geometry.coordinates[1];
                 let myLatlng = new mapboxgl.LngLat(centroidX, centroidY);
-                let marker = new mapboxgl.Marker().setLngLat(myLatlng).setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML("<h3>" + fields[i].name + "</h3><input type='button' value='ZOOM' onclick='zoomToField(" + JSON.stringify(coords) + ")'> </input><br>"))
+                let marker = new mapboxgl.Marker().setLngLat(myLatlng).setPopup(new mapboxgl.Popup({ offset: 25 })
+                        .setHTML("<b>Field Name:</b>: " + fields[i].name + "<br> <input type='button' value='ZOOM' onclick='zoomToField(" + JSON.stringify(coords) + ")'>  </input> to <input type='button' value='Save field' onclick='printMap()'> </input><br><div id ='goToEvents'><input type='button' value='View Events' onclick='showEventsOnThisField(" + fields[i].id + ")'> </input></div>"))
                     .addTo(map);
                 map.addLayer({
                     'id': "'" + fields[i].id + "'",
@@ -153,7 +154,7 @@ map.on('load', async function() {
             try {
                 let marker = new mapboxgl.Marker().setLngLat(myLatlng)
                     .setPopup(new mapboxgl.Popup({ offset: 25 })
-                        .setHTML("<b>Field Name:</b>: " + fields[i].name + "<br> <b>Field Name:</b>: BRU/BRUV/BRU <br>Check events<br><input type='button' value='ZOOM' onclick='zoomToField(" + JSON.stringify(coords) + ")'> </input><br><div id ='buttonSwitch'><input type='button' value='Save field' onclick='printMap()'> </input></div><br><div id ='goToEvents'><input type='button' value='View Events' onclick='showEventsOnThisField()'> </input></div>"))
+                        .setHTML("<b>Field Name:</b>: " + fields[i].name + "<br> <b>Field Name:</b>: BRU/BRUV/BRU <br>Check events<br><input type='button' value='ZOOM' onclick='zoomToField(" + JSON.stringify(coords) + ")'> </input><br><div id ='buttonSwitch'><input type='button' value='Save field' onclick='printMap()'> </input></div><br><div id ='goToEvents'><input type='button' value='View Events' onclick='showEventsOnThisField(" + fields[i].id + ")'> </input></div>"))
                     .addTo(map);
             } catch (err) {
                 console.log(err);
@@ -291,32 +292,47 @@ async function createNewEventForm() {
     block += "<label for='eventdurationhours'>hours</label><br>"
     block += "<input type='number' id='eventdurationmins' name='eventdurationmins' min='0' max='59'></input>"
     block += "<label for='eventdurationmins'>mins</label><br><br>"
-    block += "<input type='button' class='btn' onclick='createNewEvent()'>Create</input>";
-    block += "<input type='button' class='btn cancel' onclick='closeMiddleBox()'>Cancel</input>";
+    block += "<input type='button' class='btn' value='Create' onclick='createNewEvent()'></input>";
+    block += "<input type='button' class='btn cancel' value='Cancel' onclick='closeMiddleBox()'></input>";
     block += "</form>";
     block += "</div>";
     document.getElementById("MiddleBox").innerHTML = block;
     document.getElementById("fieldsarea").style.display = "none";
 }
 
-async function showEventsOnThisField() {
+
+async function getEventsOnField(fieldID) {
+    try {
+        var events = await $.ajax({
+            url: "/api/events/fields/" + fieldID,
+            method: "get",
+            dataType: "json"
+        });
+
+        return events;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+async function showEventsOnThisField(fieldID) {
+    var events = await getEventsOnField(fieldID);
 
     let block = "";
     block += "<form class='form-container'>";
-    block += "<div class='form-content'>";
+    block += "<div class='form-content' id='form-content2'>";
     block += "  <span class='close' onclick='closeMiddleBox()'>&times;</span>"
-    block += "<h2>All players: </h2>";
-    block += "<span id='allPlayerInfo'>";
+    block += "<h2>Events on this field: </h2>";
+
     block += "<table class='table'>";
-    block += "<thead><tr><th>INVITE:</th></tr></thead><tbody>";
-    //for (let i = 0; i < playersinfo.length; i++) {
-    block += "<tr><td><span><a>Hey</a></span></td></tr>";
-    block += "<tr><td><span><a>Hey</a></span></td></tr>";
-    block += "<tr><td><span><a>Hey</a></span></td></tr>";
-    // }
+    block += "<thead><tr><th>Name</th><th>Date</th><th>Duration</th><th>Nº of teams</th><th>Nº of players</th></tr></thead><tbody>";
+    for (let i = 0; i < events.length; i++) {
+
+        block += "<tr><td>" + events[i].name + " </td><td>" + events[i].date + " </td><td>" + events[i].duration + "</td><td>" + events[i].numOfTeams + " Teams </td><td>" + events[i].group_num + " Players</td></tr>";
+    }
     block += "</tbody></table>";
     block += "</span>";
-    block += "</span>";
+
     block += "</div>";
     block += "</form>";
     document.getElementById("MiddleBox").innerHTML = block;

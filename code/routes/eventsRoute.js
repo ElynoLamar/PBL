@@ -58,3 +58,9 @@ router.put("/newmember", async function(req, res, next) {
     let newMember = await mevent.newEventMember(event);
     res.send(newMember);
 });
+
+router.get("/fields/:pos1", async function(req, res, next) {
+    let pos1 = req.params.pos1;
+    let events = await mevent.getEventsOnField(pos1);
+    res.send(events);
+});
