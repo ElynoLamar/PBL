@@ -92,7 +92,7 @@ async function createTacticsTable(id) {
     let block = "";
     if (Object.keys(tactics).length != 0) {
         block += "<div class='flex-container'>";
-        block += "<span></span><h1 class='titles'>Map Tactics</h1><span><img onclick='show(" + 4 + ")' class='plusimage' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png' height='50vh;' ></span>";
+        block += "<span></span><h1 class='titles'>Map Tactics</h1><span><img onclick='show(" + 4 + ")' class='plusimage' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png' ;' ></span>";
         block += "</div>";
         block += "<table class='table'>";
         block += "<thead><tr><th>Name</th><th>Field</th></tr></thead><tbody>";
@@ -102,7 +102,9 @@ async function createTacticsTable(id) {
         }
         block += "</tbody></table>";
     } else {
-        block = "<h1 class='titles'> No tactics found</h1>";
+        block += "<div class='flex-container'>";
+        block += "<span></span><h1 class='titles'> No tactics found</h1><span><img onclick='show(" + 4 + ")' class='plusimage' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png';' ></span>";
+        block += "</div>";
     }
     document.getElementById("teamMaps").innerHTML = block;
 }
@@ -231,16 +233,10 @@ async function getSpecificTactic(id) {
 async function changeMiddleBox_Tactics(id_tact) {
     var tact = await getSpecificTactic(id_tact);
     let block = "";
-    console.log(tact.name);
     block += "<h2>Tactic name:" + tact.name + "</h2>";
     block += "<h2>Tactic location: " + tact.name + " </h2>";
-
-    console.log(tact.path);
     // var base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(tact.path.data)));
-
-
     block += "<img src=\"" + tact.path + "\" height='350'></img>";
-
     //block += "<img id='edit' onClick='show(" + 4 + ")' onmouseover='this.src=\"../images/editHover.png\"' onmouseout='this.src=\"../images/edit.png\"' src='../images/edit.png'>";
 
     document.getElementById("actionTeamBox").innerHTML = block;
@@ -280,7 +276,7 @@ async function changeMiddleBox_AllPlayers(teamid, player) {
     block += "<table class='table'>";
     block += "<thead><tr><th>INVITE:</th></tr></thead><tbody>";
     for (let i = 0; i < playersinfo.length; i++) {
-        block += "<tr><td id='td"+i+"'><span class='allPlayerSpecificInfo' onclick=createNewInvite(" + teamid + "," + playersinfo[i].id + "," + player +","+ i+ ")><a>" + playersinfo[i].name + "</a></span></td></tr>";
+        block += "<tr><td id='td" + i + "'><span class='allPlayerSpecificInfo' onclick=createNewInvite(" + teamid + "," + playersinfo[i].id + "," + player + "," + i + ")><a>" + playersinfo[i].name + "</a></span></td></tr>";
     }
     block += "</tbody></table>";
     block += "</span>";
@@ -288,7 +284,7 @@ async function changeMiddleBox_AllPlayers(teamid, player) {
 }
 
 async function createNewInvite(teamID, clickedPlayerID, loggedPlayer, clickedTableRow) {
-    document.getElementById('td'+clickedTableRow).style.backgroundColor = '#353321';
+    document.getElementById('td' + clickedTableRow).style.backgroundColor = '#353321';
     var player = await getPlayer(loggedPlayer);
 
     var team = await getTeamObj(teamID);

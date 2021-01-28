@@ -282,7 +282,22 @@ async function createNewEventForm() {
     block += "<input type='radio' id='privateEvent' name='privacy' value='privateEvent'>";
     block += "<label for='privateEvent'>Private event, requires autorization to join</label><br>";
     block += "<label for='start'><b>Start date:</b></label>"
-    block += "<input type='date' id='eventdate' name='event-start' value='2021-01-01' min='2021-01-01'></input><br>"
+
+    var today = new Date();
+    alert(today);
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1; //January is 0!
+    var yyyy = today.getFullYear();
+    if (dd < 10) {
+        dd = '0' + dd
+    }
+    if (mm < 10) {
+        mm = '0' + mm
+    }
+    today = yyyy + '-' + mm + '-' + dd;
+    alert(today);
+    block += "<input type='date' id='eventdate' name='event-start' value='" + today + "' min='" + today + "'></input><br>"
+
     block += "<label for='numofgroups'>Number of groups (between 2 and 10):</label>"
     block += "<input type='number' id='numofgroups' name='numofgroups' min='2' max='10'></input><br>"
     block += "<label for='playerspergroup'>Number of players per group:</label>"
