@@ -23,6 +23,7 @@ async function notifButton(player) {
     block += "</div>";
     document.getElementById("badgeContainer").innerHTML = block;
     toggleNotif();
+    
 }
 
 function toggleNotif() {

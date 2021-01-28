@@ -3,7 +3,7 @@ var x = document.getElementById("canvas");
 window.onload = function() {
     loggedUser = sessionStorage.getItem("loggedUser");
     alert(loggedUser);
-    //notifButton(loggedUser);
+    notifButton(loggedUser);
     createPaint(x);
     createNewEventForm();
 }

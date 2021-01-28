@@ -177,8 +177,10 @@ map.on('load', async function() {
 
 
 });
-let html = "<input type='button' value='createevent' onclick='createNewEventForm()'> </input>";
-html += "";
+
+let html = "<div id='eventButton'> ";
+html+= "<img onclick='createNewEventForm()' id='plus' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png'></div>";
+
 
 document.getElementById("eventcreatebutton").innerHTML = html;
 let block = "";
@@ -277,14 +279,14 @@ async function createNewEventForm() {
     }
     block += "</select><input type='button' value='Create own field' onclick='testing()'></input><br></div>";
     block += " <label><b>Choose your event privacy</b></label><br>";
-    block += "<input type='radio' id='openEvent' name='privacy' value='openEvent'>";
+    block += "<div class='radioDiv'><input type='radio' id='openEvent' name='privacy' value='openEvent'></div>";
     block += "<label for='openEvent'>Open event, anyone can join</label><br>";
-    block += "<input type='radio' id='privateEvent' name='privacy' value='privateEvent'>";
+    block += "<div class='radioDiv'><input type='radio' id='privateEvent' name='privacy' value='privateEvent'></div>";
     block += "<label for='privateEvent'>Private event, requires autorization to join</label><br>";
     block += "<label for='start'><b>Start date:</b></label>"
 
     var today = new Date();
-    alert(today);
+    
     var dd = today.getDate();
     var mm = today.getMonth() + 1; //January is 0!
     var yyyy = today.getFullYear();
@@ -295,7 +297,7 @@ async function createNewEventForm() {
         mm = '0' + mm
     }
     today = yyyy + '-' + mm + '-' + dd;
-    alert(today);
+    
     block += "<input type='date' id='eventdate' name='event-start' value='" + today + "' min='" + today + "'></input><br>"
 
     block += "<label for='numofgroups'>Number of groups (between 2 and 10):</label>"
@@ -369,6 +371,19 @@ function testing() {
 
 
 async function createNewEvent() {
+    let eventName = document.getElementById("ceventName");
+
+    let fields = document.getElementById("fields");
+    let publicRadio = document.getElementById("openEvent");
+    
+    let privateRadio = document.getElementById("privateEvent");
+    let numofgroups = document.getElementById("numofgroups");
+    let playerspergroup = document.getElementById("playerspergroup");
+    let eventdurationhours = document.getElementById("eventdurationhours");
+    let fieldName = document.getElementById("cfieldName");
+    
+    if (eventName.value.length>0 && eventName.value.length<=30 && fields.value != null && (publicRadio.checked|| privateRadio.checked) && (numofgroups.value>1 && numofgroups.value<=10) && playerspergroup.value>0 && eventdurationhours.value>0 && fieldName.value.length>0 && fieldName.value.length<=30){
+    
     try {
         let eprivacy = 0;
         if (document.getElementById("openEvent").checked) {
@@ -419,7 +434,53 @@ async function createNewEvent() {
     } catch (err) {
         console.log(err);
     }
-}
+    }else{
+    //invalidar/desinvalidar inputs
+    if (!(eventName.value.length>0 && eventName.value.length<=30)){
+        eventName.style.borderColor="red";
+    }else{
+        eventName.style.borderColor="black";
+    }
+    
+    if (fields.value === null){
+        fields.style.borderColor="red";
+    }else{
+        fields.style.borderColor="black";
+    }
+
+    if (!(publicRadio.checked || privateRadio.checked)){
+        let radioDivs=document.getElementsByClassName("radioDiv");
+        radioDivs[0].style.borderColor="red";
+        radioDivs[1].style.borderColor="red";
+    }else{
+        let radioDivs=document.getElementsByClassName("radioDiv");
+        radioDivs[0].style.borderColor="black";
+        radioDivs[1].style.borderColor="black";
+    }
+    
+    if (!(numofgroups.value>1 && numofgroups.value<=10)){
+        numofgroups.style.borderColor="red";
+    }else{
+        numofgroups.style.borderColor="black";
+    }
+    
+    if (!playerspergroup.value>0){
+        playerspergroup.style.borderColor="red";
+    }else{
+        playerspergroup.style.borderColor="black";
+    }
+
+    if (!eventdurationhours.value>0){
+        eventdurationhours.style.borderColor="red";
+    }else{
+        eventdurationhours.style.borderColor="black";
+    }
+    if (!(fieldName.value.length>0 && fieldName.value.length<=30)){
+        fieldName.style.borderColor="red";
+    }else{
+        fieldName.style.borderColor="black";
+    }
+}}
 
 
 
@@ -451,26 +512,7 @@ function drawEventField() {
         }
     }
 }
-/**
-    
-        //var center = e.layer.bounds.getCenter().addTo(map);;
-    
-        // calcular area
-        var answer = document.getElementById('calculated-area');
-        if (data.features.length > 0) {
-            var area = turf.area(data);
-            // restrict to area to 2 decimal points
-            var rounded_area = Math.round(area * 100) / 100;
-            answer.innerHTML =
-                '<p><strong>' +
-                rounded_area +
-                '</strong></p><p>square meters</p>';
-        } else {
-            answer.innerHTML = '';
-            if (e.type !== 'draw.delete')
-                alert('Use the draw tools to draw a polygon!');
-        }
-*/
+
 
 
 function zoomToField(cur) {

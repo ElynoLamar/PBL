@@ -105,7 +105,41 @@ async function createMyTeamsTable(player) {
 
 }
 
+function createNewTeamForm() {
+    let block = "";
+    block += "<form class='form-container'>";
+    block += "<div class='form-content'>";
+
+    block += "  <span class='close' onclick='closeMiddleBox()'>&times;</span>"
+    block += "<h1>Create a new Team</h1>";
+    block += " <label><b>Team name</b></label>";
+    block += "<input type='text' placeholder='Enter Team Name' id='cteamName' required>";
+    block += " <label><b>Team Description</b></label>";
+    block += " <input type='text' placeholder='Enter Team Description' id='cteamDesc'>";
+    block += " <label><b>Choose your team privacy</b></label><br>";
+    block += "<div class='radioDiv'><input type='radio' id='openTeam' name='privacy' value='openTeam'></div>";
+    block += "<label for='openTeam'>Open team, anyone can join</label><br>";
+    block += "<div class='radioDiv'><input type='radio' id='privateTeam' name='privacy' value='privateTeam'></div>";
+    block += "<label for='privateTeam'>Private, requires autorization to join</label><br><br>";
+    block += " <button type='button' class='btn' onclick='createNewTeam(" + loggedUser + ")'>Create</button>";
+    block += "  <button type='button' class='btn cancel' onclick='closeMiddleBox()'>Cancel</button>";
+    block += "</form>";
+    block += "</div>";
+    document.getElementById("MiddleBox").innerHTML = block;
+
+}
+
 async function createNewTeam(playerID) {
+
+    let teamName = document.getElementById("cteamName");
+    let teamDesc = document.getElementById("cteamDesc");
+
+let publicRadio = document.getElementById("openTeam");
+
+let privateRadio = document.getElementById("privateTeam");
+
+    if ((teamName.value.length>0 && teamName.value.length<=30) && (teamDesc.value.length>0 && teamDesc.value.length<=30) && (publicRadio.checked|| privateRadio.checked) ){
+
     try {
         let tprivacy = 0;
         if (document.getElementById("openTeam").checked) {
@@ -129,40 +163,41 @@ async function createNewTeam(playerID) {
     } catch (err) {
         console.log(err);
     }
-
-    //changeRank(playerID, teamID);
-
     createMyTeamsTable(playerID);
     closeMiddleBox();
+}else{
+    if (!(teamName.value.length>0 && teamName.value.length<=30)){
+        teamName.style.borderColor="red";
+    }else{
+        teamName.style.borderColor="black";
+    }
+
+    if (!(teamDesc.value.length>0 && teamDesc.value.length<=30)){
+        teamDesc.style.borderColor="red";
+    }else{
+        teamDesc.style.borderColor="black";
+    }
+
+    if (!(publicRadio.checked || privateRadio.checked)){
+        let radioDivs=document.getElementsByClassName("radioDiv");
+        radioDivs[0].style.borderColor="red";
+        radioDivs[1].style.borderColor="red";
+    }else{
+        let radioDivs=document.getElementsByClassName("radioDiv");
+        radioDivs[0].style.borderColor="black";
+        radioDivs[1].style.borderColor="black";
+    }
+}
+  
+
+    
 }
 
 function closeMiddleBox() {
     document.getElementById("MiddleBox").innerHTML = "";
 }
 
-function createNewTeamForm() {
-    let block = "";
-    block += "<form class='form-container'>";
-    block += "<div class='form-content'>";
 
-    block += "  <span class='close' onclick='closeMiddleBox()'>&times;</span>"
-    block += "<h1>Create a new Team</h1>";
-    block += " <label><b>Team name</b></label>";
-    block += "<input type='text' placeholder='Enter Team Name' id='cteamName' required>";
-    block += " <label><b>Team Description</b></label>";
-    block += " <input type='text' placeholder='Enter Team Description' id='cteamDesc'>";
-    block += " <label><b>Choose your team privacy</b></label><br>";
-    block += "<input type='radio' id='openTeam' name='privacy' value='openTeam'>";
-    block += "<label for='openTeam'>Open team, anyone can join</label><br>";
-    block += "<input type='radio' id='privateTeam' name='privacy' value='privateTeam'>";
-    block += "<label for='privateTeam'>Private, requires autorization to join</label><br><br>";
-    block += " <button type='button' class='btn' onclick='createNewTeam(" + loggedUser + ")'>Create</button>";
-    block += "  <button type='button' class='btn cancel' onclick='closeMiddleBox()'>Cancel</button>";
-    block += "</form>";
-    block += "</div>";
-    document.getElementById("MiddleBox").innerHTML = block;
-
-}
 
 
 function closeMiddleBox() {

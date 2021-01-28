@@ -4,7 +4,7 @@ window.onload = function() {
     fakeLogin();
     counter = 0;
     let logo = document.getElementById('logoheader');
-
+    notifButton(loggedUser);
 }
 
 function fakeLogin() {

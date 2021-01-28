@@ -9,8 +9,9 @@
 
 
 .testImg {
-    max-width: 98vh;
-    z-index:0;
+    max-width: 50%;
+    min-width: 50%;
+    z-index: 0;
 }
 
 body {
@@ -31,8 +32,8 @@ main {
 #indexVideo {
     overflow-y: hidden;
     background-color: black;
-    min-width: 200vh;
-    
+    min-width: 100%;
+    max-width: 100%;
     clip-path: polygon(0 0, 100% 0, 100% 33%, 0 78%);
 }
 
@@ -287,4 +288,15 @@ header {
     font-size:2.1vh;
     top:85vh;
     left:130vh;
+}
+
+.badge {
+    position: absolute;
+    left: 13vh;
+    top: -12vh;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background: red;
+    color: white;
+    z-index: 400;
 }

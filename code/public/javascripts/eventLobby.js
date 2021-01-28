@@ -194,13 +194,14 @@ async function showPlayers(eventid, player) {
     block += "<input type='button' value='inviteWholeTeam' onclick='inviteWholeTeamDiv()'></input>";
     block += "<span class='close' onclick='closePlayers()'>&times;</span>";
     block += "</boxHeader>";
-
-    block += "<table class='table'>";
+    block += "<div class='centerTable'>";
+    block += "<table class='table center'>";
     block += "<thead><tr><th>INVITE:</th></tr></thead><tbody>";
     for (let i = 0; i < playersinfo.length; i++) {
         block += "<tr><td id='td" + i + "'><span class='allPlayerSpecificInfo' onclick=createNewInvite(" + eventid + "," + playersinfo[i].id + "," + i + ")><a>" + playersinfo[i].name + "</a></span></td></tr>";
     }
     block += "</tbody></table>";
+    block += "</div>";
     block += "</div></div>";
     document.getElementById("PlayerBox").innerHTML = block;
 }
@@ -298,7 +299,7 @@ async function inviteWholeTeamDiv() {
     block += "<span class='close' onclick='closePlayers()'>&times;</span>";
     block += "</boxHeader>";
     block += "<span id='allPlayerInfo'>";
-    block += "<table class='table'>";
+    block += "<table class='table center'>";
     block += "<thead><tr><th>INVITE:</th></tr></thead><tbody>";
     for (let i = 0; i < teams.length; i++) {
         block += "<tr><td id='td" + i + "'><span class='allPlayerSpecificInfo' onclick='inviteWholeTeam(" + teams[i].id + "," + i + ")'><a>" + teams[i].name + "</a></span></td></tr>";

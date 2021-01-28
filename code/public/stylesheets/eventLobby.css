@@ -118,7 +118,15 @@ table > tbody{
     text-align: center;
     
   }
+  .form-content{
+    background-color: #827725;
+  }
   
+  table.center {
+    margin-left: auto; 
+    margin-right: auto;
+  }
+
   #choiceFooter{
     width: 100%;
     height:10vh;
@@ -200,4 +208,13 @@ table >tbody>tr>td{
  bottom:15vh;
  cursor: pointer;
  position:fixed;
+}
+
+.centerTable{
+  align-items: center;
+  width: 100%;
+}
+
+.plusimage{
+  cursor: pointer;
 }
