@@ -19,7 +19,7 @@ function createEventUI() {
     block += "<span id='MiddleBox'></span>";
     block += "<div id='ChoiceBox' ></div></td>";
     block += "<span id='myEvents' >1</span>";
-    block += "<span id='pluscontainer'><img onclick='createChoice()' id='plus' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png'><span id='plusText'><p>search event</p><p>create event</p></span></span>";
+    block += "<span id='pluscontainer'><img onclick='createChoice()' id='plus' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png'><span id='plusText'><p>create event</p><p>search event</p></span></span>";
     document.getElementById("eventDivItems").innerHTML = block;
 }
 
@@ -113,10 +113,6 @@ function changeToEventLobby(id) {
 }
 
 async function createNewEventForm() {
-    /**
-        var popup = document.getElementById("eventForm");
-        popup.classList.toggle("show");
-    */
     var fields = await getAllFields();
     let block = "";
     block += "<form class='form-container'>";
@@ -124,7 +120,7 @@ async function createNewEventForm() {
     block += "<span class='close' onclick='closeMiddleBox()'>&times;</span>"
     block += "<h1>Create a new Event</h1>";
     block += " <label><b>Event name</b></label>";
-    block += "<input type='text' placeholder='Enter Event Name' id='ceventName' required>";
+    block += "<input type='text' min='1' max='300' required placeholder='Enter Event Name' id='ceventName' required>";
     block += " <label><b>Event Field:  </b></label>";
     block += "<select id='fields' name='fields'>";
     for (let i = 0; i < fields.length; i++) {
