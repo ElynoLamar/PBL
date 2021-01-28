@@ -1,22 +1,20 @@
-body{
+body {
     display: grid;
-    height:100%;    
-    
-    grid-template-rows: 15vh 85vh ;
+    height: 100%;
+    grid-template-rows: 15vh 85vh;
     grid-template-areas: 'h h h' 'm m m';
     border: solid thick;
     overflow: hidden;
     margin: 0 !important;
     padding: 0 !important;
 }
-#teamDivItems{
-    
-    background-color:#353321;
-    height:100%;
+
+#teamDivItems {
+    background-color: #353321;
+    height: 100%;
     display: grid;
     grid-template-areas: 'me bo ma';
     grid-template-columns: 25% auto 25%;
-
 }
 
 #teamMembers {
@@ -24,152 +22,157 @@ body{
     grid-area: me;
     margin: 10px 5px 10px 10px;
 }
-#actionTeamBox{
-    background-color:  #827725;
+
+#actionTeamBox {
+    background-color: #827725;
     grid-area: bo;
     margin: 10px 5px 10px 5px;
     font-family: 'prestige';
     font-weight: normal;
     text-align: center;
 }
-#teamMaps{
-    background-color:  #827725;
+
+#teamMaps {
+    background-color: #827725;
     grid-area: ma;
     margin: 10px 10px 10px 5px;
 }
 
-.plusimage{
-    cursor:pointer;
+.plusimage {
+    cursor: pointer;
 }
 
-
-.titles{
+.titles {
     text-align: center;
 }
 
-#playerBox{
-    display:grid;
-    width: 100%; 
+#playerBox {
+    display: grid;
+    width: 100%;
     grid-template-columns: 65% auto 10%;
     grid-template-areas: 'I P DS' 'D D DS';
-    
 }
-#playerInfo{
+
+#playerInfo {
     grid-area: I;
     margin-left: 20px;
 }
-
 
 #allPlayerInfo {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
 }
-.allPlayerSpecificInfo {
+
+#allPlayerSpecificInfo {
     display: flex;
     flex-direction: row;
     margin-top: 10px;
     margin-left: 10px;
 }
 
-#allPlayerInfo a{
-    min-height:5px;
-
+#allPlayerInfo a {
+    min-height: 5px;
 }
-#allPlayerInfo div{
+
+#allPlayerInfo div {
     margin-left: 5px;
     margin-right: 30px;
-    
     color: white;
     background-color: #44CC44;
     text-align: center;
     min-width: 20px;
     max-width: 40px;
-
     color: #FFF;
     background: #44CC44;
-
-    
 }
-#playerPhoto{
+
+#playerPhoto {
     grid-area: P;
     margin-left: auto;
     margin-right: auto;
     width: 100%;
 }
 
-#playerDesc{
+#playerDesc {
     display: flex;
     margin-left: 20px;
 }
 
-#removeOrGiveLeaderFlex{
+#removeOrGiveLeaderFlex {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: flex;
     flex-direction: row;
     justify-content: center;
-    min-height:50px;
-    width: 100%;    
-    
+    min-height: 50px;
+    width: 100%;
 }
+
 .promote {
     color: #FFF;
     background: #FF8C00;
     padding: 15px 20px;
     text-align: center;
-
-
 }
+
 .promote:hover {
     background: #ffb84d;
 }
+
 .removeTeammate {
     color: #FFF;
     background: tomato;
     padding: 15px 20px;
     margin-left: 5px;
     text-align: center;
-
 }
+
 .removeTeammate:hover {
     background: rgb(255, 147, 128);
 }
 
-main{
+main {
     grid-area: m;
 }
 
-table > tbody{
-    min-height:200vh;
+table>tbody {
+    min-height: 200vh;
 }
 
-table >thead>tr>th {
+table>thead>tr>th {
     min-width: 15.2vh;
-    max-width:15.2vh;
+    max-width: 15.2vh;
     padding: 0.2vh 0vh 0.2vh;
 }
 
-table >tbody>tr>td{
-    
+table>tbody>tr>td {
     min-width: 100%;
-    max-width:100%;
+    max-width: 100%;
     padding: 0.2vh 2vh 0.2vh;
 }
 
-header{
+header {
     grid-area: h;
 }
 
-.titles{
-    margin-left:0vh;
+.titles {
+    margin-left: 0vh;
 }
 
-#edit{
+#edit {
     position: relative;
-    top:7vh;
+    top: 7vh;
     cursor: pointer;
-    
-    height:7vh;
+    height: 7vh;
+}
+
+.dropdown-content {
+    left: 0;
+    display: none;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
 }

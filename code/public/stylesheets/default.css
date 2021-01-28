@@ -1,22 +1,18 @@
-
-
 body {
-
-    
+    border: solid thick;
     margin: 0 !important;
     padding: 0 !important;
 }
 
 main {
-    background-color:#827725;
-    overflow-y: hidden;
-    height:100%;
-    
+    background-color: #827725;
+    overflow: hidden;
+    height: 100%;
 }
 
-.mainContainer{
+.mainContainer {
     position: relative;
-    top:24vh;
+    top: 24vh;
     align-items: center;
     justify-content: center;
     align-items: center;
@@ -51,7 +47,6 @@ main {
     cursor: pointer;
 }
 
-
 #map {
     display: flex;
     justify-content: center;
@@ -68,14 +63,9 @@ main {
     min-height: 100%
 }
 
-
-
 #backpageheader {
     margin-left: 20px;
 }
-
-
-
 
 .notification {
     text-decoration: none;
@@ -93,13 +83,13 @@ main {
 
 .badge {
     position: absolute;
-    left:8vh;
-    top:-10vh;
+    left: 8vh;
+    top: -10vh;
     padding: 5px 10px;
     border-radius: 50%;
     background: red;
     color: white;
-    z-index:400;
+    z-index: 400;
 }
 
 .notif-content {
@@ -130,9 +120,7 @@ main {
     background-color: #f1f1f1
 }
 
-
-
- .flex-notif-container {
+.flex-notif-container {
     display: flex;
     justify-content: space-between;
 }
@@ -140,10 +128,7 @@ main {
 @font-face {
     font-family: 'army_rust';
     src: url('fonts/army_rust-webfont..eot');
-    src: url('fonts/army_rust-webfont..eot?#iefix') format('embedded-opentype'),
-        url('fonts/army_rust-webfont.woff') format('woff'),
-        url('fonts/army_rust-webfont.ttf') format('truetype'),
-        url('fonts/army_rust-webfont.svg#army_rust') format('svg');
+    src: url('fonts/army_rust-webfont..eot?#iefix') format('embedded-opentype'), url('fonts/army_rust-webfont.woff') format('woff'), url('fonts/army_rust-webfont.ttf') format('truetype'), url('fonts/army_rust-webfont.svg#army_rust') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -151,14 +136,9 @@ main {
 @font-face {
     font-family: 'prestige';
     src: url('fonts/2ndfont/ch702000-webfont.eot');
-    src: url('fonts/2ndfont/ch702000-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/2ndfont/ch702000-webfont.woff2') format('woff2'),
-         url('fonts/2ndfont/ch702000-webfont.woff') format('woff'),
-         url('fonts/2ndfont/ch702000-webfont.ttf') format('truetype'),
-         url('fonts/2ndfont/ch702000-webfont.svg#chey_1_silmanuscriptlregular') format('svg');
+    src: url('fonts/2ndfont/ch702000-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/2ndfont/ch702000-webfont.woff2') format('woff2'), url('fonts/2ndfont/ch702000-webfont.woff') format('woff'), url('fonts/2ndfont/ch702000-webfont.ttf') format('truetype'), url('fonts/2ndfont/ch702000-webfont.svg#chey_1_silmanuscriptlregular') format('svg');
     font-weight: normal;
     font-style: normal;
-
 }
 
 .accept {
@@ -196,35 +176,32 @@ span #plusimage {
     margin-right: 30px;
 }
 
+.flex-notif-container {
+    display: flex;
+    justify-content: space-between;
+}
+
 .titles {
     position: relative;
     font-family: 'army_rust';
-    color:white;
+    color: white;
     letter-spacing: 0.5vh;
     font-size: 7.5vh;
     z-index: 0;
     margin-left: 85vh;
     text-decoration: underline;
     font-weight: normal;
-
-
 }
 
-
-.addPlus{
-    margin-left:55px;
-    
+.addPlus {
+    margin-left: 55px;
 }
-
-
 
 header {
-    
     display: flex;
     background-color: #353321;
     color: white;
     padding-left: 30px;
-   
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
@@ -237,24 +214,24 @@ header {
 }
 
 #userboxHeader {
-    display:flex;
+    display: flex;
     flex-direction: column;
     margin-right: 10vh;
     cursor: pointer;
 }
 
-#userNameheader{
-    text-align:center;
+#userNameheader {
+    text-align: center;
     position: relative;
-    top:-1vh;
+    top: -1vh;
     font-family: 'prestige';
 }
 
-.menu{
+.menu {
     padding-left: 5vh;
 }
 
-.menu > a{
+.menu>a {
     font-family: 'prestige';
     color: white;
     text-decoration: none;
@@ -263,106 +240,111 @@ header {
     letter-spacing: 0.6vh;
 }
 
-.menu > a:hover{
+.menu>a:hover {
     color: #827725;
-    
 }
 
-#logoheader{
+#logoheader {
     position: relative;
-    right:11%;
-    top:0%;
+    right: 11%;
+    top: 0%;
     width: 30vh;
-    height:auto;
+    height: auto;
     z-index: 1;
-    
     margin-left: 1vh;
     cursor: pointer;
 }
 
-table{
+table {
     position: relative;
     font-family: 'prestige';
     margin: 0 auto;
-    
-}
-table > thead{
-    display:block;
-}
-table > tbody{
-  display:block;
-  overflow:auto;
-  overflow-x: hidden;
-  height:30vh;
-  
 }
 
-table >thead>tr>th {
+table>thead {
+    display: block;
+}
+
+table>tbody {
+    display: block;
+    overflow: auto;
+    overflow-x: hidden;
+    height: 30vh;
+}
+
+table>thead>tr>th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    font-size:3.5vh;
+    font-size: 3.5vh;
     background-color: #827725;
-    text-align:center;
+    text-align: center;
     color: white;
     font-weight: normal;
-    padding-left:10vh;
+    padding-left: 10vh;
     padding-right: 10vh;
 }
 
-table > tbody >tr {
-    
+table>tbody>tr {
     font-size: 2.5vh;
     text-align: center;
-    padding:2vh;
+    padding: 2vh;
     cursor: pointer;
-    
 }
 
-table >tbody>tr>td{
+table>tbody>tr>td {
     min-width: 30vh;
-    max-width:30vh;
+    max-width: 30vh;
     padding: 0.2vh 1vh 0.2vh;
 }
 
-
-
-table >tbody>tr:hover {
+table>tbody>tr:hover {
     background-color: #353321;
 }
 
-
-tr:nth-child(even) {background: #DDDACC}
-tr:nth-child(odd) {background-color: #827725;}
-
-#userboxHeader:hover{
-    color:#827725;
-    
+tr:nth-child(even) {
+    background: #DDDACC
 }
 
+tr:nth-child(odd) {
+    background-color: #827725;
+}
+
+#userboxHeader:hover {
+    color: #827725;
+}
+
+
 /* width */
+
 ::-webkit-scrollbar {
     width: 20px;
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px#353321; 
-    border-radius: 10px;
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background:#353321; 
-    border-radius: 10px;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #1c1a11; 
-  }
+}
 
-  .tablediv{
+
+/* Track */
+
+ ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px#353321;
+    border-radius: 10px;
+}
+
+
+/* Handle */
+
+ ::-webkit-scrollbar-thumb {
+    background: #353321;
+    border-radius: 10px;
+}
+
+
+/* Handle on hover */
+
+ ::-webkit-scrollbar-thumb:hover {
+    background: #1c1a11;
+}
+
+.tablediv {
     position: relative;
-    top:-3vh;
-  }
+    top: -3vh;
+}

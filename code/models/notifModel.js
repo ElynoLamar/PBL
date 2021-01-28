@@ -37,20 +37,32 @@ module.exports.updateInviteStatus = async function(invite) {
 }
 
 module.exports.sendInvToSpecificPerson = async function(newInvite) {
-    if (newInvite.team != null) {
+    if (newInvite.event != null) {
+        if (newInvite.team != null) {
+            try {
+                var query = "insert into Notification(receiver,sender,eventInv,teamInv,text_notif,invite,status) values(?, ?, ?,?, ?,1,1);";
+                const result = await pool.query(query, [newInvite.playerRec, newInvite.playerSend, newInvite.event, newInvite.team, newInvite.text]);
+                console.log(query);
+                return { status: 200, data: result };
+            } catch (err) {
+                console.log(err);
+                return err;
+            }
+        } else {
+            try {
+                var query = "insert into Notification(receiver,sender,eventInv,text_notif,invite,status) values(?, ?, ?, ?,1,1);";
+                const result = await pool.query(query, [newInvite.playerRec, newInvite.playerSend, newInvite.event, newInvite.text]);
+                console.log(query);
+                return { status: 200, data: result };
+            } catch (err) {
+                console.log(err);
+                return err;
+            }
+        }
+    } else if (newInvite.team != null) {
         try {
             var query = "insert into Notification(receiver,sender,teamInv,text_notif,invite,status) values(?, ?, ?, ?,1,1);";
             const result = await pool.query(query, [newInvite.playerRec, newInvite.playerSend, newInvite.team, newInvite.text]);
-            console.log(query);
-            return { status: 200, data: result };
-        } catch (err) {
-            console.log(err);
-            return err;
-        }
-    } else if (newInvite.event != null) {
-        try {
-            var query = "insert into Notification(receiver,sender,eventInv,text_notif,invite,status) values(?, ?, ?, ?,1,1);";
-            const result = await pool.query(query, [newInvite.playerRec, newInvite.playerSend, newInvite.event, newInvite.text]);
             console.log(query);
             return { status: 200, data: result };
         } catch (err) {

@@ -6,7 +6,7 @@ var loggedUser;
 arrayOfItems = [stringHome, stringTeam, stringEvents, stringMap];
 
 window.onload = async function() {
-    loggedUser= sessionStorage.getItem("loggedUser");
+    loggedUser = sessionStorage.getItem("loggedUser");
     createTeamUI();
     notifButton(loggedUser);
     createAllTeamsTable(loggedUser);
@@ -31,9 +31,9 @@ function show(index) {
 
 function createTeamUI() {
     let block = "";
-    block+="<span id='MiddleBox'> </span>";
+    block += "<span id='MiddleBox'> </span>";
     block += "<span id='allTeams'>1</span>";
-    block+="<span id='pluscontainer'><img onclick='show(1)' id='plus' onmouseover='this.src=\"../images/backHover.png\"' onmouseout='this.src=\"../images/back.png\"' src='../images/back.png'><span id='plusText'>";
+    block += "<span id='pluscontainer'><img onclick='show(1)' id='plus' onmouseover='this.src=\"../images/backHover.png\"' onmouseout='this.src=\"../images/back.png\"' src='../images/back.png'><span id='plusText'>";
     document.getElementById("teamDivItems").innerHTML = block;
 }
 
@@ -109,11 +109,12 @@ function closeMiddleBox() {
 
 async function requestToJoinTeam(teamID, loggedPlayer) {
     var player = await getPlayer(loggedPlayer);
+    var teamOBJ = await getSpecificTeamObj(teamID);
     try {
         let request = {
             player: loggedPlayer,
             team: teamID,
-            text: "Player " + player.name + " is requesting to join your team."
+            text: "Player '" + player.name + "' is requesting to join your team '" + teamOBJ.name + "'."
         }
 
         let result = await $.ajax({
@@ -122,7 +123,7 @@ async function requestToJoinTeam(teamID, loggedPlayer) {
             dataType: "json",
             data: JSON.stringify(request),
             contentType: "application/json"
-            
+
         });
         closeMiddleBox();
     } catch (err) {

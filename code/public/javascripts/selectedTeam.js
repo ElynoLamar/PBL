@@ -77,7 +77,7 @@ async function createTeammatesTable(teamid, player) {
 async function getTeamTactics(id) {
     try {
         var teamtacts = await $.ajax({
-            url: "../api/teams/" + id + "/tactics",
+            url: "/api/teams/" + id + "/tactics",
             method: "get",
             dataType: "json"
         });
@@ -97,7 +97,8 @@ async function createTacticsTable(id) {
         block += "<table class='table'>";
         block += "<thead><tr><th>Name</th><th>Field</th></tr></thead><tbody>";
         for (let i = 0; i < tactics.length; i++) {
-            block += "<tr onclick=changeMiddleBox_Tactics(" + id + ",\'" + tactics[i].image + "\')><td>" + tactics[i].name + "</td><td>" + tactics[i].field + "</td></tr>";
+
+            block += "<tr onclick=changeMiddleBox_Tactics(" + tactics[i].id + ")><td>" + tactics[i].name + "</td><td>" + tactics[i].field + "</td></tr>";
         }
         block += "</tbody></table>";
     } else {
@@ -140,6 +141,7 @@ async function changeMiddleBox_Player(player, team, loggedPlayer) {
     var playerinfo = await getPlayerInfo(player, team);
     var loggedPlayerinfo = await getPlayerInfo(loggedPlayer, team);
     var roles = await getAllRoles();
+
     block += "<h2>Player Details: </h2>";
     block += "<span id='playerBox'>"
     block += "<span id='playerInfo'>"
@@ -150,6 +152,7 @@ async function changeMiddleBox_Player(player, team, loggedPlayer) {
     if (loggedPlayerinfo.ranking == 'Leader') {
         block += "<div class='dropdown'><button class='dropbtn'>Change Role</button><div class='dropdown-content'>";
         for (let i = 0; i < roles.length; i++) {
+
             block += "<a onclick=changeRole(" + roles[i].id + "," + playerinfo.id + "," + team + "," + loggedPlayer + ")>" + roles[i].name + "</a>";
         }
         block += "</div></div>";
@@ -211,14 +214,34 @@ async function createMiddleBox(teamid) {
     block += "<span id='playerPhoto'> <img src='../images/teamlogo.png' height='150' ></span>";
     document.getElementById("actionTeamBox").innerHTML = block;
 }
+
+async function getSpecificTactic(id) {
+    try {
+        var tact = await $.ajax({
+            url: "/api/tactics/" + id,
+            method: "get",
+            dataType: "json"
+        });
+        return tact;
+    } catch (err) {
+        console.log(err);
+    }
+}
 // mostrar info sobre tacticas
-async function changeMiddleBox_Tactics(teamid, tacticmap) {
+async function changeMiddleBox_Tactics(id_tact) {
+    var tact = await getSpecificTactic(id_tact);
     let block = "";
-    //  block+="<h2>Tactic name:"+ tacticName+ "</h2>";
-    block += "<h2>Tactic location: HEHEHE </h2>";
-    block += "<h2>Team id:" + teamid + "</h2>";
-    block += "<img src='../images/" + tacticmap + "' height='450'></img>";
-    block += "<img id='edit' onClick='show(" + 4 + ")' onmouseover='this.src=\"../images/editHover.png\"' onmouseout='this.src=\"../images/edit.png\"' src='../images/edit.png'>";
+    console.log(tact.name);
+    block += "<h2>Tactic name:" + tact.name + "</h2>";
+    block += "<h2>Tactic location: " + tact.name + " </h2>";
+
+    console.log(tact.path);
+    // var base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(tact.path.data)));
+
+
+    block += "<img src=\"" + tact.path + "\" height='350'></img>";
+
+    //block += "<img id='edit' onClick='show(" + 4 + ")' onmouseover='this.src=\"../images/editHover.png\"' onmouseout='this.src=\"../images/edit.png\"' src='../images/edit.png'>";
 
     document.getElementById("actionTeamBox").innerHTML = block;
 }

@@ -5,7 +5,7 @@ var map = new mapboxgl.Map({
     center: [-9.314149, 38.77295], // starting position
     zoom: 11, // starting zoom
     preserveDrawingBuffer: true
-    
+
 });
 
 var loggedUser;
@@ -30,12 +30,14 @@ function show(index) {
         case 3:
             window.location = "map.html";
             break;
-}}
+    }
+}
 
 var latlng = {};
 
 
 
+// desenhar polygon
 var draw = new MapboxDraw({
     displayControlsDefault: false,
     controls: {
@@ -70,20 +72,22 @@ el.style.height = '30px';
 el.style.transform = 'skewY(20deg)';
 
 
-map.on('mousemove', function(e) {
-    document.getElementById('info').innerHTML =
-        // e.point is the x, y coordinates of the mousemove event relative
-        // to the top-left corner of the map
-        JSON.stringify(e.point) +
-        '<br />' +
-        // e.lngLat is the longitude, latitude geographical position of the event
-        JSON.stringify(e.lngLat.wrap());
-});
+/** USADO PARA DEBUGG
+    map.on('mousemove', function(e) {
+        document.getElementById('info').innerHTML =
+            // e.point is the x, y coordinates of the mousemove event relative
+            // to the top-left corner of the map
+            JSON.stringify(e.point) +
+            '<br />' +
+            // e.lngLat is the longitude, latitude geographical position of the event
+            JSON.stringify(e.lngLat.wrap());
+    });
+*/
 
 //criar markers com BD
 map.on('load', async function() {
     var fields = await getAllFields();
-    
+
     let coords = [];
     let nextInObj = 0;
     let data = {};
@@ -149,7 +153,7 @@ map.on('load', async function() {
             try {
                 let marker = new mapboxgl.Marker().setLngLat(myLatlng)
                     .setPopup(new mapboxgl.Popup({ offset: 25 })
-                        .setHTML("<b>Field Name:</b>: " + fields[i].name + "<br> <b>Field Name:</b>: BRU/BRUV/BRU <br>Check events<br><input type='button' value='ZOOM' onclick='zoomToField(" + JSON.stringify(coords) + ")'> </input><br><input type='button' value='Save field' onclick='printMap()'> </input>"))
+                        .setHTML("<b>Field Name:</b>: " + fields[i].name + "<br> <b>Field Name:</b>: BRU/BRUV/BRU <br>Check events<br><input type='button' value='ZOOM' onclick='zoomToField(" + JSON.stringify(coords) + ")'> </input><br><div id ='buttonSwitch'><input type='button' value='Save field' onclick='printMap()'> </input></div><br><div id ='goToEvents'><input type='button' value='View Events' onclick='showEventsOnThisField()'> </input></div>"))
                     .addTo(map);
             } catch (err) {
                 console.log(err);
@@ -182,6 +186,12 @@ function printMap() {
     map.getCanvas().toBlob(function(blob) {
         saveAs(blob, 'map.png');
     })
+    let html = "<input type='button' value='Go to tactics' onclick='changeToTacticsHTML()'> </input>";
+    document.getElementById("buttonSwitch").innerHTML = html;
+}
+
+function changeToTacticsHTML() {
+    window.location = "../Links/tactic.html";
 }
 /**
     $('#downloadLink').click(function() {
@@ -287,6 +297,30 @@ async function createNewEventForm() {
     block += "</div>";
     document.getElementById("MiddleBox").innerHTML = block;
     document.getElementById("fieldsarea").style.display = "none";
+}
+
+async function showEventsOnThisField() {
+
+    let block = "";
+    block += "<form class='form-container'>";
+    block += "<div class='form-content'>";
+    block += "  <span class='close' onclick='closeMiddleBox()'>&times;</span>"
+    block += "<h2>All players: </h2>";
+    block += "<span id='allPlayerInfo'>";
+    block += "<table class='table'>";
+    block += "<thead><tr><th>INVITE:</th></tr></thead><tbody>";
+    //for (let i = 0; i < playersinfo.length; i++) {
+    block += "<tr><td><span><a>Hey</a></span></td></tr>";
+    block += "<tr><td><span><a>Hey</a></span></td></tr>";
+    block += "<tr><td><span><a>Hey</a></span></td></tr>";
+    // }
+    block += "</tbody></table>";
+    block += "</span>";
+    block += "</span>";
+    block += "</div>";
+    block += "</form>";
+    document.getElementById("MiddleBox").innerHTML = block;
+
 }
 
 function closeMiddleBox() {

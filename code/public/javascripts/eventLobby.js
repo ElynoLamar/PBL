@@ -74,7 +74,7 @@ async function createEventLobbyUI(event_id) {
     block += "<div id='PlayerBox' ></div></td>";
     block += "<img id='mapIcon' onClick='show(" + 4 + ")' onmouseover='this.src=\"../images/mapIcon.png\"' onmouseout='this.src=\"../images/mapIcon.png\"' src='../images/mapIcon.png'>";
     block += "<img id='edit' onClick='show(" + 4 + ")' onmouseover='this.src=\"../images/editHover.png\"' onmouseout='this.src=\"../images/edit.png\"' src='../images/edit.png'>";
-    block+="<span id='groupDiv'>"
+    block += "<span id='groupDiv'>"
     for (let i = 1; i <= numOfGroups; i++) {
         let groupMembers = await getGroupMembersObj(event_id, i);
         block += "<span class='lobbyGroup' id='group" + i + "'>";
@@ -194,11 +194,11 @@ async function showPlayers(eventid, player) {
     block += "<input type='button' value='inviteWholeTeam' onclick='inviteWholeTeamDiv()'></input>";
     block += "<span class='close' onclick='closePlayers()'>&times;</span>";
     block += "</boxHeader>";
-   
+
     block += "<table class='table'>";
     block += "<thead><tr><th>INVITE:</th></tr></thead><tbody>";
     for (let i = 0; i < playersinfo.length; i++) {
-        block += "<tr><td id='td"+i+"'><span class='allPlayerSpecificInfo' onclick=createNewInvite(" + eventid + "," + playersinfo[i].id +","+i +")><a>" + playersinfo[i].name + "</a></span></td></tr>";
+        block += "<tr><td id='td" + i + "'><span class='allPlayerSpecificInfo' onclick=createNewInvite(" + eventid + "," + playersinfo[i].id + "," + i + ")><a>" + playersinfo[i].name + "</a></span></td></tr>";
     }
     block += "</tbody></table>";
     block += "</div></div>";
@@ -223,10 +223,10 @@ async function getPlayer(id) {
 }
 
 async function createNewInvite(eventID, clickedPlayerID, rowID) {
-    document.getElementById('td'+rowID).style.backgroundColor = '#353321';
+    document.getElementById('td' + rowID).style.backgroundColor = '#353321';
     var event = await getEventObj(eventID);
     var player = await getPlayer(loggedUser);
-    
+
     try {
         let newInvite = {
             playerRec: clickedPlayerID,
@@ -301,7 +301,7 @@ async function inviteWholeTeamDiv() {
     block += "<table class='table'>";
     block += "<thead><tr><th>INVITE:</th></tr></thead><tbody>";
     for (let i = 0; i < teams.length; i++) {
-        block += "<tr><td id='td"+i+"'><span class='allPlayerSpecificInfo' onclick='inviteWholeTeam(" + teams[i].id + ","+i+ ")'><a>" + teams[i].name + "</a></span></td></tr>";
+        block += "<tr><td id='td" + i + "'><span class='allPlayerSpecificInfo' onclick='inviteWholeTeam(" + teams[i].id + "," + i + ")'><a>" + teams[i].name + "</a></span></td></tr>";
     }
     block += "</tbody></table>";
     block += "</div></div>";
@@ -321,13 +321,54 @@ async function getTeamMembersObj(id) {
     }
 }
 async function inviteWholeTeam(teamID, rowID) {
-    document.getElementById('td'+rowID).style.backgroundColor = '#353321';
+    document.getElementById('td' + rowID).style.backgroundColor = '#353321';
     let teamMember = await getTeamMembersObj(teamID);
-    alert("t")
-    alert(JSON.stringify(teamMember));
-    alert(teamMember[0].id);
     for (let i = 0; i < teamMember.length; i++) {
-        alert(teamMember[i].id);
-        createNewInvite(eventid, teamMember[i].id, i);
+        createNewInvite(eventid, teamMember[i].id, teamID);
+    }
+}
+
+async function createNewInvite(eventID, clickedPlayerID, teamID) {
+    var event = await getEventObj(eventID);
+    var player = await getPlayer(loggedUser);
+    if (teamID != null) {
+        try {
+            let newInvite = {
+                playerRec: clickedPlayerID,
+                playerSend: player.id,
+                event: event.id,
+                team: teamID,
+                text: "You have been invited to '" + event.name + "' event by the player: '" + player.name + "'"
+            }
+
+            let result = await $.ajax({
+                url: "/api/notifications/player/invite",
+                method: "post",
+                dataType: "json",
+                data: JSON.stringify(newInvite),
+                contentType: "application/json"
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    } else {
+        try {
+            let newInvite = {
+                playerRec: clickedPlayerID,
+                playerSend: player.id,
+                event: event.id,
+                text: "You have been invited to '" + event.name + "' event by the player: '" + player.name + "'"
+            }
+
+            let result = await $.ajax({
+                url: "/api/notifications/player/invite",
+                method: "post",
+                dataType: "json",
+                data: JSON.stringify(newInvite),
+                contentType: "application/json"
+            });
+        } catch (err) {
+            console.log(err);
+        }
     }
 }

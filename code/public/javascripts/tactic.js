@@ -146,6 +146,7 @@ controls.save = function(cx) {
         try {
             link.href = cx.canvas.toDataURL();
 
+
         } catch (e) {
             if (e instanceof SecurityError)
                 link.href = "javascript:alert(" +
@@ -192,6 +193,7 @@ controls.openFile = function(cx) {
     });
     return elt("div", null, "Open file: ", input);
 };
+
 controls.openURL = function(cx) {
     var input = elt("input", { type: "text" });
     var form = elt("form", null,

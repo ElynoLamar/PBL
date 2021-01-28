@@ -38,7 +38,7 @@ module.exports.getTeamMembers = async function(index) {
 
 module.exports.getTeamTactics = async function(index) {
     try {
-        var query = "select name_tactic as name, field as fieldID, name_field  as field, image_tactic as image from Tactics, Field, Team WHERE Team =? and Tactics.team=Team.id_team and Tactics.field=Field.id_field ";
+        var query = "select id_tactic as id, name_tactic as name, field as fieldID, name_field  as field, image_tactic as image from Tactics, Field, Team WHERE Team =? and Tactics.team=Team.id_team and Tactics.field=Field.id_field ";
         const tactics = await pool.query(query, index);
         console.log(query);
         return tactics;
