@@ -1,30 +1,35 @@
-body{
+html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
     grid-template-areas: 'h' 'm';
     grid-template-rows: 30vh auto;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
 }
 
-
-.mapboxgl-canvas{
-    height:100%;
+.mapboxgl-canvas {
+    height: 100%;
 }
-
 
 #mapmap {
     grid-area: m;
     position: absolute;
     top: 18vh;
     bottom: 0;
-    width:100%;
+    width: 100%;
     max-height: 100vh;
 }
 
 main {
-    
     margin: 0;
     padding: 0;
 }
 
-header{
+header {
     grid-area: h;
 }
 
@@ -36,7 +41,6 @@ header{
     border-radius: 50%;
     cursor: pointer;
 }
-
 
 .calculation-box {
     height: 75px;
