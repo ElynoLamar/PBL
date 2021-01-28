@@ -15,7 +15,7 @@ var app = express();
 
 app.use(logger('dev'));
 app.use(express.json({
-    limit: '800mb'
+    limit: '20mb'
 }));
 
 app.use(cookieParser());

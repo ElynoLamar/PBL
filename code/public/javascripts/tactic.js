@@ -137,13 +137,15 @@ controls.save = function(cx) {
     var link = elt("button", { type: "submit" }, "Create Tactic");
 
 
-    function ahahaha() {
+    function saveTactBD() {
         createTact(cx.canvas.toDataURL());
     }
 
     function update() {
+
         try {
             link.href = cx.canvas.toDataURL();
+
         } catch (e) {
             if (e instanceof SecurityError)
                 link.href = "javascript:alert(" +
@@ -154,7 +156,7 @@ controls.save = function(cx) {
     }
     link.addEventListener("mouseover", update);
     link.addEventListener("focus", update);
-    link.addEventListener("click", ahahaha);
+    link.addEventListener("click", saveTactBD);
     return link;
 };
 
@@ -290,13 +292,13 @@ async function createTact(image) {
 
     try {
         let tactic = {
-            name: document.getElementById("ctactName").value,
-            team_or_group: document.getElementById("teamsGroups").value,
-            field: document.getElementById("fields").value,
-            player: loggedUser, // not used, just incase we wanna keep track of who created
-            image_path: image
-        }
-        console.log(JSON.stringify(tactic));
+                name: document.getElementById("ctactName").value,
+                team_or_group: document.getElementById("teamsGroups").value,
+                field: document.getElementById("fields").value,
+                player: loggedUser, // not used, just incase we wanna keep track of who created
+                image_path: image
+            }
+            //console.log(JSON.stringify(tactic));
         let result = await $.ajax({
             url: "/api/tactics/",
             method: "post",
@@ -304,7 +306,7 @@ async function createTact(image) {
             data: JSON.stringify(tactic),
             contentType: "application/json"
         });
-        console.log(JSON.stringify(tactic));
+
     } catch (err) {
         console.log(err);
     }

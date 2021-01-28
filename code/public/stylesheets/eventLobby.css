@@ -201,8 +201,3 @@ table >tbody>tr>td{
  cursor: pointer;
  position:fixed;
 }
-
-.form-content{
-  align-items: center;
-  justify-content: center;
-}

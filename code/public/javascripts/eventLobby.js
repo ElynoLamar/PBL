@@ -69,7 +69,6 @@ function show(index) {
 }
 
 async function createEventLobbyUI(event_id) {
-
     let block = "";
     block += "<div id='ChoiceBox' ></div></td>";
     block += "<div id='PlayerBox' ></div></td>";
@@ -83,16 +82,29 @@ async function createEventLobbyUI(event_id) {
         block += "<div class='tablediv'><table class='table'>";
         block += "<tr><th>Name</th><th>Team</th></tr>";
         for (let i = 0; i < groupMembers.length; i++) {
-
-            block += "<tr><td>" + groupMembers[i].name + "</td><td>" + groupMembers[i].team + "</td></tr>";
+            if (groupMembers[i].team == null) {
+                block += "<tr><td>" + groupMembers[i].name_player + "</td><td> N / A </td></tr>";
+            } else {
+                let membersTeam = await getTeamObj(groupMembers[i].team);
+                block += "<tr><td>" + groupMembers[i].name_player + "</td><td>" + membersTeam.name + "</td></tr>";
+            }
         }
         block += "</table></div></span>";
     }
-    block+="</span>";
-
     document.getElementById("eventlobbymain").innerHTML = block;
 }
-
+async function getTeamObj(id) {
+    try {
+        var team = await $.ajax({
+            url: "/api/teams/" + id,
+            method: "get",
+            dataType: "json"
+        });
+        return team;
+    } catch (err) {
+        console.log(err);
+    }
+}
 async function getGroupMembersObj(id_event, group_id) {
     try {
         var getgroupmembers = await $.ajax({
@@ -137,7 +149,7 @@ async function insertIntoGroup(groupNum, eventMember) {
             player: eventMember,
             group: groupNum
         }
-
+        console.log(JSON.stringify(newGroupMember));
         let result = await $.ajax({
             url: "/api/events/group",
             method: "post",
