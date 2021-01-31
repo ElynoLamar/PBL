@@ -183,17 +183,10 @@ async function changeMiddleBox_Player(player, team, loggedPlayer) {
 
 async function changeRole(roleID, playerID, teamID, loggedPlayer) {
     try {
-        let newRoleInfo = {
-            role: roleID,
-            player: playerID,
-            team: teamID
-        }
-
         let result = await $.ajax({
             url: "/api/teams/" + teamID + "/player/" + playerID + "/role/" + roleID,
-            method: "post",
+            method: "put",
             dataType: "json",
-            data: JSON.stringify(newRoleInfo),
             contentType: "application/json"
         });
         changeMiddleBox_Player(playerID, teamID, loggedPlayer);
@@ -284,6 +277,7 @@ async function changeMiddleBox_AllPlayers(teamid, player) {
 }
 
 async function createNewInvite(teamID, clickedPlayerID, loggedPlayer, clickedTableRow) {
+
     document.getElementById('td' + clickedTableRow).style.backgroundColor = '#353321';
     var player = await getPlayer(loggedPlayer);
 
@@ -311,15 +305,11 @@ async function createNewInvite(teamID, clickedPlayerID, loggedPlayer, clickedTab
 
 async function removeThisPlayer(playerID, teamID, loggedPlayer) {
     try {
-        let teammate = {
-            player: playerID,
-            team: teamID
-        }
+
         let result = await $.ajax({
             url: "/api/teams/" + teamID + "/player/" + playerID,
-            method: "post",
+            method: "delete",
             dataType: "json",
-            data: JSON.stringify(teammate),
             contentType: "application/json"
         });
         createTeammatesTable(teamID, loggedPlayer);
@@ -336,18 +326,11 @@ async function removeThisPlayer(playerID, teamID, loggedPlayer) {
 
 
 async function promoteToLeader(playerID, teamID, loggedPlayer) {
-
     try {
-        let teammate = {
-            newLeader: playerID,
-            team: teamID,
-            oldLeader: loggedPlayer
-        }
         let result = await $.ajax({
             url: "/api/teams/" + teamID + "/player/" + loggedPlayer + "/giveLead/" + playerID,
-            method: "post",
+            method: "put",
             dataType: "json",
-            data: JSON.stringify(teammate),
             contentType: "application/json"
         });
         createTeammatesTable(teamID, loggedPlayer);
@@ -358,31 +341,33 @@ async function promoteToLeader(playerID, teamID, loggedPlayer) {
 }
 
 //not using
-function createNav() {
-    let aux = "";
-    for (let i = 0; i < arrayOfItems.length; i++) {
-        aux += "<span class='navContainer' onclick='show(" + i + ")'>" + arrayOfItems[i] + "</span>";
+/**
+    function createNav() {
+        let aux = "";
+        for (let i = 0; i < arrayOfItems.length; i++) {
+            aux += "<span class='navContainer' onclick='show(" + i + ")'>" + arrayOfItems[i] + "</span>";
+        }
+        document.getElementById("navItems").innerHTML = aux;
     }
-    document.getElementById("navItems").innerHTML = aux;
-}
-//not using
-function show(index) {
-    switch (index) {
-        case 0:
-            window.location = "../index.html";
-            break;
-        case 1:
-            window.location = "team.html";
-            break;
-        case 2:
-            window.location = "event.html";
-            break;
-        case 3:
-            window.location = "map.html";
-            break;
-        case 4:
-            sessionStorage.setItem("loggedUser", loggedUser);
-            window.location = "tactic.html";
-            break;
+    //not using
+    function show(index) {
+        switch (index) {
+            case 0:
+                window.location = "../index.html";
+                break;
+            case 1:
+                window.location = "team.html";
+                break;
+            case 2:
+                window.location = "event.html";
+                break;
+            case 3:
+                window.location = "map.html";
+                break;
+            case 4:
+                sessionStorage.setItem("loggedUser", loggedUser);
+                window.location = "tactic.html";
+                break;
+        }
     }
-}
+*/

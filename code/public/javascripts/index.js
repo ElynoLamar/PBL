@@ -12,7 +12,6 @@ function fakeLogin() {
     sessionStorage.setItem("loggedUser", loggedUser);
 }
 
-
 function show(index) {
 
     switch (index) {

@@ -11,6 +11,7 @@ window.onload = async function() {
     notifButton(loggedUser);
     createNav(eventid);
     createEventLobbyUI(eventid);
+    eventDetails(eventid);
 }
 
 async function createNav(eventid) {
@@ -157,7 +158,7 @@ async function insertIntoGroup(groupNum, eventMember) {
             data: JSON.stringify(newGroupMember),
             contentType: "application/json"
         });
-
+        closeChoice();
     } catch (err) {
         console.log(err);
     }
@@ -198,7 +199,7 @@ async function showPlayers(eventid, player) {
     block += "<table class='table center'>";
     block += "<thead><tr><th>INVITE:</th></tr></thead><tbody>";
     for (let i = 0; i < playersinfo.length; i++) {
-        block += "<tr><td id='td" + i + "'><span class='allPlayerSpecificInfo' onclick=createNewInvite(" + eventid + "," + playersinfo[i].id + "," + i + ")><a>" + playersinfo[i].name + "</a></span></td></tr>";
+        block += "<tr><td id='td" + i + "'><span class='allPlayerSpecificInfo' onclick=createNewInvite(" + eventid + "," + playersinfo[i].id + "," + null + "," + i + ")><a>" + playersinfo[i].name + "</a></span></td></tr>";
     }
     block += "</tbody></table>";
     block += "</div>";
@@ -223,35 +224,52 @@ async function getPlayer(id) {
     }
 }
 
-async function createNewInvite(eventID, clickedPlayerID, rowID) {
-    document.getElementById('td' + rowID).style.backgroundColor = '#353321';
-    var event = await getEventObj(eventID);
-    var player = await getPlayer(loggedUser);
-
-    try {
-        let newInvite = {
-            playerRec: clickedPlayerID,
-            playerSend: player.id,
-            event: event.id,
-            text: "You have been invited to '" + event.name + "' event by the player: '" + player.name + "'"
+/**
+    async function createNewInvite(eventID, clickedPlayerID, rowID) {
+    
+        var event = await getEventObj(eventID);
+        var player = await getPlayer(loggedUser);
+        alert(rowID)
+        alert(clickedPlayerID);
+        try {
+            let newInvite = {
+                playerRec: clickedPlayerID,
+                playerSend: player.id,
+                event: event.id,
+                team: null,
+                text: "You have been invited to '" + event.name + "' event by the player: '" + player.name + "'"
+            }
+            alert(JSON.stringify(newInvite));
+            let result = await $.ajax({
+                url: "/api/notifications/player/invite",
+                method: "post",
+                dataType: "json",
+                data: JSON.stringify(newInvite),
+                contentType: "application/json"
+            });
+        } catch (err) {
+            console.log(err);
         }
-
-        let result = await $.ajax({
-            url: "/api/notifications/player/invite",
-            method: "post",
-            dataType: "json",
-            data: JSON.stringify(newInvite),
-            contentType: "application/json"
-        });
-    } catch (err) {
-        console.log(err);
     }
-}
+*/
 
 async function getEventObj(id) {
     try {
         var event = await $.ajax({
             url: "/api/events/" + id,
+            method: "get",
+            dataType: "json"
+        });
+        return event;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+async function getEventSettingsObj(id) {
+    try {
+        var event = await $.ajax({
+            url: "/api/events/" + id + "/settings",
             method: "get",
             dataType: "json"
         });
@@ -329,9 +347,11 @@ async function inviteWholeTeam(teamID, rowID) {
     }
 }
 
-async function createNewInvite(eventID, clickedPlayerID, teamID) {
+async function createNewInvite(eventID, clickedPlayerID, teamID, rowID) {
+    document.getElementById('td' + rowID).style.backgroundColor = '#353321';
     var event = await getEventObj(eventID);
     var player = await getPlayer(loggedUser);
+    alert(teamID);
     if (teamID != null) {
         try {
             let newInvite = {
@@ -372,4 +392,21 @@ async function createNewInvite(eventID, clickedPlayerID, teamID) {
             console.log(err);
         }
     }
+}
+
+async function eventDetails(eventID) {
+    var event = await getEventSettingsObj(eventID);
+    let block = "";
+    block += "<span id='eventDef'>"
+    block += "<h3>Event Settings:</h3>";
+    block += "<a>   <img src='../images/pistol.png' height='10'> Name: " + event.name + "</a><br>";
+    block += "<a>   <img src='../images/pistol.png' height='10'> Field: " + event.field + "</a><br>";
+    block += "<a>   <img src='../images/pistol.png' height='10'> Date: " + event.date + "            </a>";
+    block += "<a>    Duration:  " + event.duration + "</a><br>";
+    block += "<a>   <img src='../images/pistol.png' height='10'> Number of groups:  " + event.group_num + "       </a>";
+    block += "<a>   Number of players per group:  " + event.team_size_event + "</a><br>";
+    block += "<a>   <img src='../images/pistol.png' height='10'> Event Owner:  " + event.name_player + "       </a>";
+    block += "<a>   Email:  " + event.email_player + "</a>";
+    block += "</span>"
+    document.getElementById("articleEL").innerHTML = block;
 }

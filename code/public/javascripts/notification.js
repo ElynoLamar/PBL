@@ -14,7 +14,7 @@ async function notifButton(player) {
 
             }
         } else if (notif[i].invite == 0) {
-            block += "<div class='flex-notif-container'><span class='accept' onclick=changeStatus(" + notif[i].id_notif + "," + 2 + "," + notif[i].teamInv + "," + notif[i].receiver + ")>✔</span><span class='deny' onclick=changeStatus(" + notif[i].id_notif + "," + 3 + "," + notif[i].teamInv + "," + notif[i].receiver + ")>✖</span></div>";
+            block += "<div class='flex-notif-container'><span class='accept' onclick=changeStatus(" + notif[i].id_notif + "," + 2 + "," + notif[i].teamInv + "," + notif[i].sender + ")>✔</span><span class='deny' onclick=changeStatus(" + notif[i].id_notif + "," + 3 + "," + notif[i].teamInv + "," + notif[i].sender + ")>✖</span></div>";
         }
 
         block += "</a>";
@@ -67,7 +67,6 @@ async function getSpecificNotification(notifID) {
 
 async function changeStatus(idNotif, newstatus, teamORevent, player) {
     let notification = await getSpecificNotification(idNotif);
-    alert(JSON.stringify(notification));
     if (notification.eventInv != null) {
         try {
             let updatedInv = {
@@ -82,9 +81,7 @@ async function changeStatus(idNotif, newstatus, teamORevent, player) {
                 contentType: "application/json"
             });
             if (newstatus == 2) {
-
                 joinEvent(teamORevent, player);
-
             }
             notifButton(player);
         } catch (err) {
@@ -105,7 +102,7 @@ async function changeStatus(idNotif, newstatus, teamORevent, player) {
                 contentType: "application/json"
             });
             if (newstatus == 2) {
-                joinTeam(teamORevent, notification.sender);
+                joinTeam(teamORevent, player);
             }
             notifButton(player);
         } catch (err) {
@@ -172,13 +169,12 @@ async function joinTeam(teamID, playerID) {
     try {
         let newMember = {
             player: playerID,
-            team: teamID,
             ranking: 2,
             role: 1
         }
 
         let result = await $.ajax({
-            url: "/api/teams/newmember",
+            url: "/api/teams/" + teamID + "/newmember",
             method: "post",
             dataType: "json",
             data: JSON.stringify(newMember),

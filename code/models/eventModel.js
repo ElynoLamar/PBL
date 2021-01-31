@@ -114,7 +114,7 @@ module.exports.newEvent = async function(event) {
 
 module.exports.insertPlayerIntoGroup = async function(newGroupMember) {
     try {
-        var query = "insert into EventGroup (groupNumber,player,event) values(?,?,?);";
+        var query = "insert into EventGroup (groupNumber,player,event,ranking) values(?,?,?,2);";
         const result2 = await pool.query(query, [newGroupMember.group, newGroupMember.player, newGroupMember.event]);
         return { status: 200, data: result2 };
     } catch (err) {
@@ -139,10 +139,22 @@ module.exports.newEventMember = async function(newMember) {
 
 module.exports.getEventsOnField = async function(fieldID) {
     try {
-        var query = "select name_event as name, date_event as date , duration_event as duration, team_size_event as numOfTeams, group_num from Event , Field where Event.field_event = Field.id_field and id_field = ?;";
+        var query = "select id_event as id, name_event as name, date_event as date , duration_event as duration, team_size_event as numOfTeams, group_num from Event , Field where Event.field_event = Field.id_field and id_field = ?;";
         const result = await pool.query(query, [fieldID]);
         console.log(query);
         return result;
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+
+module.exports.getSpecificEventSettings = async function(eventid) {
+    try {
+        var query = "select id_event as id, name_event as name, name_field as field, date_event as date, duration_event as duration, team_size_event, group_num, privacy, name_player, email_player from Player, EventMember, Event, Field where Field.id_field = Event.field_event and EventMember.event= Event.id_event and EventMember.player = Player.id_player and EventMember.ranking = 1 and Event.id_event = ?;";
+        const event = await pool.query(query, eventid);
+        console.log(query);
+        return event[0];
     } catch (err) {
         console.log(err);
         return err;
