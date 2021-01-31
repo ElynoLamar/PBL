@@ -116,7 +116,7 @@ map.on('load', async function() {
                 let centroidY = centroid.geometry.coordinates[1];
                 let myLatlng = new mapboxgl.LngLat(centroidX, centroidY);
                 let marker = new mapboxgl.Marker().setLngLat(myLatlng).setPopup(new mapboxgl.Popup({ offset: 25 })
-                        .setHTML("<b>Field Name:</b>: " + fields[i].name + "<br> <input type='button' value='ZOOM' onclick='zoomToField(" + JSON.stringify(coords) + ")'>  </input> to <input type='button' value='Save field' onclick='printMap()'> </input><br><div id ='goToEvents'><input type='button' value='View Events' onclick='showEventsOnThisField(" + fields[i].id + ")'> </input></div>"))
+                        .setHTML("<b>Field Name:</b>: " + fields[i].name + "<br> <input type='button' value='ZOOM' onclick='zoomToField(" + JSON.stringify(coords) + ")'>  </input> to <div id ='buttonSwitch'><input type='button' value='Save field' onclick='printMap()'> </input></div><br><div id ='goToEvents'><input type='button' value='View Events' onclick='showEventsOnThisField(" + fields[i].id + ")'> </input></div>"))
                     .addTo(map);
                 map.addLayer({
                     'id': "'" + fields[i].id + "'",
@@ -154,7 +154,7 @@ map.on('load', async function() {
             try {
                 let marker = new mapboxgl.Marker().setLngLat(myLatlng)
                     .setPopup(new mapboxgl.Popup({ offset: 25 })
-                        .setHTML("<b>Field Name:</b>: " + fields[i].name + "<br> <b>Field Name:</b>: BRU/BRUV/BRU <br>Check events<br><input type='button' value='ZOOM' onclick='zoomToField(" + JSON.stringify(coords) + ")'> </input><br><div id ='buttonSwitch'><input type='button' value='Save field' onclick='printMap()'> </input></div><br><div id ='goToEvents'><input type='button' value='View Events' onclick='showEventsOnThisField(" + fields[i].id + ")'> </input></div>"))
+                        .setHTML("<b>Field Name:</b>: " + fields[i].name + "<br> <input type='button' value='ZOOM' onclick='zoomToField(" + JSON.stringify(coords) + ")'>  </input> to <div id ='buttonSwitch'><input type='button' value='Save field' onclick='printMap()'> </input></div><br><div id ='goToEvents'><input type='button' value='View Events' onclick='showEventsOnThisField(" + fields[i].id + ")'> </input></div>"))
                     .addTo(map);
             } catch (err) {
                 console.log(err);
@@ -193,7 +193,10 @@ function printMap() {
     document.getElementById("buttonSwitch").innerHTML = html;
 }
 
+
+
 function changeToTacticsHTML() {
+    sessionStorage.setItem("loggedUser", loggedUser);
     window.location = "../Links/tactic.html";
 }
 /**
@@ -317,7 +320,6 @@ async function createNewEventForm() {
     document.getElementById("fieldsarea").style.display = "none";
 }
 
-
 async function getEventsOnField(fieldID) {
     try {
         var events = await $.ajax({
@@ -334,18 +336,15 @@ async function getEventsOnField(fieldID) {
 
 async function showEventsOnThisField(fieldID) {
     var events = await getEventsOnField(fieldID);
-
     let block = "";
     block += "<form class='form-container'>";
     block += "<div class='form-content' id='form-content2'>";
     block += "  <span class='close' onclick='closeMiddleBox()'>&times;</span>"
     block += "<h2>Events on this field: </h2>";
-
     block += "<table class='table'>";
     block += "<thead><tr><th>Name</th><th>Date</th><th>Duration</th><th>Nº of teams</th><th>Nº of players</th></tr></thead><tbody>";
     for (let i = 0; i < events.length; i++) {
-
-        block += "<tr><td>" + events[i].name + " </td><td>" + events[i].date + " </td><td>" + events[i].duration + "</td><td>" + events[i].numOfTeams + " Teams </td><td>" + events[i].group_num + " Players</td></tr>";
+        block += "<tr onclick='changeToSelectedEvent(" + events[i].id + ")'><td>" + events[i].name + " </td><td>" + events[i].date + " </td><td>" + events[i].duration + "</td><td>" + events[i].numOfTeams + " Teams </td><td>" + events[i].group_num + " Players</td></tr>";
     }
     block += "</tbody></table>";
     block += "</span>";
@@ -354,6 +353,12 @@ async function showEventsOnThisField(fieldID) {
     block += "</form>";
     document.getElementById("MiddleBox").innerHTML = block;
 
+}
+
+function changeToSelectedEvent(eventid) {
+    array = [eventid, loggedUser]
+    sessionStorage.setItem("eventAndLoggedUserID", JSON.stringify(array));
+    window.location = "../Links/eventLobby.html";
 }
 
 function closeMiddleBox() {

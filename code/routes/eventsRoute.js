@@ -64,3 +64,9 @@ router.get("/fields/:pos1", async function(req, res, next) {
     let events = await mevent.getEventsOnField(pos1);
     res.send(events);
 });
+
+router.get("/:pos/settings", async function(req, res, next) {
+    let pos = req.params.pos;
+    let event = await mevent.getSpecificEventSettings(pos);
+    res.send(event);
+});
