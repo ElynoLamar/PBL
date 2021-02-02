@@ -114,8 +114,8 @@ module.exports.newEvent = async function(event) {
 
 module.exports.insertPlayerIntoGroup = async function(newGroupMember) {
     try {
-        var query = "insert into EventGroup (groupNumber,player,event,ranking) values(?,?,?,2);";
-        const result2 = await pool.query(query, [newGroupMember.group, newGroupMember.player, newGroupMember.event]);
+        var query = "insert into EventGroup (groupNumber,player,event,ranking) values(?,?,?,?);";
+        const result2 = await pool.query(query, [newGroupMember.group, newGroupMember.player, newGroupMember.event, 2]);
         return { status: 200, data: result2 };
     } catch (err) {
         console.log(err);

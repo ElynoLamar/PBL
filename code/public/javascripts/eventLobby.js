@@ -158,7 +158,8 @@ async function insertIntoGroup(groupNum, eventMember) {
             data: JSON.stringify(newGroupMember),
             contentType: "application/json"
         });
-        closeChoice();
+        location.reload();
+
     } catch (err) {
         console.log(err);
     }
@@ -274,6 +275,7 @@ async function getEventSettingsObj(id) {
             dataType: "json"
         });
         return event;
+        
     } catch (err) {
         console.log(err);
     }
@@ -351,7 +353,7 @@ async function createNewInvite(eventID, clickedPlayerID, teamID, rowID) {
     document.getElementById('td' + rowID).style.backgroundColor = '#353321';
     var event = await getEventObj(eventID);
     var player = await getPlayer(loggedUser);
-    alert(teamID);
+ 
     if (teamID != null) {
         try {
             let newInvite = {

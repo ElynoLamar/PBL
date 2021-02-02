@@ -350,24 +350,26 @@ async function promoteToLeader(playerID, teamID, loggedPlayer) {
         document.getElementById("navItems").innerHTML = aux;
     }
     //not using
-    function show(index) {
-        switch (index) {
-            case 0:
-                window.location = "../index.html";
-                break;
-            case 1:
-                window.location = "team.html";
-                break;
-            case 2:
-                window.location = "event.html";
-                break;
-            case 3:
-                window.location = "map.html";
-                break;
-            case 4:
-                sessionStorage.setItem("loggedUser", loggedUser);
-                window.location = "tactic.html";
-                break;
-        }
-    }
+
 */
+
+function show(index) {
+    switch (index) {
+        case 0:
+            window.location = "../index.html";
+            break;
+        case 1:
+            window.location = "team.html";
+            break;
+        case 2:
+            window.location = "event.html";
+            break;
+        case 3:
+            window.location = "map.html";
+            break;
+        case 4:
+            sessionStorage.setItem("loggedUser", loggedUser);
+            window.location = "tactic.html";
+            break;
+    }
+}
