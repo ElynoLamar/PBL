@@ -16,4 +16,12 @@ router.get("/:pos", async function(req, res, next) {
     res.send(tact);
 });
 
+router.get("/events/:event/groups/:groupnum", async function(req, res, next) {
+    let groupnum = req.params.groupnum;
+    let event = req.params.event;
+    let tact = await mtact.getSpecificTactforGroup(event, groupnum);
+    res.send(tact);
+});
+
+
 module.exports = router;

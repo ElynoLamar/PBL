@@ -130,6 +130,7 @@ map.on('load', async function() {
                 });
                 coords = [];
             }
+
         } else if (nextInObj == fields.length) {
             data = {
                 'type': 'geojson',
@@ -171,6 +172,7 @@ map.on('load', async function() {
                     'fill-opacity': 0.5
                 }
             });
+
         }
 
     }
@@ -179,7 +181,7 @@ map.on('load', async function() {
 });
 
 let html = "<div id='eventButton'> ";
-html+= "<img onclick='createNewEventForm()' id='plus' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png'></div>";
+html += "<img onclick='createNewEventForm()' id='plus' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png'></div>";
 
 
 document.getElementById("eventcreatebutton").innerHTML = html;
@@ -289,7 +291,7 @@ async function createNewEventForm() {
     block += "<label for='start'><b>Start date:</b></label>"
 
     var today = new Date();
-    
+
     var dd = today.getDate();
     var mm = today.getMonth() + 1; //January is 0!
     var yyyy = today.getFullYear();
@@ -300,7 +302,7 @@ async function createNewEventForm() {
         mm = '0' + mm
     }
     today = yyyy + '-' + mm + '-' + dd;
-    
+
     block += "<input type='date' id='eventdate' name='event-start' value='" + today + "' min='" + today + "'></input><br>"
 
     block += "<label for='numofgroups'>Number of groups (between 2 and 10):</label>"
@@ -380,112 +382,114 @@ async function createNewEvent() {
 
     let fields = document.getElementById("fields");
     let publicRadio = document.getElementById("openEvent");
-    
+
     let privateRadio = document.getElementById("privateEvent");
     let numofgroups = document.getElementById("numofgroups");
     let playerspergroup = document.getElementById("playerspergroup");
     let eventdurationhours = document.getElementById("eventdurationhours");
     let fieldName = document.getElementById("cfieldName");
-    
-    if (eventName.value.length>0 && eventName.value.length<=30 && fields.value != null && (publicRadio.checked|| privateRadio.checked) && (numofgroups.value>1 && numofgroups.value<=10) && playerspergroup.value>0 && eventdurationhours.value>0 && fieldName.value.length>0 && fieldName.value.length<=30){
-    
-    try {
-        let eprivacy = 0;
-        if (document.getElementById("openEvent").checked) {
-            eprivacy = 1;
-        } else if (document.getElementById("privateEvent").checked) {
-            eprivacy = 2;
-        }
-        let hours = document.getElementById("eventdurationhours").value;
-        let mins = document.getElementById("eventdurationmins").value;
-        let duration = (hours * 3600) + (mins * 60);
-        let event = {};
 
-        if (Object.keys(latlng).length != 0) {
-            event = {
-                name: document.getElementById("ceventName").value,
-                fieldlats: latlng.lat,
-                fieldlngs: latlng.lng,
-                date: document.getElementById("eventdate").value,
-                duration: duration,
-                groupNum: document.getElementById("numofgroups").value,
-                teamsSize: document.getElementById("playerspergroup").value,
-                privacy: eprivacy,
-                player: 1,
-                fieldName: document.getElementById("cfieldName").value
+    if (eventName.value.length > 0 && eventName.value.length <= 30 && fields.value != null && (publicRadio.checked || privateRadio.checked) && (numofgroups.value > 1 && numofgroups.value <= 10) && playerspergroup.value > 0 && eventdurationhours.value > 0 && (fields.value.length > 0 || (fieldName.value.length > 0 && fieldName.value.length <= 30))) {
+
+        try {
+            let eprivacy = 0;
+            if (document.getElementById("openEvent").checked) {
+                eprivacy = 1;
+            } else if (document.getElementById("privateEvent").checked) {
+                eprivacy = 2;
             }
+            let hours = document.getElementById("eventdurationhours").value;
+            let mins = document.getElementById("eventdurationmins").value;
+            let duration = (hours * 3600) + (mins * 60);
+            let event = {};
+
+            if (Object.keys(latlng).length != 0) {
+                event = {
+                    name: document.getElementById("ceventName").value,
+                    fieldlats: latlng.lat,
+                    fieldlngs: latlng.lng,
+                    date: document.getElementById("eventdate").value,
+                    duration: duration,
+                    groupNum: document.getElementById("numofgroups").value,
+                    teamsSize: document.getElementById("playerspergroup").value,
+                    privacy: eprivacy,
+                    player: 1,
+                    fieldName: document.getElementById("cfieldName").value
+                }
+            } else {
+
+                event = {
+                    name: document.getElementById("ceventName").value,
+                    field: document.getElementById("fields").value,
+                    date: document.getElementById("eventdate").value,
+                    duration: duration,
+                    groupNum: document.getElementById("numofgroups").value,
+                    teamsSize: document.getElementById("playerspergroup").value,
+                    privacy: eprivacy,
+                    player: 1
+                }
+
+            }
+            let result = await $.ajax({
+                url: "/api/events/",
+                method: "post",
+                dataType: "json",
+                data: JSON.stringify(event),
+                contentType: "application/json"
+            });
+            document.getElementById("MiddleBox").innerHTML = "none";
+            document.getElementById("fieldsarea").style.display = "none";
+        } catch (err) {
+            console.log(err);
+        }
+    } else {
+        //invalidar/desinvalidar inputs
+        if (!(eventName.value.length > 0 && eventName.value.length <= 30)) {
+            eventName.style.borderColor = "red";
         } else {
-            event = {
-                name: document.getElementById("ceventName").value,
-                field: document.getElementById("fields").value,
-                date: document.getElementById("eventdate").value,
-                duration: duration,
-                groupNum: document.getElementById("numofgroups").value,
-                teamsSize: document.getElementById("playerspergroup").value,
-                privacy: eprivacy,
-                player: 1
-            }
-
+            eventName.style.borderColor = "black";
         }
-        let result = await $.ajax({
-            url: "/api/events/",
-            method: "post",
-            dataType: "json",
-            data: JSON.stringify(event),
-            contentType: "application/json"
-        });
-        document.getElementById("MiddleBox").innerHTML = "none";
-        document.getElementById("fieldsarea").style.display = "none";
-    } catch (err) {
-        console.log(err);
-    }
-    }else{
-    //invalidar/desinvalidar inputs
-    if (!(eventName.value.length>0 && eventName.value.length<=30)){
-        eventName.style.borderColor="red";
-    }else{
-        eventName.style.borderColor="black";
-    }
-    
-    if (fields.value === null){
-        fields.style.borderColor="red";
-    }else{
-        fields.style.borderColor="black";
-    }
 
-    if (!(publicRadio.checked || privateRadio.checked)){
-        let radioDivs=document.getElementsByClassName("radioDiv");
-        radioDivs[0].style.borderColor="red";
-        radioDivs[1].style.borderColor="red";
-    }else{
-        let radioDivs=document.getElementsByClassName("radioDiv");
-        radioDivs[0].style.borderColor="black";
-        radioDivs[1].style.borderColor="black";
-    }
-    
-    if (!(numofgroups.value>1 && numofgroups.value<=10)){
-        numofgroups.style.borderColor="red";
-    }else{
-        numofgroups.style.borderColor="black";
-    }
-    
-    if (!playerspergroup.value>0){
-        playerspergroup.style.borderColor="red";
-    }else{
-        playerspergroup.style.borderColor="black";
-    }
+        if (fields.value === null) {
+            fields.style.borderColor = "red";
+        } else {
+            fields.style.borderColor = "black";
+        }
 
-    if (!eventdurationhours.value>0){
-        eventdurationhours.style.borderColor="red";
-    }else{
-        eventdurationhours.style.borderColor="black";
+        if (!(publicRadio.checked || privateRadio.checked)) {
+            let radioDivs = document.getElementsByClassName("radioDiv");
+            radioDivs[0].style.borderColor = "red";
+            radioDivs[1].style.borderColor = "red";
+        } else {
+            let radioDivs = document.getElementsByClassName("radioDiv");
+            radioDivs[0].style.borderColor = "black";
+            radioDivs[1].style.borderColor = "black";
+        }
+
+        if (!(numofgroups.value > 1 && numofgroups.value <= 10)) {
+            numofgroups.style.borderColor = "red";
+        } else {
+            numofgroups.style.borderColor = "black";
+        }
+
+        if (!playerspergroup.value > 0) {
+            playerspergroup.style.borderColor = "red";
+        } else {
+            playerspergroup.style.borderColor = "black";
+        }
+
+        if (!eventdurationhours.value > 0) {
+            eventdurationhours.style.borderColor = "red";
+        } else {
+            eventdurationhours.style.borderColor = "black";
+        }
+        if (!(fieldName.value.length > 0 && fieldName.value.length <= 30)) {
+            fieldName.style.borderColor = "red";
+        } else {
+            fieldName.style.borderColor = "black";
+        }
     }
-    if (!(fieldName.value.length>0 && fieldName.value.length<=30)){
-        fieldName.style.borderColor="red";
-    }else{
-        fieldName.style.borderColor="black";
-    }
-}}
+}
 
 
 

@@ -81,6 +81,7 @@ async function getTeamTactics(id) {
             method: "get",
             dataType: "json"
         });
+
         return teamtacts;
     } catch (err) {
         console.log(err);
@@ -89,8 +90,9 @@ async function getTeamTactics(id) {
 //criar tabela de tacticas/campos desta equipa
 async function createTacticsTable(id) {
     var tactics = await getTeamTactics(id);
+
     let block = "";
-    if (Object.keys(tactics).length != 0) {
+    if (tactics !== undefined) {
         block += "<div class='flex-container'>";
         block += "<span></span><h1 class='titles'>Map Tactics</h1><span><img onclick='show(" + 4 + ")' class='plusimage' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png' ;' ></span>";
         block += "</div>";
@@ -227,7 +229,7 @@ async function changeMiddleBox_Tactics(id_tact) {
     var tact = await getSpecificTactic(id_tact);
     let block = "";
     block += "<h2>Tactic name:" + tact.name + "</h2>";
-    block += "<h2>Tactic location: " + tact.name + " </h2>";
+    block += "<h2>Tactic location: " + tact.name_field + " </h2>";
     // var base64String = btoa(String.fromCharCode.apply(null, new Uint8Array(tact.path.data)));
     block += "<img src=\"" + tact.path + "\" height='350'></img>";
     //block += "<img id='edit' onClick='show(" + 4 + ")' onmouseover='this.src=\"../images/editHover.png\"' onmouseout='this.src=\"../images/edit.png\"' src='../images/edit.png'>";

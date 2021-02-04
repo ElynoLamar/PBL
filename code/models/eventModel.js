@@ -38,10 +38,26 @@ module.exports.getPlayerJoinedEvents = async function(index) {
 
 module.exports.getEventMembers = async function(id_event) {
     try {
-        var query = "select Player.id_player as id, Player.name_player as name, Team.name_team as team from EventMember Left join Player ON EventMember.player=Player.id_player Left join Team on EventMember.team=Team.id_team Left OUTER join EventGroup ON EventMember.player = EventGroup.player where EventMember.event=? and EventGroup.player is null";
+        var query = " select Player.name_player as name, EventMember.ranking as ranking, EventMember.player as id, EventMember.event as event, Team.name_team as team " +
+            " from EventMember" +
+            " Left join EventGroup ON EventMember.player = EventGroup.player and EventMember.event = EventGroup.event " +
+            " Left join Team on EventMember.team=Team.id_team " +
+            " Left join Player on EventMember.player=Player.id_player" +
+            " where EventGroup.player is null and EventMember.event=?";
         const member = await pool.query(query, id_event);
         console.log(query);
         return member;
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+module.exports.getspecificEventMember = async function(id_event, playerid) {
+    try {
+        var query = "select EventMember.ranking as ranking, EventMember.player as id, EventMember.event as event, EventMember.team as team from EventMember where EventMember.event=? and EventMember.player= ? order by EventMember.player";
+        const member = await pool.query(query, [id_event, playerid]);
+        console.log(query);
+        return member[0];
     } catch (err) {
         console.log(err);
         return err;
@@ -51,7 +67,7 @@ module.exports.getEventMembers = async function(id_event) {
 
 module.exports.getEventGroupMembers = async function(id_event, groupNumber) {
     try {
-        var query = "select Player.name_player, EventMember.team from Player, EventGroup , EventMember where EventGroup.event = EventMember.event and EventGroup.player = EventMember.player and EventMember.player = Player.id_player and EventGroup.event =?  AND EventGroup.groupNumber=?  ;";
+        var query = "select Player.id_player, EventGroup.ranking, Player.name_player, EventMember.team from Player, EventGroup , EventMember where EventGroup.event = EventMember.event and EventGroup.player = EventMember.player and EventMember.player = Player.id_player and EventGroup.event =?  AND EventGroup.groupNumber=? order by Player.id_player ;";
         const groupMember = await pool.query(query, [id_event, groupNumber]);
         console.log(query);
         return groupMember;
@@ -122,6 +138,16 @@ module.exports.insertPlayerIntoGroup = async function(newGroupMember) {
         return err;
     }
 }
+module.exports.removePlayerFromGroup = async function(eventid, playerid) {
+    try {
+        var query = "DELETE FROM EventGroup WHERE EventGroup.event = ? AND EventGroup.player = ?;";
+        const result2 = await pool.query(query, [eventid, playerid]);
+        return { status: 200, data: result2 };
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
 
 
 module.exports.newEventMember = async function(newMember) {
@@ -155,6 +181,20 @@ module.exports.getSpecificEventSettings = async function(eventid) {
         const event = await pool.query(query, eventid);
         console.log(query);
         return event[0];
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+
+module.exports.setGroupLeader = async function(eventid, playerid, group) {
+    try {
+        console.log(">>>>>>>>>>>>>>>>>>>>eventid=" + eventid + " playerid=" + playerid + " group=" + group);
+        var query = "UPDATE EventGroup SET ranking = 2 where EventGroup.event = ? and EventGroup.groupNumber = ?;";
+        const result1 = await pool.query(query, [eventid, group]);
+        query = "UPDATE EventGroup SET ranking = 1 where EventGroup.event = ? and EventGroup.groupNumber = ? and EventGroup.player = ?;";
+        const result2 = await pool.query(query, [eventid, group, playerid]);
+        return { status: 200, data: result2 };
     } catch (err) {
         console.log(err);
         return err;

@@ -12,30 +12,57 @@ window.onload = async function() {
     createNav(eventid);
     createEventLobbyUI(eventid);
     eventDetails(eventid);
+
+
 }
 
 async function createNav(eventid) {
     var eventMembers = await getEventMembersObj(eventid);
+    let thisPlayer = await getSpecificEventMembersObj(eventid);
     let block = "";
-    block += "<h1 class='titles' id='navTitle'>Players <img class='plusimage' onClick='showPlayers(" + eventid + "," + loggedUser + ")' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png' height='50vh;' ></h1>";
+    block += "<h1 class='titles' id='navTitle'>Players";
+    if (thisPlayer.ranking == 1) {
+        block += "<img class='plusimage' onClick='showPlayers(" + eventid + "," + loggedUser + ")' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png' height='50vh;' >";
+    }
+    block += "</h1>";
     block += "<table class='table'>";
-    block += "<tr><th>Name</th><th>Team</th><th>Add</th></tr>";
-    for (let i = 0; i < eventMembers.length; i++) {
+    block += "<tr><th>Name</th><th>Team</th>";
 
-        block += "<tr><td>" + eventMembers[i].name + "</td>";
+    block += "</tr>";
+    for (let i = 0; i < eventMembers.length; i++) {
+        if (eventMembers[i].id == loggedUser) {
+            block += "<tr><td> You </td>";
+        } else
+            block += "<tr><td>" + eventMembers[i].name + "</td>";
         if (eventMembers[i].team == null) {
             block += "<td> N / A </td>";
         } else {
             block += "<td>" + eventMembers[i].team + "</td>";
         }
-        block += "<td><div id='buttonCell' onClick='createGroupChoiceUI(" + eventMembers[i].id + ")'>";
-        block += "<img src='../images/plus-sign.png' height='50'>"
+
+        if (thisPlayer.ranking == 1) {
+
+            block += "<td><div id='buttonCell' onClick='createGroupChoiceUI(" + eventMembers[i].id + ")'>";
+            block += "<img src='../images/plus-sign.png' height='50'></td>";
+        }
         block += "</tr>";
     }
     block += "</table>";
     document.getElementById("eventlobbynav").innerHTML = block;
 }
 
+async function getSpecificEventMembersObj(id_event) {
+    try {
+        var geteventmember = await $.ajax({
+            url: "/api/events/" + id_event + "/players/" + loggedUser,
+            method: "get",
+            dataType: "json"
+        });
+        return geteventmember;
+    } catch (err) {
+        console.log(err);
+    }
+}
 async function getEventMembersObj(id_event) {
     try {
         var geteventmembers = await $.ajax({
@@ -70,30 +97,119 @@ function show(index) {
 }
 
 async function createEventLobbyUI(event_id) {
+    let thisPlayer = await getSpecificEventMembersObj(event_id);
     let block = "";
     block += "<div id='ChoiceBox' ></div></td>";
     block += "<div id='PlayerBox' ></div></td>";
-    block += "<img id='mapIcon' onClick='show(" + 4 + ")' onmouseover='this.src=\"../images/mapIcon.png\"' onmouseout='this.src=\"../images/mapIcon.png\"' src='../images/mapIcon.png'>";
-    block += "<img id='edit' onClick='show(" + 4 + ")' onmouseover='this.src=\"../images/editHover.png\"' onmouseout='this.src=\"../images/edit.png\"' src='../images/edit.png'>";
-    block += "<span id='groupDiv'>"
-    for (let i = 1; i <= numOfGroups; i++) {
-        let groupMembers = await getGroupMembersObj(event_id, i);
-        block += "<span class='lobbyGroup' id='group" + i + "'>";
-        block += "<h1 class='titles'>Group " + i + "</h1>";
+    block += "<span id='groupDiv'>";
+    for (let j = 1; j <= numOfGroups; j++) {
+        let groupMembers = await getGroupMembersObj(event_id, j);
+        block += "<span class='lobbyGroup' id='group" + j + "'>";
+        block += "<h1 class='titles'>Group " + j + "</h1>";
         block += "<div class='tablediv'><table class='table'>";
         block += "<tr><th>Name</th><th>Team</th></tr>";
         for (let i = 0; i < groupMembers.length; i++) {
             if (groupMembers[i].team == null) {
-                block += "<tr><td>" + groupMembers[i].name_player + "</td><td> N / A </td></tr>";
+
+                block += "<tr ";
+                if (thisPlayer.ranking == 1) {
+                    block += "onclick='removeOrMakeLeader(" + groupMembers[i].id_player + "," + j + ")'"
+                }
+                block += "><td>";
+                if (groupMembers[i].ranking == 1) {
+                    block += "(Leader) ";
+                }
+                if (groupMembers[i].id_player == loggedUser) {
+                    block += "You </td><td> N / A </td></tr> ";
+                } else block += "" + groupMembers[i].name_player + " </td><td> N / A </td></tr> ";
             } else {
                 let membersTeam = await getTeamObj(groupMembers[i].team);
-                block += "<tr><td>" + groupMembers[i].name_player + "</td><td>" + membersTeam.name + "</td></tr>";
+                block += "<tr ";
+                if (thisPlayer.ranking == 1) {
+                    block += "onclick='removeOrMakeLeader(" + groupMembers[i].id_player + "," + j + ")'"
+                }
+                block += "<td>";
+                if (groupMembers[i].ranking == 1) {
+                    block += "(Leader) ";
+                }
+
+                if (groupMembers[i].id_player == loggedUser) {
+                    block += "You </td><td>" + membersTeam.name + "</td></tr>";
+                } else block += "" + groupMembers[i].name_player + "</td><td>" + membersTeam.name + "</td></tr>";
+
+            }
+
+            if (groupMembers[i].ranking == 1 && loggedUser == groupMembers[i].id_player) {
+                block += "<img id='edit' onClick='show(" + 4 + ")' onmouseover='this.src=\"../images/editHover.png\"' onmouseout='this.src=\"../images/edit.png\"' src='../images/edit.png'>";
+            }
+            if (loggedUser == groupMembers[i].id_player) {
+                block += "<img id='mapIcon' onClick='showTacticOfGroup(" + j + ")' onmouseover='this.src=\"../images/mapIcon.png\"' onmouseout='this.src=\"../images/mapIcon.png\"' src='../images/mapIcon.png'>";
             }
         }
+
         block += "</table></div></span>";
+
     }
     document.getElementById("eventlobbymain").innerHTML = block;
 }
+async function getTacticOfGroup(groupnum) {
+    try {
+        var tact = await $.ajax({
+            url: "/api/tactics/events/" + eventid + "/groups/" + groupnum,
+            method: "get",
+            dataType: "json"
+        });
+        return tact;
+    } catch (err) {
+        console.log(err);
+    }
+}
+async function showTacticOfGroup(groupnum) {
+    let tactic = await getTacticOfGroup(groupnum);
+
+    let block = "";
+    block += "<div  class='form-container'>";
+    block += "<div class='form-content'>";
+    block += "<boxHeader id='choiceHeader'>";
+    block += "<h1 id='choiceTitle'>Your groups Tactic!</h1>";
+
+    block += "<span class='close' onclick='closeChoice()'>&times;</span>";
+    block += "</boxHeader>";
+    if (tactic != null) {
+        block += "<h2> Tactic name: " + tactic.name_tactic + "</h2>";
+        block += "<img src=\"" + tactic.image_tactic + "\" height='350'></img>";
+    } else {
+        block += "<h2>No tactic has been created yet.</h2>";
+    }
+
+
+    block += "</div>";
+    block += "</div>";
+    document.getElementById("ChoiceBox").innerHTML = block;
+}
+
+function removeOrMakeLeader(eventMember, group) {
+
+    let block = "";
+    block += "<div  class='form-container'>";
+    block += "<div class='form-content'>";
+    block += "<boxHeader id='choiceHeader'>";
+    block += "<h1 id='choiceTitle'>Make leader <br>or <br>Remove from group</h1>";
+    block += "<span class='close' onclick='closeChoice()'>&times;</span>";
+    block += "</boxHeader>";
+
+    block += "<div onClick=makeLeaderofGroup(" + eventMember + "," + group + ")> Make this player leader of the group";
+    block += "<div class='accept'>✔</div>";
+    block += "</div>";
+    block += "<div onClick=removeFromGroup(" + eventMember + ")> Remove this player from this group";
+    block += "<div class='accept'>✔</div>";
+    block += "</div>";
+
+    block += "</div>";
+    block += "</div>";
+    document.getElementById("ChoiceBox").innerHTML = block;
+}
+
 async function getTeamObj(id) {
     try {
         var team = await $.ajax({
@@ -120,9 +236,6 @@ async function getGroupMembersObj(id_event, group_id) {
 }
 
 async function createGroupChoiceUI(eventMember) {
-
-    //eventMember = eventMember + 1;
-
     let block = "";
     block += "<div  class='form-container'>";
     block += "<div class='form-content'>";
@@ -130,18 +243,49 @@ async function createGroupChoiceUI(eventMember) {
     block += "<h1 id='choiceTitle'>Choose a Group!</h1>";
     block += "<span class='close' onclick='closeChoice()'>&times;</span>";
     block += "</boxHeader>";
-
+    block += "<div id='overflowgroupdiv'>";
     for (let i = 1; i <= numOfGroups; i++) {
         block += "<div onClick=insertIntoGroup(" + i + "," + eventMember + ")>Group " + i;
         block += "<div class='accept'>✔</div>";
         block += "</div>";
     }
+    block += "</div>";
 
     block += "</div>";
     block += "</div>";
     document.getElementById("ChoiceBox").innerHTML = block;
 }
 
+async function makeLeaderofGroup(eventMember, group) {
+
+    try {
+        let result = await $.ajax({
+            url: "/api/events/" + eventid + "/players/" + eventMember + "/group/" + group + "/leader",
+            method: "put",
+            dataType: "json"
+        });
+        location.reload();
+
+    } catch (err) {
+        console.log(err);
+    }
+
+}
+async function removeFromGroup(eventMember) {
+
+    try {
+        let result = await $.ajax({
+            url: "/api/events/" + eventid + "/players/" + eventMember + "/group",
+            method: "delete",
+            dataType: "json"
+        });
+        location.reload();
+
+    } catch (err) {
+        console.log(err);
+    }
+
+}
 async function insertIntoGroup(groupNum, eventMember) {
 
     try {
@@ -275,7 +419,7 @@ async function getEventSettingsObj(id) {
             dataType: "json"
         });
         return event;
-        
+
     } catch (err) {
         console.log(err);
     }
@@ -353,7 +497,7 @@ async function createNewInvite(eventID, clickedPlayerID, teamID, rowID) {
     document.getElementById('td' + rowID).style.backgroundColor = '#353321';
     var event = await getEventObj(eventID);
     var player = await getPlayer(loggedUser);
- 
+
     if (teamID != null) {
         try {
             let newInvite = {
@@ -398,6 +542,7 @@ async function createNewInvite(eventID, clickedPlayerID, teamID, rowID) {
 
 async function eventDetails(eventID) {
     var event = await getEventSettingsObj(eventID);
+
     let block = "";
     block += "<span id='eventDef'>"
     block += "<h3>Event Settings:</h3>";
@@ -410,5 +555,6 @@ async function eventDetails(eventID) {
     block += "<a>   <img src='../images/pistol.png' height='10'> Event Owner:  " + event.name_player + "       </a>";
     block += "<a>   Email:  " + event.email_player + "</a>";
     block += "</span>"
+
     document.getElementById("articleEL").innerHTML = block;
 }

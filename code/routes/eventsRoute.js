@@ -25,6 +25,14 @@ router.get("/:pos/players", async function(req, res, next) {
     res.send(event);
 });
 
+router.get("/:eventid/players/:playerid", async function(req, res, next) {
+    let eventid = req.params.eventid;
+    let playerid = req.params.playerid;
+
+    let result = await mevent.getspecificEventMember(eventid, playerid);
+    res.send(result);
+});
+
 router.get("/:pos1/groups/:pos2/members", async function(req, res, next) {
     let pos1 = req.params.pos1;
     let pos2 = req.params.pos2;
@@ -51,7 +59,21 @@ router.post('/group', async function(req, res, next) {
     res.send(newGroupMember);
 });
 
-module.exports = router;
+router.delete('/:eventid/players/:playerid/group', async function(req, res, next) {
+    let eventID = req.params.eventid;
+    let playerID = req.params.playerid;
+    let groupMember = await mevent.removePlayerFromGroup(eventID, playerID);
+    res.send(groupMember);
+});
+
+router.put('/:eventid/players/:playerid/group/:group/leader', async function(req, res, next) {
+    let eventID = req.params.eventid;
+    let group = req.params.group;
+    let playerID = req.params.playerid;
+    let groupMember = await mevent.setGroupLeader(eventID, playerID, group);
+    res.send(groupMember);
+});
+
 
 router.put("/newmember", async function(req, res, next) {
     let event = req.body;
@@ -70,3 +92,5 @@ router.get("/:pos/settings", async function(req, res, next) {
     let event = await mevent.getSpecificEventSettings(pos);
     res.send(event);
 });
+
+module.exports = router;

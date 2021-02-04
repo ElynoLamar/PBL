@@ -20,10 +20,16 @@ router.get("/:pos/teams", async function(req, res, next) {
     res.send(teams);
 });
 
-router.get("/:pos/leaderships", async function(req, res, next) {
+router.get("/:pos/leaderships/teams", async function(req, res, next) {
     let pos = req.params.pos;
-    let leads = await mplayer.getPlayerLeadershipDuties(pos);
-    res.send(leads);
+    let teamleads = await mplayer.getPlayerTeamLeadershipDuties(pos);
+    res.send(teamleads);
+});
+
+router.get("/:playerid/leaderships/groups", async function(req, res, next) {
+    let playerid = req.params.playerid;
+    let groupleads = await mplayer.getPlayerGroupLeadershipDuties(playerid);
+    res.send(groupleads);
 });
 
 

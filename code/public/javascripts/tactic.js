@@ -2,7 +2,8 @@ var loggedUser;
 var x = document.getElementById("canvas");
 window.onload = function() {
     loggedUser = sessionStorage.getItem("loggedUser");
-    alert(loggedUser);
+
+
     notifButton(loggedUser);
     createPaint(x);
     createNewEventForm();
@@ -242,10 +243,22 @@ function randomPointInRadius(radius) {
     }
 }
 
-async function getTeamsAndGroups(id) {
+async function getTeamsLeaderships(id) {
     try {
         var leads = await $.ajax({
-            url: "/api/players/" + id + "/leaderships",
+            url: "/api/players/" + id + "/leaderships/teams",
+            method: "get",
+            dataType: "json"
+        });
+        return leads;
+    } catch (err) {
+        console.log(err);
+    }
+}
+async function getGroupsLeaderships(id) {
+    try {
+        var leads = await $.ajax({
+            url: "/api/players/" + id + "/leaderships/groups",
             method: "get",
             dataType: "json"
         });
@@ -268,7 +281,10 @@ async function getAllDistinctFields() {
 }
 
 async function createNewEventForm() {
-    var leads = await getTeamsAndGroups(loggedUser);
+    var teamleads = await getTeamsLeaderships(loggedUser);
+    var groupleads = await getGroupsLeaderships(loggedUser);
+    //console.log(JSON.stringify(teamleads));
+    console.log(JSON.stringify(groupleads));
     var fields = await getAllDistinctFields();
     block = "";
     block += "<h1>Create Tactic:</h1>";
@@ -277,9 +293,18 @@ async function createNewEventForm() {
     block += "<input type='text' placeholder='Enter your Tactic Name' id='ctactName' required><br><br>";
     block += " <label><b>Save for:  </b>(select your team or group)</label><br>";
     block += "<select id='teamsGroups' name='teamsGroups'>";
-    for (let i = 0; i < leads.length; i++) {
-        block += "<option value=" + leads[i].id + "> TEAM: " + leads[i].name + "</option>";
+
+    for (let i = 0; i < teamleads.length; i++) {
+        block += "<option value=t" + teamleads[i].id + "> TEAM: " + teamleads[i].name + "</option>";
     }
+
+
+
+    for (let i = 0; i < groupleads.length; i++) {
+        block += "<option value=g" + groupleads[i].groupNumber + "/" + groupleads[i].event + "> Group " + groupleads[i].groupNumber + ": " + groupleads[i].name_event + "</option>";
+    }
+
+
     block += "</select><br><br>";
     block += " <label><b>Select field:  </b>(select the field this image represents)</label><br>";
     block += "<select id='fields' name='fields'>";
@@ -291,16 +316,38 @@ async function createNewEventForm() {
 
 
 async function createTact(image) {
-
+    //Gort é = group or team
+    let GorT = document.getElementById("teamsGroups").value; // value pode vir versao team(t1) ou versao grupo(g1/1)
+    //quando é grupo, tambem quero saber qual é o evento do grupo
+    let smallGorT = GorT.substring(0, 1) //checkar se é team ou grupo pelo primeiro char
+    let tactic = {};
     try {
-        let tactic = {
+        if (smallGorT == 't') {
+            let team = GorT.substring(1, 2)
+            tactic = {
                 name: document.getElementById("ctactName").value,
-                team_or_group: document.getElementById("teamsGroups").value,
+                team_or_group: team,
                 field: document.getElementById("fields").value,
                 player: loggedUser, // not used, just incase we wanna keep track of who created
                 image_path: image
             }
-            //console.log(JSON.stringify(tactic));
+        } else if (smallGorT == 'g') {
+            let group = GorT.substring(1, 2);
+            var partsOfStr;
+            partsOfStr = GorT.split('/'); // dividir a string em array caso seja grupo
+            let eventid = partsOfStr[1] // apnhar a ultima parte(event)
+            tactic = {
+                name: document.getElementById("ctactName").value,
+                team_or_group: group,
+                event: eventid,
+                field: document.getElementById("fields").value,
+                player: loggedUser, // not used, just incase we wanna keep track of who created
+                image_path: image
+            }
+        }
+
+        //console.log(JSON.stringify(tactic));
+
         let result = await $.ajax({
             url: "/api/tactics/",
             method: "post",
@@ -308,6 +355,7 @@ async function createTact(image) {
             data: JSON.stringify(tactic),
             contentType: "application/json"
         });
+
 
     } catch (err) {
         console.log(err);

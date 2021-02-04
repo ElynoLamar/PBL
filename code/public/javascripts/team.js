@@ -72,7 +72,7 @@ function createTeamUI() {
     block += "<span id='myTeams'>1</span>";
     block += "<span id='MiddleBox'></span>";
     block += "<div id='ChoiceBox' ></div></td>";
-    block += "<span id='pluscontainer'><img onclick='createChoice()' id='plus' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png'><span id='plusText'><p>search team</p><p>create team</p></span></span>";
+    block += "<span id='pluscontainer'><img onclick='createChoice()' id='plus' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png'><span id='plusText'><p>create team</p><p>search team</p></span></span>";
     document.getElementById("teamDivItems").innerHTML = block;
 }
 
@@ -134,63 +134,63 @@ async function createNewTeam(playerID) {
     let teamName = document.getElementById("cteamName");
     let teamDesc = document.getElementById("cteamDesc");
 
-let publicRadio = document.getElementById("openTeam");
+    let publicRadio = document.getElementById("openTeam");
 
-let privateRadio = document.getElementById("privateTeam");
+    let privateRadio = document.getElementById("privateTeam");
 
-    if ((teamName.value.length>0 && teamName.value.length<=30) && (teamDesc.value.length>0 && teamDesc.value.length<=30) && (publicRadio.checked|| privateRadio.checked) ){
+    if ((teamName.value.length > 0 && teamName.value.length <= 30) && (teamDesc.value.length > 0 && teamDesc.value.length <= 250) && (publicRadio.checked || privateRadio.checked)) {
 
-    try {
-        let tprivacy = 0;
-        if (document.getElementById("openTeam").checked) {
-            tprivacy = 1;
-        } else if (document.getElementById("privateTeam").checked) {
-            tprivacy = 2;
+        try {
+            let tprivacy = 0;
+            if (document.getElementById("openTeam").checked) {
+                tprivacy = 1;
+            } else if (document.getElementById("privateTeam").checked) {
+                tprivacy = 2;
+            }
+            let team = {
+                name: document.getElementById("cteamName").value,
+                desc: document.getElementById("cteamDesc").value,
+                privacy: tprivacy,
+                player: playerID
+            }
+            let result = await $.ajax({
+                url: "/api/teams",
+                method: "post",
+                dataType: "json",
+                data: JSON.stringify(team),
+                contentType: "application/json"
+            });
+        } catch (err) {
+            console.log(err);
         }
-        let team = {
-            name: document.getElementById("cteamName").value,
-            desc: document.getElementById("cteamDesc").value,
-            privacy: tprivacy,
-            player: playerID
+        createMyTeamsTable(playerID);
+        closeMiddleBox();
+    } else {
+        if (!(teamName.value.length > 0 && teamName.value.length <= 30)) {
+            teamName.style.borderColor = "red";
+        } else {
+            teamName.style.borderColor = "black";
         }
-        let result = await $.ajax({
-            url: "/api/teams",
-            method: "post",
-            dataType: "json",
-            data: JSON.stringify(team),
-            contentType: "application/json"
-        });
-    } catch (err) {
-        console.log(err);
-    }
-    createMyTeamsTable(playerID);
-    closeMiddleBox();
-}else{
-    if (!(teamName.value.length>0 && teamName.value.length<=30)){
-        teamName.style.borderColor="red";
-    }else{
-        teamName.style.borderColor="black";
+
+        if (!(teamDesc.value.length > 0 && teamDesc.value.length <= 30)) {
+            teamDesc.style.borderColor = "red";
+        } else {
+            teamDesc.style.borderColor = "black";
+        }
+
+        if (!(publicRadio.checked || privateRadio.checked)) {
+            let radioDivs = document.getElementsByClassName("radioDiv");
+            radioDivs[0].style.borderColor = "red";
+            radioDivs[1].style.borderColor = "red";
+        } else {
+            let radioDivs = document.getElementsByClassName("radioDiv");
+            radioDivs[0].style.borderColor = "black";
+            radioDivs[1].style.borderColor = "black";
+        }
     }
 
-    if (!(teamDesc.value.length>0 && teamDesc.value.length<=30)){
-        teamDesc.style.borderColor="red";
-    }else{
-        teamDesc.style.borderColor="black";
-    }
 
-    if (!(publicRadio.checked || privateRadio.checked)){
-        let radioDivs=document.getElementsByClassName("radioDiv");
-        radioDivs[0].style.borderColor="red";
-        radioDivs[1].style.borderColor="red";
-    }else{
-        let radioDivs=document.getElementsByClassName("radioDiv");
-        radioDivs[0].style.borderColor="black";
-        radioDivs[1].style.borderColor="black";
-    }
-}
-  
 
-    
 }
 
 function closeMiddleBox() {
