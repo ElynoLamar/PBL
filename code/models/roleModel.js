@@ -6,9 +6,13 @@ module.exports.getAllRoles = async function() {
         const role = await pool.query(query);
 
         console.log(query);
-        return role;
+        if (role.length > 0) {
+            return { status: 200, data: role };
+        } else {
+            return { status: 400, msg: 'roles not found' };
+        }
     } catch (err) {
-        console.log(err);
-        return err;
+        return { status: 500, data: err };
+
     }
 }

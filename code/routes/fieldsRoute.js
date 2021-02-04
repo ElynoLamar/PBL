@@ -12,9 +12,9 @@ router.get('/distinct', async function(req, res, next) {
     res.send(fields);
 });
 
-router.get('/:pos/coordinates', async function(req, res, next) {
-    let pos = req.params.pos;
-    let fieldsCoords = await mfield.getSpecificFieldCoords(pos);
+router.get('/:fieldID/coordinates', async function(req, res, next) {
+    let fieldID = req.params.fieldID;
+    let fieldsCoords = await mfield.getSpecificFieldCoords(fieldID);
     res.send(fieldsCoords);
 });
 

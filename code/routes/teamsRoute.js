@@ -8,16 +8,16 @@ router.get('/', async function(req, res, next) {
     send(result.data);
 
 });
-router.get("/:pos", async function(req, res, next) {
-    let pos = req.params.pos;
-    let result = await mteam.getSpecificTeam(pos);
+router.get("/:teamID", async function(req, res, next) {
+    let teamID = req.params.teamID;
+    let result = await mteam.getSpecificTeam(teamID);
     res.status(result.status).
     send(result.data);
 });
-router.post("/:pos/newmember", async function(req, res, next) {
-    let pos = req.params.pos;
+router.post("/:teamID/newmember", async function(req, res, next) {
+    let teamID = req.params.teamID;
     let team = req.body;
-    let result = await mteam.newTeamMember(team, pos);
+    let result = await mteam.newTeamMember(team, teamID);
     res.status(result.status).
     send(result.data);
 });
@@ -31,51 +31,49 @@ router.post('/', async function(req, res, next) {
 });
 
 
-router.get("/:pos/members", async function(req, res, next) {
-    let pos = req.params.pos;
-    let result = await mteam.getTeamMembers(pos);
+router.get("/:teamID/members", async function(req, res, next) {
+    let teamID = req.params.teamID;
+    let result = await mteam.getTeamMembers(teamID);
     res.status(result.status).
     send(result.data);
 });
 
-router.get("/:pos/tactics", async function(req, res, next) {
-    let pos = req.params.pos;
-    let result = await mteam.getTeamTactics(pos);
+router.get("/:teamID/tactics", async function(req, res, next) {
+    let teamID = req.params.pos;
+    let result = await mteam.getTeamTactics(teamID);
     res.status(result.status).
     send(result.data);
 });
 
 
-router.put("/:pos/player/:pos2/role/:pos3", async function(req, res, next) {
-    let team = req.params.pos;
-    let player = req.params.pos2;
-    let role = req.params.pos3;
+router.put("/:teamID/player/:playerID/role/", async function(req, res, next) {
+    let team = req.params.teamID;
+    let player = req.params.playerID;
+    let obj = req.body;
+    let role = obj.role;
     let result = await mteam.changeRole(team, player, role);
     res.status(result.status).
     send(result.data);
 });
 //not used
-router.post("/:pos/player/:pos2/rank/:pos3", async function(req, res, next) {
-    let pos = req.params.pos;
-    let pos2 = req.params.pos2;
-    let pos3 = req.params.pos3;
+router.post("/:teamID/player/:playerID/rank/", async function(req, res, next) {
     let newRankInfo = req.body;
     let newRank = await mteam.changeRank(newRankInfo);
     res.send(newRank);
 });
 
-router.delete("/:pos/player/:pos2", async function(req, res, next) {
-    let team = req.params.pos;
-    let player = req.params.pos2;
+router.delete("/:teamID/player/:playerID", async function(req, res, next) {
+    let team = req.params.teamID;
+    let player = req.params.playerID;
     let result = await mteam.removeTeammate(team, player);
     res.status(result.status).
     send(result.data);
 });
 
-router.put("/:pos/player/:pos2/giveLead/:pos3", async function(req, res, next) {
-    let team = req.params.pos;
-    let oldleader = req.params.pos2;
-    let newleader = req.params.pos3;
+router.put("/:team/player/:oldleader/giveLead/:newleader", async function(req, res, next) {
+    let team = req.params.team;
+    let oldleader = req.params.oldleader;
+    let newleader = req.params.newleader;
     let result = await mteam.promoteToLeader(team, oldleader, newleader);
     res.status(result.status).
     send(result.data);

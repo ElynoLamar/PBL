@@ -7,21 +7,21 @@ router.get('/', async function(req, res, next) {
     res.send(events);
 });
 
-router.get("/:pos", async function(req, res, next) {
-    let pos = req.params.pos;
-    let event = await mevent.getSpecificEvent(pos);
+router.get("/:eventID", async function(req, res, next) {
+    let eventID = req.params.eventID;
+    let event = await mevent.getSpecificEvent(eventID);
     res.send(event);
 });
 
-router.get("/player/:pos", async function(req, res, next) {
-    let pos = req.params.pos;
-    let events = await mevent.getPlayerJoinedEvents(pos);
+router.get("/player/:playerID", async function(req, res, next) {
+    let playerID = req.params.playerID;
+    let events = await mevent.getPlayerJoinedEvents(playerID);
     res.send(events);
 });
 
-router.get("/:pos/players", async function(req, res, next) {
-    let pos = req.params.pos;
-    let event = await mevent.getEventMembers(pos);
+router.get("/:eventID/players", async function(req, res, next) {
+    let eventID = req.params.eventID;
+    let event = await mevent.getEventMembers(eventID);
     res.send(event);
 });
 
@@ -33,10 +33,10 @@ router.get("/:eventid/players/:playerid", async function(req, res, next) {
     res.send(result);
 });
 
-router.get("/:pos1/groups/:pos2/members", async function(req, res, next) {
-    let pos1 = req.params.pos1;
-    let pos2 = req.params.pos2;
-    let members = await mevent.getEventGroupMembers(pos1, pos2);
+router.get("/:eventID/groups/:num/members", async function(req, res, next) {
+    let eventID = req.params.eventID;
+    let num = req.params.num;
+    let members = await mevent.getEventGroupMembers(eventID, num);
     res.send(members);
 });
 

@@ -2,33 +2,27 @@ var express = require('express');
 var router = express.Router();
 var mnotif = require("../models/notifModel");
 
-router.get('/player/:pos', async function(req, res, next) {
-    let pos = req.params.pos;
-    let notif = await mnotif.getPlayerNotifications(pos);
+router.get('/player/:playerID', async function(req, res, next) {
+    let playerID = req.params.playerID;
+    let notif = await mnotif.getPlayerNotifications(playerID);
     res.send(notif);
 });
-router.get('/player/:pos/count', async function(req, res, next) {
-    let pos = req.params.pos;
-    let notif = await mnotif.getPlayerNotifCount(pos);
+router.get('/player/:playerID/count', async function(req, res, next) {
+    let playerID = req.params.playerID;
+    let notif = await mnotif.getPlayerNotifCount(playerID);
     res.send(notif);
 });
 
-router.get('/invite/:pos', async function(req, res, next) {
-    let pos = req.params.pos;
-    let ivnites = await mnotif.getInviteInfo(pos);
-    res.send(ivnites);
-});
 
-//not used
 router.post('/', async function(req, res, next) {
     let invite = req.body;
     let updatedInv = await mnotif.updateInviteStatus(invite);
     res.send(updatedInv);
 });
 
-router.get('/:pos', async function(req, res, next) {
-    let pos = req.params.pos;
-    let notifInfo = await mnotif.getSpecificNotification(pos);
+router.get('/:idNotif', async function(req, res, next) {
+    let idNotif = req.params.idNotif;
+    let notifInfo = await mnotif.getSpecificNotification(idNotif);
     res.send(notifInfo);
 });
 

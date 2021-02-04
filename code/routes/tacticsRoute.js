@@ -10,9 +10,9 @@ router.post('/', async function(req, res, next) {
     res.send(newtact);
 });
 
-router.get("/:pos", async function(req, res, next) {
-    let pos = req.params.pos;
-    let tact = await mtact.getSpecificTact(pos);
+router.get("/:tacticID", async function(req, res, next) {
+    let tacticID = req.params.tacticID;
+    let tact = await mtact.getSpecificTact(tacticID);
     res.send(tact);
 });
 

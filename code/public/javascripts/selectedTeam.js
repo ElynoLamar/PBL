@@ -102,7 +102,7 @@ async function createTacticsTable(team, player) {
         block += "<div class='flex-container'>";
         block += "<span></span><h1 class='titles'>Map Tactics</h1>";
         if (thisPlayer.ranking == "Leader") {
-            block += "<span><img onclick='show(" + 4 + ")' class='plusimage' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png' ;' ></span>";
+            block += "<span> <img onclick='show(" + 4 + ")' class='plusimage' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png';' ></span>";
         } else {
             block += "<span></span>";
         }
@@ -116,16 +116,21 @@ async function createTacticsTable(team, player) {
         block += "</tbody></table>";
     } else {
         block += "<div class='flex-container'>";
-        block += "<span></span><h1 class='titles'> No tactics found</h1><span><img onclick='show(" + 4 + ")' class='plusimage' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png';' ></span>";
+        block += "<span></span><h1 class='titles'> No tactics found</h1>"
+        if (thisPlayer.ranking == "Leader") {
+            block += "<span> img onclick='show(" + 4 + ")' class='plusimage' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png';' ></span>";
+        } else {
+            block += "<span></span>";
+        }
         block += "</div>";
     }
     document.getElementById("teamMaps").innerHTML = block;
 }
 // buscar informação do jogador NESTA equipa(roles e rankings especificos desta equipa) na middle box
 async function getPlayerInfo(player, team) {
-    try { //fixar isto para /api/team/id/player/id
+    try {
         var playerinfo = await $.ajax({
-            url: "/api/players/" + player + "/team/" + team,
+            url: "/api/players/" + player + "/teams/" + team,
             method: "get",
             dataType: "json"
         });
@@ -196,10 +201,14 @@ async function changeMiddleBox_Player(player, team, loggedPlayer) {
 
 async function changeRole(roleID, playerID, teamID, loggedPlayer) {
     try {
+        let obj = {
+            role: roleID
+        }
         let result = await $.ajax({
-            url: "/api/teams/" + teamID + "/player/" + playerID + "/role/" + roleID,
+            url: "/api/teams/" + teamID + "/player/" + playerID + "/role/",
             method: "put",
             dataType: "json",
+            data: JSON.stringify(obj),
             contentType: "application/json"
         });
         changeMiddleBox_Player(playerID, teamID, loggedPlayer);
