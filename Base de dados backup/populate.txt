@@ -13,12 +13,21 @@ insert into InviteStatus(id_i_status, name_i_status) values (1,"Awaiting");
 insert into InviteStatus(id_i_status, name_i_status) values (2,"Accepted");
 insert into InviteStatus(id_i_status, name_i_status) values (3,"Rejected");
 
+insert into Privacy (id_privacy,name_privacy) values(1,"Public");
+insert into Privacy (id_privacy,name_privacy) values(2,"Private by request");
+insert into Privacy (id_privacy,name_privacy) values(3,"Private by password");
+
+
+
 insert into Notification(receiver,sender,teamInv,text_notif,invite,status) VALUES(5,1,1,"Join our team! inv nº1", true, 1);
 insert into Notification(receiver,sender,teamInv,text_notif,invite,status) VALUES(5,1,1,"Join our team! inv nº2", true, 1);
 insert into Notification(receiver,sender,teamInv,text_notif,invite,status) VALUES(5,8,3,"Join our team! inv nº3", true, 1);
 insert into Notification(receiver,sender,text_notif,invite,status) VALUES(5,1,"Atualizações foram feitas ao sistema",false,1);
 insert into Notification(receiver,sender,text_notif,invite,status) VALUES(5,1,"Atualizações foram feitas ao sistema v2",false,1);
 //mudanças foram feitas, atualizar o resto do populate
+
+insert into Player(name_player,age_player,email_player,description_player,photo_path)values(
+"Jane Bravo", 27, "ppp@gmail.com","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent rutrum diam quis orci tempor semper. Nullam bibendum pulvinar nulla id fringilla. Pellentesque bibendum est lectus, ultrices efficitur massa cursus vel.","Player4.png");
 
 
 insert into Team(name_team, description_team) values('Team Snipe Matracas','Very Casual but serious');
