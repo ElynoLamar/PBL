@@ -121,7 +121,7 @@ module.exports.removeTeammate = async function(team, player) {
 
 module.exports.promoteToLeader = async function(team, oldLeader, newLeader) {
     try { // ranking 1 é "leader", ranking 2 é "player"
-        if (playerID > 0 && teamID > 0 && loggedPlayer > 0) {
+        if (newLeader > 0 && team > 0 && oldLeader > 0) {
             let sql = "UPDATE TeamMember SET ranking = 2 WHERE TeamMember.player = ? AND TeamMember.team = ?;"
             const result1 = await pool.query(sql, [oldLeader, team]);
             console.log(sql);

@@ -29,13 +29,17 @@ async function notifButton(player) {
 
 }
 
+
 async function changeStatus(idNotif, newstatus, teamORevent, player) {
     let notification = await getSpecificNotification(idNotif);
     if (notification.eventInv != null) {
         try {
             let updatedInv = {
                 id: idNotif,
-                status: newstatus
+                status: newstatus,
+                target: teamORevent,
+                newmember: player,
+                isTeam: false
             }
             let result = await $.ajax({
                 url: "/api/notifications/",
@@ -44,9 +48,11 @@ async function changeStatus(idNotif, newstatus, teamORevent, player) {
                 data: JSON.stringify(updatedInv),
                 contentType: "application/json"
             });
-            if (newstatus == 2) {
-                joinEvent(teamORevent, player);
-            }
+            /**
+                            if (newstatus == 2) {
+                                joinEvent(teamORevent, player);
+                            }
+            */
             notifButton(notification.receiver);
         } catch (err) {
             console.log(err);
@@ -56,7 +62,10 @@ async function changeStatus(idNotif, newstatus, teamORevent, player) {
         try {
             let updatedInv = {
                 id: idNotif,
-                status: newstatus
+                status: newstatus,
+                target: teamORevent,
+                newmember: player,
+                isTeam: true
             }
             let result = await $.ajax({
                 url: "/api/notifications/",
@@ -65,9 +74,11 @@ async function changeStatus(idNotif, newstatus, teamORevent, player) {
                 data: JSON.stringify(updatedInv),
                 contentType: "application/json"
             });
-            if (newstatus == 2) {
-                joinTeam(teamORevent, player);
-            }
+            /**
+                            if (newstatus == 2) {
+                                joinTeam(teamORevent, player);
+                            }
+            */
             notifButton(player);
         } catch (err) {
             console.log(err);
@@ -90,7 +101,7 @@ async function changeStatus(idNotif, newstatus, teamORevent, player) {
             console.log(err);
         }
     }
-
+    location.reload();
 }
 
 

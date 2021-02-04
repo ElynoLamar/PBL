@@ -489,6 +489,7 @@ async function createNewEvent() {
             fieldName.style.borderColor = "black";
         }
     }
+    location.reload();
 }
 
 

@@ -8,7 +8,7 @@ window.onload = function() {
 }
 
 function fakeLogin() {
-    loggedUser = 1;
+    loggedUser = 2;
     sessionStorage.setItem("loggedUser", loggedUser);
 }
 
