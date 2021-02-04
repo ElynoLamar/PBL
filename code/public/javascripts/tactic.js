@@ -344,6 +344,7 @@ async function createTact(image) {
                 player: loggedUser, // not used, just incase we wanna keep track of who created
                 image_path: image
             }
+
         }
 
         //console.log(JSON.stringify(tactic));

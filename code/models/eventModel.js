@@ -14,7 +14,7 @@ module.exports.getSpecificEvent = async function(index) {
 
 module.exports.getAllEvents = async function() {
     try {
-        var query = "SELECT name_event as name, name_field as field, date_event as date from Event, Field where Field.id_field = Event.field_event";
+        var query = "SELECT id_event as id, name_event as name, name_field as field, date_event as date from Event, Field where Field.id_field = Event.field_event";
         const events = await pool.query(query);
         console.log(query);
         return events;

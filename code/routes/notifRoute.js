@@ -40,13 +40,22 @@ router.post('/player/invite', async function(req, res, next) {
 });
 
 
-router.post('/player/:pos/team/:pos2/request/', async function(req, res, next) {
+router.post('/player/:pos/teams/:pos2/requests/', async function(req, res, next) {
     let pos = req.params.pos;
     let pos2 = req.params.pos2;
     let request = req.body;
     let nRequest = await mnotif.requestToJoinTeamNotif(request);
     res.send(nRequest);
 });
+
+router.post('/player/:pos/events/:pos2/requests/', async function(req, res, next) {
+    let pos = req.params.pos;
+    let pos2 = req.params.pos2;
+    let request = req.body;
+    let nRequest = await mnotif.requestToJoinEventNotif(request);
+    res.send(nRequest);
+});
+
 
 
 module.exports = router;

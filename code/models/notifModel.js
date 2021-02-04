@@ -88,10 +88,19 @@ module.exports.getPlayerNotifCount = async function(player) {
 
 module.exports.requestToJoinTeamNotif = async function(request) {
     try {
-        let message = request.playerName;
         var query = "insert into Notification(receiver,sender,text_notif,status,invite,teamInv) VALUES((select player from TeamMember where TeamMember.ranking=1 and TeamMember.team=?),?,?, 1,0,?);";
         const result = await pool.query(query, [request.team, request.player, request.text, request.team]);
-        console.log(query);
+        return { status: 200, data: result };
+    } catch (err) {
+        console.log(err);
+        return err;
+    }
+}
+
+module.exports.requestToJoinEventNotif = async function(request) {
+    try {
+        var query = "insert into Notification(receiver,sender,text_notif,status,invite,eventInv) VALUES((select player from EventMember where EventMember.ranking=1 and EventMember.event=?),?,?, 1,0,?);";
+        const result = await pool.query(query, [request.event, request.player, request.text, request.event]);
         return { status: 200, data: result };
     } catch (err) {
         console.log(err);

@@ -74,12 +74,12 @@ async function joinTeamForm(teamID, player) {
     block += "<div class='form-container'>";
     block += "<div class='form-content'>";
     block += "<h1>Join this team?</h1>";
-    block += " <label><b>Team name: " + team.name + " </b></label>";
+    block += " <label><b>Team name: " + team.name + " </b></label><br>";
     block += " <label><b>Team Description: " + team.description + " </b></label>";
     if (team.privacy == 2) {
         block += " <button type='button' class='btn' onclick='requestToJoinTeam(" + teamID + "," + player + ")'>Request to join</button>";
     } else if (team.privacy == 3) {
-        //
+        //se tivesse password
     } else if (team.privacy == 1) {
         block += " <button type='button' class='btn' onclick='joinTeam(" + teamID + "," + player + ")'>Join</button>";
     }
@@ -118,7 +118,7 @@ async function requestToJoinTeam(teamID, loggedPlayer) {
         }
 
         let result = await $.ajax({
-            url: "/api/notifications/player/:pos/team/:pos2/request/",
+            url: "/api/notifications/player/:pos/teams/:pos2/requests/",
             method: "post",
             dataType: "json",
             data: JSON.stringify(request),
