@@ -14,6 +14,7 @@ router.get("/:teamID", async function(req, res, next) {
     res.status(result.status).
     send(result.data);
 });
+
 router.post("/:teamID/newmember", async function(req, res, next) {
     let teamID = req.params.teamID;
     let team = req.body;
@@ -39,11 +40,12 @@ router.get("/:teamID/members", async function(req, res, next) {
 });
 
 router.get("/:teamID/tactics", async function(req, res, next) {
-    let teamID = req.params.pos;
+    let teamID = req.params.teamID;
     let result = await mteam.getTeamTactics(teamID);
     res.status(result.status).
     send(result.data);
 });
+
 
 
 router.put("/:teamID/player/:playerID/role/", async function(req, res, next) {

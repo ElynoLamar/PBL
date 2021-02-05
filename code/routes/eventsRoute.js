@@ -40,10 +40,22 @@ router.get("/:eventID/groups/:num/members", async function(req, res, next) {
     res.send(members);
 });
 
-router.get("/:pos1/numofgroups", async function(req, res, next) {
-    let pos1 = req.params.pos1;
-    let numofgroups = await mevent.getEventNumOfGroups(pos1);
+router.get("/:eventID/numofgroups", async function(req, res, next) {
+    let eventID = req.params.eventID;
+    let numofgroups = await mevent.getEventNumOfGroups(eventID);
     res.send(numofgroups);
+});
+
+router.get("/fields/:fieldID", async function(req, res, next) {
+    let fieldID = req.params.fieldID;
+    let events = await mevent.getEventsOnField(fieldID);
+    res.send(events);
+});
+
+router.get("/:eventID/settings", async function(req, res, next) {
+    let eventID = req.params.eventID;
+    let event = await mevent.getSpecificEventSettings(eventID);
+    res.send(event);
 });
 
 
@@ -81,16 +93,5 @@ router.put("/newmember", async function(req, res, next) {
     res.send(newMember);
 });
 
-router.get("/fields/:pos1", async function(req, res, next) {
-    let pos1 = req.params.pos1;
-    let events = await mevent.getEventsOnField(pos1);
-    res.send(events);
-});
-
-router.get("/:pos/settings", async function(req, res, next) {
-    let pos = req.params.pos;
-    let event = await mevent.getSpecificEventSettings(pos);
-    res.send(event);
-});
 
 module.exports = router;

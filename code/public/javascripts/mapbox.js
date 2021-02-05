@@ -247,7 +247,7 @@ async function getAllDistinctFields() {
         console.log(err);
     }
 }
-
+//not used
 async function getSpecificField() {
     try {
         var getField = await $.ajax({
@@ -346,7 +346,8 @@ async function showEventsOnThisField(fieldID) {
     block += "<table class='table'>";
     block += "<thead><tr><th>Name</th><th>Date</th><th>Duration</th><th>Nº of teams</th><th>Nº of players</th></tr></thead><tbody>";
     for (let i = 0; i < events.length; i++) {
-        block += "<tr onclick='changeToSelectedEvent(" + events[i].id + ")'><td>" + events[i].name + " </td><td>" + events[i].date + " </td><td>" + events[i].duration + "</td><td>" + events[i].numOfTeams + " Teams </td><td>" + events[i].group_num + " Players</td></tr>";
+        // block += "<tr onclick='changeToSelectedEvent(" + events[i].id + ")'><td>" + events[i].name + " </td><td>" + events[i].date + " </td><td>" + events[i].duration + "</td><td>" + events[i].numOfTeams + " Teams </td><td>" + events[i].group_num + " Players</td></tr>";
+        block += "<tr onclick='joinEventForm(" + events[i].id + ")'><td>" + events[i].name + " </td><td>" + events[i].date + " </td><td>" + events[i].duration + "</td><td>" + events[i].numOfTeams + " Teams </td><td>" + events[i].group_num + " Players</td></tr>";
     }
     block += "</tbody></table>";
     block += "</span>";
@@ -533,4 +534,91 @@ function zoomToField(cur) {
     map.fitBounds(bounds, {
         padding: 20
     });
+}
+
+
+async function joinEventForm(eventID) {
+    var event = await getEventSettingsObj(eventID);
+    closeMiddleBox();
+    let block = "";
+    block += "<div class='form-container'>";
+    block += "<div class='form-content'>";
+    block += "<h1>Join this event?</h1>";
+
+    block += "<a> <b>Name:</b> " + event.name + "</a><br>";
+    block += "<a> <b>Field:</b> " + event.field + "</a><br>";
+    block += "<a> <b>Date:</b> " + event.date + "            </a>";
+    block += "<a> <b>Duration:</b>  " + event.duration + "</a><br>";
+    block += "<a> <b>Number of groups:</b>  " + event.group_num + "       </a><br>";
+    block += "<a> <b>Number of players per group:</b>  " + event.team_size_event + "</a><br>";
+    block += "<a> <b>Event Owner:</b>  " + event.name_player + "       </a><br>";
+    block += "<a> <b>Email:</b>  " + event.email_player + "</a><br><br><br><br>";
+    //event shit
+    if (event.privacy == 2) {
+        block += " <button type='button' class='btn' onclick='requestToJoinEvent(" + eventID + "," + loggedUser + ")'>Request to join</button>";
+    } else if (event.privacy == 3) {
+        //se tivesse password
+    } else if (event.privacy == 1) {
+        block += " <button type='button' class='btn' onclick='joinEvent(" + eventID + "," + loggedUser + ")'>Join</button>";
+    }
+    block += "  <button type='button' class='btn cancel' onclick='closeMiddleBox()'>Cancel</button>";
+    block += "</div></div>";
+    block += "</div>";
+    document.getElementById("MiddleBox").innerHTML = block;
+}
+
+async function getEventSettingsObj(id) {
+    try {
+        var event = await $.ajax({
+            url: "/api/events/" + id + "/settings",
+            method: "get",
+            dataType: "json"
+        });
+        return event;
+
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+function closeMiddleBox() {
+    document.getElementById("MiddleBox").innerHTML = "";
+}
+
+
+async function requestToJoinEvent(eventID, loggedPlayer) {
+    var player = await getPlayer(loggedPlayer);
+    var eventOBJ = await getEventSettingsObj(eventID);
+    try {
+        let request = {
+            player: loggedPlayer,
+            event: eventID,
+            text: "Player '" + player.name + "' is requesting to join your event '" + eventOBJ.name + "'."
+        }
+
+        let result = await $.ajax({
+            url: "/api/notifications/player/:pos/events/:pos2/requests/",
+            method: "post",
+            dataType: "json",
+            data: JSON.stringify(request),
+            contentType: "application/json"
+
+        });
+        closeMiddleBox();
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+async function getPlayer(id) {
+    try {
+        var player = await $.ajax({
+            url: "/api/players/" + id,
+            method: "get",
+            dataType: "json"
+        });
+        return player;
+    } catch (err) {
+        console.log(err);
+    }
 }

@@ -8,16 +8,22 @@ async function notifButton(player) {
     for (let i = 0; i < notif.length; i++) {
         block += "<a>" + notif[i].text_notif;
         if (notif[i].invite == 1) {
-            if (Number.isInteger(notif[i].teamInv)) {
-                block += "<div class='flex-notif-container'><span class='accept' onclick=changeStatus(" + notif[i].id_notif + "," + 2 + "," + notif[i].teamInv + "," + notif[i].receiver + ")>✔</span><span class='deny' onclick=changeStatus(" + notif[i].id_notif + "," + 3 + "," + notif[i].teamInv + "," + notif[i].receiver + ")>✖</span></div>";
-            } else if (Number.isInteger(notif[i].eventInv)) {
-                block += "<div class='flex-notif-container'><span class='accept' onclick=changeStatus(" + notif[i].id_notif + "," + 2 + "," + notif[i].eventInv + "," + notif[i].receiver + ")>✔</span><span class='deny' onclick=changeStatus(" + notif[i].id_notif + "," + 3 + "," + notif[i].eventInv + "," + notif[i].receiver + ")>✖</span></div>";
+            if (Number.isInteger(notif[i].eventInv)) {
+                if (Number.isInteger(notif[i].teamInv)) {
+                    block += "<div class='flex-notif-container'><span class='accept' onclick=changeStatus(" + notif[i].id_notif + "," + 2 + "," + notif[i].eventInv + "," + notif[i].receiver + "," + 0 + ")>✔</span><span class='deny' onclick=changeStatus(" + notif[i].id_notif + "," + 3 + "," + notif[i].eventInv + "," + notif[i].receiver + "," + 0 + ")>✖</span></div>";
+                } else {
+                    alert("supostamente OBJ ir com team")
+                        //     block += "<div class='flex-notif-container'><span class='accept' onclick=changeStatus(" + notif[i].id_notif + "," + 2 + "," + notif[i].eventInv + "." + notif[i].teamInv + "," + notif[i].receiver + "," + 1 + ")>✔</span><span class='deny' onclick=changeStatus(" + notif[i].id_notif + "," + 3 + "," + notif[i].eventInv + "," + notif[i].receiver + "," + 1 + ")>✖</span></div>";
+                }
+            } else if (Number.isInteger(notif[i].teamInv)) {
+                block += "<div class='flex-notif-container'><span class='accept' onclick=changeStatus(" + notif[i].id_notif + "," + 2 + "," + notif[i].teamInv + "," + notif[i].receiver + "," + 0 + ")>✔</span><span class='deny' onclick=changeStatus(" + notif[i].id_notif + "," + 3 + "," + notif[i].teamInv + "," + notif[i].receiver + "," + 0 + ")>✖</span></div>";
             }
+
         } else if (notif[i].invite == 0) {
             if (Number.isInteger(notif[i].teamInv)) {
-                block += "<div class='flex-notif-container'><span class='accept' onclick=changeStatus(" + notif[i].id_notif + "," + 2 + "," + notif[i].teamInv + "," + notif[i].sender + ")>✔</span><span class='deny' onclick=changeStatus(" + notif[i].id_notif + "," + 3 + "," + notif[i].teamInv + "," + notif[i].sender + ")>✖</span></div>";
+                block += "<div class='flex-notif-container'><span class='accept' onclick=changeStatus(" + notif[i].id_notif + "," + 2 + "," + notif[i].teamInv + "," + notif[i].sender + "," + 0 + ")>✔</span><span class='deny' onclick=changeStatus(" + notif[i].id_notif + "," + 3 + "," + notif[i].teamInv + "," + notif[i].sender + "," + 0 + ")>✖</span></div>";
             } else if (Number.isInteger(notif[i].eventInv)) {
-                block += "<div class='flex-notif-container'><span class='accept' onclick=changeStatus(" + notif[i].id_notif + "," + 2 + "," + notif[i].eventInv + "," + notif[i].sender + ")>✔</span><span class='deny' onclick=changeStatus(" + notif[i].id_notif + "," + 3 + "," + notif[i].eventInv + "," + notif[i].sender + ")>✖</span></div>";
+                block += "<div class='flex-notif-container'><span class='accept' onclick=changeStatus(" + notif[i].id_notif + "," + 2 + "," + notif[i].eventInv + "," + notif[i].sender + "," + 0 + ")>✔</span><span class='deny' onclick=changeStatus(" + notif[i].id_notif + "," + 3 + "," + notif[i].eventInv + "," + notif[i].sender + "," + 0 + ")>✖</span></div>";
             }
         }
         block += "</a>";
@@ -30,14 +36,22 @@ async function notifButton(player) {
 }
 
 
-async function changeStatus(idNotif, newstatus, teamORevent, player) {
+async function changeStatus(idNotif, newstatus, teamORevent, player, wholeteam) {
+
     let notification = await getSpecificNotification(idNotif);
-    if (notification.eventInv != null) {
+    if (wholeteam == 1) {
+        let eVorT = teamORevent;
+
+        let eeVorT = eVorT.substring(0, 1)
+        partsOfStr = eVorT.split('/');
+        let teVorT = partsOfStr[1];
+
         try {
             let updatedInv = {
                 id: idNotif,
                 status: newstatus,
-                target: teamORevent,
+                target: eeVorT,
+                target2: teVorT,
                 newmember: player,
                 isTeam: false
             }
@@ -57,48 +71,75 @@ async function changeStatus(idNotif, newstatus, teamORevent, player) {
         } catch (err) {
             console.log(err);
         }
-    } else if (notification.teamInv != null) {
+    } else if (wholeteam == 0) {
+        if (notification.eventInv != null) {
+            try {
+                let updatedInv = {
+                    id: idNotif,
+                    status: newstatus,
+                    target: teamORevent,
+                    newmember: player,
+                    isTeam: false
+                }
+                let result = await $.ajax({
+                    url: "/api/notifications/",
+                    method: "post",
+                    dataType: "json",
+                    data: JSON.stringify(updatedInv),
+                    contentType: "application/json"
+                });
+                /**
+                                if (newstatus == 2) {
+                                    joinEvent(teamORevent, player);
+                                }
+                */
+                notifButton(notification.receiver);
+            } catch (err) {
+                console.log(err);
+            }
+        } else if (notification.teamInv != null) {
 
-        try {
-            let updatedInv = {
-                id: idNotif,
-                status: newstatus,
-                target: teamORevent,
-                newmember: player,
-                isTeam: true
+            try {
+                let updatedInv = {
+                    id: idNotif,
+                    status: newstatus,
+                    target: teamORevent,
+                    newmember: player,
+                    isTeam: true
+                }
+                let result = await $.ajax({
+                    url: "/api/notifications/",
+                    method: "post",
+                    dataType: "json",
+                    data: JSON.stringify(updatedInv),
+                    contentType: "application/json"
+                });
+                /**
+                                if (newstatus == 2) {
+                                    joinTeam(teamORevent, player);
+                                }
+                */
+                notifButton(player);
+            } catch (err) {
+                console.log(err);
             }
-            let result = await $.ajax({
-                url: "/api/notifications/",
-                method: "post",
-                dataType: "json",
-                data: JSON.stringify(updatedInv),
-                contentType: "application/json"
-            });
-            /**
-                            if (newstatus == 2) {
-                                joinTeam(teamORevent, player);
-                            }
-            */
-            notifButton(player);
-        } catch (err) {
-            console.log(err);
-        }
-    } else {
-        try {
-            let updatedInv = {
-                id: idNotif,
-                status: newstatus
+        } else {
+            try {
+                let updatedInv = {
+                    id: idNotif,
+                    status: newstatus
+                }
+                let result = await $.ajax({
+                    url: "/api/notifications/",
+                    method: "post",
+                    dataType: "json",
+                    data: JSON.stringify(updatedInv),
+                    contentType: "application/json"
+                });
+                notifButton(player);
+            } catch (err) {
+                console.log(err);
             }
-            let result = await $.ajax({
-                url: "/api/notifications/",
-                method: "post",
-                dataType: "json",
-                data: JSON.stringify(updatedInv),
-                contentType: "application/json"
-            });
-            notifButton(player);
-        } catch (err) {
-            console.log(err);
         }
     }
     location.reload();

@@ -11,7 +11,7 @@ router.get('/distinct', async function(req, res, next) {
     let fields = await mfield.getAllFieldsDistinct();
     res.send(fields);
 });
-
+//not used
 router.get('/:fieldID/coordinates', async function(req, res, next) {
     let fieldID = req.params.fieldID;
     let fieldsCoords = await mfield.getSpecificFieldCoords(fieldID);

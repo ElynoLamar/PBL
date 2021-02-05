@@ -118,7 +118,7 @@ async function createTacticsTable(team, player) {
         block += "<div class='flex-container'>";
         block += "<span></span><h1 class='titles'> No tactics found</h1>"
         if (thisPlayer.ranking == "Leader") {
-            block += "<span> img onclick='show(" + 4 + ")' class='plusimage' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png';' ></span>";
+            block += "<span> <img onclick='show(" + 4 + ")' class='plusimage' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png';' ></span>";
         } else {
             block += "<span></span>";
         }
@@ -170,7 +170,7 @@ async function changeMiddleBox_Player(player, team, loggedPlayer) {
     block += "<p><img src='../images/pistol.png' height='10'> Team Rank: " + playerinfo.ranking + "</p>";
     block += "<p><img src='../images/pistol.png' height='10'> Team Role: " + playerinfo.role;
     if (loggedPlayerinfo.ranking == 'Leader') {
-        block += "<div class='dropdown'><button class='dropbtn'>Change Role</button><div class='dropdown-content'>";
+        block += "<div class='dropdown'><button class='dropbtn'>Change Role</button><div class='dropdown-content'id='fixpos'>";
         for (let i = 0; i < roles.length; i++) {
 
             block += "<a onclick=changeRole(" + roles[i].id + "," + playerinfo.id + "," + team + "," + loggedPlayer + ")>" + roles[i].name + "</a>";
