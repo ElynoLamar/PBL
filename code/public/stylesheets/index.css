@@ -300,3 +300,50 @@ header {
     color: white;
     z-index: 400;
 }
+
+table {
+    position: relative;
+    font-family: 'prestige';
+    margin: 0 auto;
+}
+
+table>thead {
+    display: block;
+}
+
+table>tbody {
+    display: block;
+    overflow: auto;
+    overflow-x: hidden;
+    height: 30vh;
+}
+
+table>thead>tr>th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    font-size: 3.5vh;
+    background-color: #827725;
+    text-align: center;
+    color: white;
+    font-weight: normal;
+    padding-left: 10vh;
+    padding-right: 10vh;
+}
+
+table>tbody>tr {
+    font-size: 2.5vh;
+    text-align: center;
+    padding: 2vh;
+    cursor: pointer;
+}
+
+table>tbody>tr>td {
+    min-width: 30vh;
+    max-width: 30vh;
+    padding: 0.2vh 1vh 0.2vh;
+}
+
+table>tbody>tr:hover {
+    background-color: #353321;
+}

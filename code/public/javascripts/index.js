@@ -1,14 +1,22 @@
 var counter = -1;
-var loggedUser;
+var loggedUser=1;
 window.onload = function() {
     fakeLogin();
     counter = 0;
     let logo = document.getElementById('logoheader');
-    notifButton(loggedUser);
+
+    let block ="";
+    block+="<span id='userboxHeader' onclick='changeUser()'>";
+    block+="<span id='userimageHeader'><img id='userImage' src='images/userImage.png' height='50px'></span>";
+    block+="<span id='userNameHeader'>John Doe</span>";
+    block+="<span id='badgeContainer'></span>";
+    block+="</span>";
+    document.getElementById("userBoxDiv").innerHTML = block;
+    
 }
 
-function fakeLogin() {
-    loggedUser = 1;
+function fakeLogin(id) {
+    loggedUser = id;
     sessionStorage.setItem("loggedUser", loggedUser);
 }
 
@@ -82,4 +90,46 @@ function onscrollCheck() {
 
     }
 
+}
+
+async function changeUser() {
+    
+    var playersinfo = await getAllPlayers();
+    block = "";
+    block += "<div  class='form-container'>";
+    block += "<div class='form-content'>";
+    block += "<boxHeader id='choiceHeader'>";
+    block += "<h1 id='choiceTitle'>Pick User:</h1>";
+    block += "<span class='close' onclick='closeChangeUser()'>&times;</span>";
+    block += "</boxHeader>";
+    block += "<div class='centerTable'>";
+    block += "<table class='table center'>";
+    block += "<thead><tr><th>Choose:</th></tr></thead><tbody>";
+    for (let i = 0; i < playersinfo.length; i++) {
+        block += "<tr><td id='td" + i + "'><span class='allPlayerSpecificInfo' onclick='fakeLogin("+i+")'><a>" + playersinfo[i].name + "</a></span></td></tr>";
+    }
+    block += "</tbody></table>";
+    block += "</div>";
+    block += "</div></div>";
+    alert(loggedUser);
+    document.getElementById("badgeContainer").innerHTML = block;
+    document.getElementById("badgeContainer").style.display = "block";
+    
+}
+
+function closeChangeUser(){
+    document.getElementById("badgeContainer").style.display = "none";
+}
+
+async function getAllPlayers() {
+    try {
+        var players = await $.ajax({
+            url: "/api/players/",
+            method: "get",
+            dataType: "json"
+        });
+        return players;
+    } catch (err) {
+        console.log(err);
+    }
 }
