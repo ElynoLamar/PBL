@@ -10,8 +10,7 @@ window.onload = function() {
     let block = "";
     block += "<span id='userboxHeader' onclick='changeUser()'>";
     block += "<span id='userimageHeader'><img id='userImage' src='images/userImage.png' height='50px'></span>";
-    block += "<span id='userNameHeader'>John Doe</span>";
-
+    block += "<span id='userNameHeader'>Choose a User!</span>";
     block += "</span>";
     block += "<span id='badgeContainer'></span>";
     document.getElementById("userBoxDiv").innerHTML = block;
@@ -19,6 +18,8 @@ window.onload = function() {
 
 function fakeLogin(id) {
 
+    let block = "<span id='userNameHeader'>John Doe</span>";
+    document.getElementById("userNameHeader").innerHTML = block;
     loggedUser = id + 1;
     console.log((loggedUser));
     sessionStorage.setItem("loggedUser", loggedUser);
