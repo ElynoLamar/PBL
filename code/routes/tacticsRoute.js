@@ -10,17 +10,19 @@ router.post('/', async function(req, res, next) {
     res.send(newtact);
 });
 
-router.get("/:pos", async function(req, res, next) {
-    let pos = req.params.pos;
-    let tact = await mtact.getSpecificTact(pos);
-    res.send(tact);
+router.get("/:tacticID", async function(req, res, next) {
+    let tacticID = req.params.tacticID;
+    let result = await mtact.getSpecificTact(tacticID);
+    res.status(result.status).
+    send(result.data);
 });
 
 router.get("/events/:event/groups/:groupnum", async function(req, res, next) {
     let groupnum = req.params.groupnum;
     let event = req.params.event;
-    let tact = await mtact.getSpecificTactforGroup(event, groupnum);
-    res.send(tact);
+    let result = await mtact.getSpecificTactforGroup(event, groupnum);
+    res.status(result.status).
+    send(result.data);
 });
 
 

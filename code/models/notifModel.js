@@ -24,11 +24,19 @@ module.exports.getSpecificNotification = async function(notifID) {
     }
 }
 
+
+
 module.exports.updateInviteStatus = async function(invite) {
     try {
         var query = "UPDATE Notification SET status =? WHERE Notification.id_notif=?";
         const result = await pool.query(query, [invite.status, invite.id]);
-        console.log(query);
+        if (invite.isTeam) {
+            var query = "insert into TeamMember(player, team,ranking, role) values(?, ?, ?, ?);";
+            const result = await pool.query(query, [invite.newmember, invite.target, 2, 1]);
+        } else if (!invite.isTeam) {
+            var query = "insert into EventMember(player, event,ranking) values(?, ?, ?);";
+            const result = await pool.query(query, [invite.newmember, invite.target, 2]);
+        }
         return { status: 200, data: result };
     } catch (err) {
         console.log(err);

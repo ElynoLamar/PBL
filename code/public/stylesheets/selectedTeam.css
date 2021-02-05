@@ -169,8 +169,12 @@ header {
 }
 
 .dropdown-content {
-    left: 0;
+    left: -40vh;
     display: none;
+}
+
+#fixpos {
+    left: 0;
 }
 
 .dropdown:hover .dropdown-content {

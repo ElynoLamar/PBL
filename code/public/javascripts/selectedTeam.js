@@ -15,7 +15,7 @@ window.onload = async function() {
 
         createTeamUI();
         createTeammatesTable(teamid, loggedUser);
-        createTacticsTable(teamid);
+        createTacticsTable(teamid, loggedUser);
         createMiddleBox(teamid);
         notifButton(loggedUser);
         //notifButton();
@@ -56,11 +56,17 @@ async function getTeamMembersObj(id) {
 }
 //uma lista que mostra os players desta equipa
 async function createTeammatesTable(teamid, player) {
+    let thisPlayer = await getPlayerInfo(player, teamid);
     var teammember = await getTeamMembersObj(teamid);
     let block = "";
     if (Object.keys(teammember).length != 0) {
         block += "<div class='flex-container'>";
-        block += "<span></span><h1 class='titles'>Team members</h1><span><img class='plusimage' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png' height='50vh;' onclick=changeMiddleBox_AllPlayers(" + teamid + "," + player + ")></span>";
+        block += "<span></span><h1 class='titles'>Team members</h1>";
+        if (thisPlayer.ranking == "Leader") {
+            block += "<span><img class='plusimage' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png' height='50vh;' onclick=changeMiddleBox_AllPlayers(" + teamid + "," + player + ")></span>";
+        } else {
+            block += "<span></span>";
+        }
         block += "</div>";
         block += "<table class='table'>";
         block += "<thead><tr><th>Name</th><th>Rank</th><th>Role</th></tr></thead><tbody>";
@@ -88,13 +94,18 @@ async function getTeamTactics(id) {
     }
 }
 //criar tabela de tacticas/campos desta equipa
-async function createTacticsTable(id) {
-    var tactics = await getTeamTactics(id);
-
+async function createTacticsTable(team, player) {
+    var tactics = await getTeamTactics(team);
+    let thisPlayer = await getPlayerInfo(player, team);
     let block = "";
     if (tactics !== undefined) {
         block += "<div class='flex-container'>";
-        block += "<span></span><h1 class='titles'>Map Tactics</h1><span><img onclick='show(" + 4 + ")' class='plusimage' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png' ;' ></span>";
+        block += "<span></span><h1 class='titles'>Map Tactics</h1>";
+        if (thisPlayer.ranking == "Leader") {
+            block += "<span> <img onclick='show(" + 4 + ")' class='plusimage' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png';' ></span>";
+        } else {
+            block += "<span></span>";
+        }
         block += "</div>";
         block += "<table class='table'>";
         block += "<thead><tr><th>Name</th><th>Field</th></tr></thead><tbody>";
@@ -105,16 +116,21 @@ async function createTacticsTable(id) {
         block += "</tbody></table>";
     } else {
         block += "<div class='flex-container'>";
-        block += "<span></span><h1 class='titles'> No tactics found</h1><span><img onclick='show(" + 4 + ")' class='plusimage' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png';' ></span>";
+        block += "<span></span><h1 class='titles'> No tactics found</h1>"
+        if (thisPlayer.ranking == "Leader") {
+            block += "<span> <img onclick='show(" + 4 + ")' class='plusimage' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png';' ></span>";
+        } else {
+            block += "<span></span>";
+        }
         block += "</div>";
     }
     document.getElementById("teamMaps").innerHTML = block;
 }
 // buscar informação do jogador NESTA equipa(roles e rankings especificos desta equipa) na middle box
 async function getPlayerInfo(player, team) {
-    try { //fixar isto para /api/team/id/player/id
+    try {
         var playerinfo = await $.ajax({
-            url: "/api/players/" + player + "/team/" + team,
+            url: "/api/players/" + player + "/teams/" + team,
             method: "get",
             dataType: "json"
         });
@@ -154,7 +170,7 @@ async function changeMiddleBox_Player(player, team, loggedPlayer) {
     block += "<p><img src='../images/pistol.png' height='10'> Team Rank: " + playerinfo.ranking + "</p>";
     block += "<p><img src='../images/pistol.png' height='10'> Team Role: " + playerinfo.role;
     if (loggedPlayerinfo.ranking == 'Leader') {
-        block += "<div class='dropdown'><button class='dropbtn'>Change Role</button><div class='dropdown-content'>";
+        block += "<div class='dropdown'><button class='dropbtn'>Change Role</button><div class='dropdown-content'id='fixpos'>";
         for (let i = 0; i < roles.length; i++) {
 
             block += "<a onclick=changeRole(" + roles[i].id + "," + playerinfo.id + "," + team + "," + loggedPlayer + ")>" + roles[i].name + "</a>";
@@ -185,10 +201,14 @@ async function changeMiddleBox_Player(player, team, loggedPlayer) {
 
 async function changeRole(roleID, playerID, teamID, loggedPlayer) {
     try {
+        let obj = {
+            role: roleID
+        }
         let result = await $.ajax({
-            url: "/api/teams/" + teamID + "/player/" + playerID + "/role/" + roleID,
+            url: "/api/teams/" + teamID + "/player/" + playerID + "/role/",
             method: "put",
             dataType: "json",
+            data: JSON.stringify(obj),
             contentType: "application/json"
         });
         changeMiddleBox_Player(playerID, teamID, loggedPlayer);
@@ -328,6 +348,7 @@ async function removeThisPlayer(playerID, teamID, loggedPlayer) {
 
 
 async function promoteToLeader(playerID, teamID, loggedPlayer) {
+
     try {
         let result = await $.ajax({
             url: "/api/teams/" + teamID + "/player/" + loggedPlayer + "/giveLead/" + playerID,

@@ -3,41 +3,43 @@ var router = express.Router();
 var mplayer = require("../models/playerModel");
 
 router.get('/', async function(req, res, next) {
-    let players = await mplayer.getAllPlayers();
-    res.send(players);
-
+    let result = await mplayer.getAllPlayers();
+    res.status(result.status).
+    send(result.data);
 });
 
-router.get("/:pos", async function(req, res, next) {
-    let pos = req.params.pos;
-    let player = await mplayer.getPlayer(pos);
-    res.send(player);
+router.get("/:playerID", async function(req, res, next) {
+    let playerID = req.params.playerID;
+    let result = await mplayer.getPlayer(playerID);
+    res.status(result.status).
+    send(result.data);
 });
 
-router.get("/:pos/teams", async function(req, res, next) {
-    let pos = req.params.pos;
-    let teams = await mplayer.getPlayerJoinedTeams(pos);
-    res.send(teams);
+router.get("/:playerID/teams", async function(req, res, next) {
+    let playerID = req.params.playerID;
+    let result = await mplayer.getPlayerJoinedTeams(playerID);
+    res.status(result.status).
+    send(result.data);
 });
 
-router.get("/:pos/leaderships/teams", async function(req, res, next) {
-    let pos = req.params.pos;
-    let teamleads = await mplayer.getPlayerTeamLeadershipDuties(pos);
-    res.send(teamleads);
+router.get("/:playerID/leaderships/teams", async function(req, res, next) {
+    let playerID = req.params.playerID;
+    let result = await mplayer.getPlayerTeamLeadershipDuties(playerID);
+    res.send(result);
 });
 
-router.get("/:playerid/leaderships/groups", async function(req, res, next) {
-    let playerid = req.params.playerid;
-    let groupleads = await mplayer.getPlayerGroupLeadershipDuties(playerid);
-    res.send(groupleads);
+router.get("/:playerID/leaderships/groups", async function(req, res, next) {
+    let playerID = req.params.playerID;
+    let result = await mplayer.getPlayerGroupLeadershipDuties(playerID);
+    res.send(result);
 });
 
 
 
-router.get("/:pos1/team/:pos2", async function(req, res, next) {
-    let pos1 = req.params.pos1;
-    let pos2 = req.params.pos2;
-    let playerInfo = await mplayer.getSpecificPlayer(pos1, pos2);
+router.get("/:playerID/teams/:teamID", async function(req, res, next) {
+    let playerID = req.params.playerID;
+    let teamID = req.params.teamID;
+    let playerInfo = await mplayer.getSpecificPlayer(playerID, teamID);
     res.send(playerInfo);
 });
 

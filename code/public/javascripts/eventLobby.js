@@ -22,7 +22,9 @@ async function createNav(eventid) {
     let block = "";
     block += "<h1 class='titles' id='navTitle'>Players";
     if (thisPlayer.ranking == 1) {
-        block += "<img class='plusimage' onClick='showPlayers(" + eventid + "," + loggedUser + ")' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png' height='50vh;' >";
+        block += "<img class='plusimage' onClick='showPlayers()' onmouseover='this.src=\"../images/plusHover.png\"' onmouseout='this.src=\"../images/plus.png\"' src='../images/plus.png' height='50vh;' >";
+    } else if (typeof thisPlayer.ranking === 'undefined') {
+        block += "<span></span>";
     }
     block += "</h1>";
     block += "<table class='table'>";
@@ -44,6 +46,8 @@ async function createNav(eventid) {
 
             block += "<td><div id='buttonCell' onClick='createGroupChoiceUI(" + eventMembers[i].id + ")'>";
             block += "<img src='../images/plus-sign.png' height='50'></td>";
+        } else if (typeof thisPlayer.ranking === 'undefined') {
+            block += "<span></span>";
         }
         block += "</tr>";
     }
@@ -114,10 +118,14 @@ async function createEventLobbyUI(event_id) {
                 block += "<tr ";
                 if (thisPlayer.ranking == 1) {
                     block += "onclick='removeOrMakeLeader(" + groupMembers[i].id_player + "," + j + ")'"
+                } else if (typeof thisPlayer.ranking === 'undefined') {
+                    block += "<span></span>";
                 }
                 block += "><td>";
                 if (groupMembers[i].ranking == 1) {
                     block += "(Leader) ";
+                } else {
+                    block += "<span></span>";
                 }
                 if (groupMembers[i].id_player == loggedUser) {
                     block += "You </td><td> N / A </td></tr> ";
@@ -127,10 +135,14 @@ async function createEventLobbyUI(event_id) {
                 block += "<tr ";
                 if (thisPlayer.ranking == 1) {
                     block += "onclick='removeOrMakeLeader(" + groupMembers[i].id_player + "," + j + ")'"
+                } else if (typeof thisPlayer.ranking === 'undefined') {
+                    block += "<span></span>";
                 }
                 block += "<td>";
                 if (groupMembers[i].ranking == 1) {
                     block += "(Leader) ";
+                } else {
+                    block += "<span></span>";
                 }
 
                 if (groupMembers[i].id_player == loggedUser) {
@@ -330,7 +342,7 @@ async function getEventGroups(event_id) {
 
 }
 
-async function showPlayers(eventid, player) {
+async function showPlayers() {
     var playersinfo = await getAllPlayers();
     block = "";
     block += "<div  class='form-container'>";
@@ -466,7 +478,7 @@ async function inviteWholeTeamDiv() {
     block += "<table class='table center'>";
     block += "<thead><tr><th>INVITE:</th></tr></thead><tbody>";
     for (let i = 0; i < teams.length; i++) {
-        block += "<tr><td id='td" + i + "'><span class='allPlayerSpecificInfo' onclick='inviteWholeTeam(" + teams[i].id + "," + i + ")'><a>" + teams[i].name + "</a></span></td></tr>";
+        block += "<tr><td id='teamtd" + i + "'><span class='allPlayerSpecificInfo' onclick='inviteWholeTeam(" + teams[i].id + "," + i + ")'><a>" + teams[i].name + "</a></span></td></tr>";
     }
     block += "</tbody></table>";
     block += "</div></div>";
@@ -486,15 +498,15 @@ async function getTeamMembersObj(id) {
     }
 }
 async function inviteWholeTeam(teamID, rowID) {
-    document.getElementById('td' + rowID).style.backgroundColor = '#353321';
     let teamMember = await getTeamMembersObj(teamID);
+
     for (let i = 0; i < teamMember.length; i++) {
         createNewInvite(eventid, teamMember[i].id, teamID);
     }
 }
 
 async function createNewInvite(eventID, clickedPlayerID, teamID, rowID) {
-    document.getElementById('td' + rowID).style.backgroundColor = '#353321';
+
     var event = await getEventObj(eventID);
     var player = await getPlayer(loggedUser);
 
@@ -538,6 +550,7 @@ async function createNewInvite(eventID, clickedPlayerID, teamID, rowID) {
             console.log(err);
         }
     }
+
 }
 
 async function eventDetails(eventID) {
