@@ -110,7 +110,7 @@ async function createEventLobbyUI(event_id) {
         let groupMembers = await getGroupMembersObj(event_id, j);
         block += "<span class='lobbyGroup' id='group" + j + "'>";
         block += "<h1 class='titles'>Group " + j + "</h1>";
-        block += "<div class='tablediv'><table class='table'>";
+        block += "<div class='tablediv'>  <table class='table'>";
         block += "<tr><th>Name</th><th>Team</th></tr>";
         for (let i = 0; i < groupMembers.length; i++) {
             if (groupMembers[i].team == null) {
@@ -138,7 +138,7 @@ async function createEventLobbyUI(event_id) {
                 } else if (typeof thisPlayer.ranking === 'undefined') {
                     block += "<span></span>";
                 }
-                block += "<td>";
+                block += "><td>";
                 if (groupMembers[i].ranking == 1) {
                     block += "(Leader) ";
                 } else {
