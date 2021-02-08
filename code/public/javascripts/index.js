@@ -1,7 +1,9 @@
 var counter = -1;
 var loggedUser;
 window.onload = function() {
-    fakeLogin();
+
+    loggedUser = sessionStorage.getItem("loggedUser");
+    console.log((loggedUser));
     counter = 0;
     let logo = document.getElementById('logoheader');
 
@@ -12,7 +14,6 @@ window.onload = function() {
     block += "</span>";
     block += "<span id='badgeContainer'></span>";
     document.getElementById("userBoxDiv").innerHTML = block;
-    
 }
 
 function fakeLogin(id) {
@@ -97,7 +98,7 @@ function onscrollCheck() {
 }
 
 async function changeUser() {
-    
+
     var playersinfo = await getAllPlayers();
     block = "";
     block += "<div  class='form-container'>";
@@ -110,18 +111,19 @@ async function changeUser() {
     block += "<table class='table center'>";
     block += "<thead><tr><th>Choose:</th></tr></thead><tbody>";
     for (let i = 0; i < playersinfo.length; i++) {
-        block += "<tr><td id='td" + i + "'><span class='allPlayerSpecificInfo' onclick='fakeLogin("+i+")'><a>" + playersinfo[i].name + "</a></span></td></tr>";
+        block += "<tr onclick='fakeLogin(" + i + ")'><td id='td" + i + "'><span class='allPlayerSpecificInfo'><a>" + playersinfo[i].name + "</a></span></td></tr>";
     }
     block += "</tbody></table>";
     block += "</div>";
     block += "</div></div>";
-    alert(loggedUser);
+
     document.getElementById("badgeContainer").innerHTML = block;
     document.getElementById("badgeContainer").style.display = "block";
-    
+
 }
 
-function closeChangeUser(){
+function closeChangeUser() {
+    document.getElementById("badgeContainer").innerHTML = "";
     document.getElementById("badgeContainer").style.display = "none";
 }
 
