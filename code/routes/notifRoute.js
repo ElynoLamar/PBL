@@ -4,33 +4,38 @@ var mnotif = require("../models/notifModel");
 
 router.get('/player/:playerID', async function(req, res, next) {
     let playerID = req.params.playerID;
-    let notif = await mnotif.getPlayerNotifications(playerID);
-    res.send(notif);
+    let result = await mnotif.getPlayerNotifications(playerID);
+    res.status(result.status).
+    send(result.data);
 });
 router.get('/player/:playerID/count', async function(req, res, next) {
     let playerID = req.params.playerID;
-    let notif = await mnotif.getPlayerNotifCount(playerID);
-    res.send(notif);
+    let result = await mnotif.getPlayerNotifCount(playerID);
+    res.status(result.status).
+    send(result.data);
 });
 
 
 router.post('/', async function(req, res, next) {
     let invite = req.body;
-    let updatedInv = await mnotif.updateInviteStatus(invite);
-    res.send(updatedInv);
+    let result = await mnotif.updateInviteStatus(invite);
+    res.status(result.status).
+    send(result.data);
 });
 
 router.get('/:idNotif', async function(req, res, next) {
     let idNotif = req.params.idNotif;
-    let notifInfo = await mnotif.getSpecificNotification(idNotif);
-    res.send(notifInfo);
+    let result = await mnotif.getSpecificNotification(idNotif);
+    res.status(result.status).
+    send(result.data);
 });
 
 
 router.post('/player/invite', async function(req, res, next) {
     let invite = req.body;
-    let newInv = await mnotif.sendInvToSpecificPerson(invite);
-    res.send(newInv);
+    let result = await mnotif.sendInvToSpecificPerson(invite);
+    res.status(result.status).
+    send(result.data);
 });
 
 
@@ -38,16 +43,18 @@ router.post('/player/:pos/teams/:pos2/requests/', async function(req, res, next)
     let pos = req.params.pos;
     let pos2 = req.params.pos2;
     let request = req.body;
-    let nRequest = await mnotif.requestToJoinTeamNotif(request);
-    res.send(nRequest);
+    let result = await mnotif.requestToJoinTeamNotif(request);
+    res.status(result.status).
+    send(result.data);
 });
 
 router.post('/player/:pos/events/:pos2/requests/', async function(req, res, next) {
     let pos = req.params.pos;
     let pos2 = req.params.pos2;
     let request = req.body;
-    let nRequest = await mnotif.requestToJoinEventNotif(request);
-    res.send(nRequest);
+    let result = await mnotif.requestToJoinEventNotif(request);
+    res.status(result.status).
+    send(result.data);
 });
 
 

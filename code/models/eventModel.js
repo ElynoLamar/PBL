@@ -189,7 +189,6 @@ module.exports.getSpecificEventSettings = async function(eventid) {
 
 module.exports.setGroupLeader = async function(eventid, playerid, group) {
     try {
-        console.log(">>>>>>>>>>>>>>>>>>>>eventid=" + eventid + " playerid=" + playerid + " group=" + group);
         var query = "UPDATE EventGroup SET ranking = 2 where EventGroup.event = ? and EventGroup.groupNumber = ?;";
         const result1 = await pool.query(query, [eventid, group]);
         query = "UPDATE EventGroup SET ranking = 1 where EventGroup.event = ? and EventGroup.groupNumber = ? and EventGroup.player = ?;";

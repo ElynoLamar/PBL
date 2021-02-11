@@ -130,7 +130,7 @@ async function createTacticsTable(team, player) {
 async function getPlayerInfo(player, team) {
     try {
         var playerinfo = await $.ajax({
-            url: "/api/players/" + player + "/teams/" + team,
+            url: "/api/teams/" + team + "/members/" + player,
             method: "get",
             dataType: "json"
         });

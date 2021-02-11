@@ -5,10 +5,13 @@ module.exports.getPlayerNotifications = async function(player) {
         var query = "select * from Notification where receiver=? and status=1";
         const notif = await pool.query(query, player);
         console.log(query);
-        return notif;
+        if (notif.length > 0) {
+            return { status: 200, data: notif };
+        } else {
+            return { status: 400, msg: 'no notifications for this player' };
+        }
     } catch (err) {
-        console.log(err);
-        return err;
+        return { status: 500, data: err };
     }
 }
 
@@ -17,10 +20,10 @@ module.exports.getSpecificNotification = async function(notifID) {
         var query = "select * from Notification where id_notif = ?";
         const notif = await pool.query(query, notifID);
         console.log(query);
-        return notif[0];
+        return { status: 200, data: notif[0] };
     } catch (err) {
         console.log(err);
-        return err;
+        return { status: 500, data: err };
     }
 }
 
@@ -40,7 +43,7 @@ module.exports.updateInviteStatus = async function(invite) {
         return { status: 200, data: result };
     } catch (err) {
         console.log(err);
-        return err;
+        return { status: 500, data: err };
     }
 }
 
@@ -54,7 +57,7 @@ module.exports.sendInvToSpecificPerson = async function(newInvite) {
                 return { status: 200, data: result };
             } catch (err) {
                 console.log(err);
-                return err;
+                return { status: 500, data: err };
             }
         } else {
             try {
@@ -64,7 +67,7 @@ module.exports.sendInvToSpecificPerson = async function(newInvite) {
                 return { status: 200, data: result };
             } catch (err) {
                 console.log(err);
-                return err;
+                return { status: 500, data: err };
             }
         }
     } else if (newInvite.team != null) {
@@ -75,7 +78,7 @@ module.exports.sendInvToSpecificPerson = async function(newInvite) {
             return { status: 200, data: result };
         } catch (err) {
             console.log(err);
-            return err;
+            return { status: 500, data: err };
         }
     }
 
@@ -87,10 +90,13 @@ module.exports.getPlayerNotifCount = async function(player) {
         var query = "SELECT COUNT(id_notif) as num FROM Notification WHERE Notification.receiver=? and status=1; ";
         const count = await pool.query(query, player);
         console.log(query);
-        return count[0];
+        if (count.length > 0) {
+            return { status: 200, data: count[0] };
+        } else {
+            return { status: 400, msg: 'no notifications for this player' };
+        }
     } catch (err) {
-        console.log(err);
-        return err;
+        return { status: 500, data: err };
     }
 }
 
@@ -101,7 +107,7 @@ module.exports.requestToJoinTeamNotif = async function(request) {
         return { status: 200, data: result };
     } catch (err) {
         console.log(err);
-        return err;
+        return { status: 500, data: err };
     }
 }
 
@@ -112,6 +118,6 @@ module.exports.requestToJoinEventNotif = async function(request) {
         return { status: 200, data: result };
     } catch (err) {
         console.log(err);
-        return err;
+        return { status: 500, data: err };
     }
 }

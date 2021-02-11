@@ -39,15 +39,14 @@ async function notifButton(player) {
 async function changeStatus(idNotif, newstatus, teamORevent, player, wholeteam) {
 
     let notification = await getSpecificNotification(idNotif);
-    if (wholeteam == 1) {
-        let eVorT = teamORevent;
-
-        let eeVorT = eVorT.substring(0, 1)
-        partsOfStr = eVorT.split('/');
-        let teVorT = partsOfStr[1];
-
-        try {
-            let updatedInv = {
+    try {
+        let updatedInv = {}
+        if (wholeteam == 1) { //not implemented, mas seria para saber qual a equipa do jogador quando se convida uma equipa inteira para um evento
+            let eVorT = teamORevent; //pode ser id evento ou id team, esta no formato eventID.teamID
+            let eeVorT = eVorT.substring(0, 1) //buscar o eventID
+            partsOfStr = eVorT.split('.'); //dividir a string em partes de array
+            let teVorT = partsOfStr[1]; // teamID é a segunda parte do array
+            updatedInv = {
                 id: idNotif,
                 status: newstatus,
                 target: eeVorT,
@@ -55,95 +54,50 @@ async function changeStatus(idNotif, newstatus, teamORevent, player, wholeteam) 
                 newmember: player,
                 isTeam: false
             }
-            let result = await $.ajax({
-                url: "/api/notifications/",
-                method: "post",
-                dataType: "json",
-                data: JSON.stringify(updatedInv),
-                contentType: "application/json"
-            });
-            /**
-                            if (newstatus == 2) {
-                                joinEvent(teamORevent, player);
-                            }
-            */
             notifButton(notification.receiver);
-        } catch (err) {
-            console.log(err);
-        }
-    } else if (wholeteam == 0) {
-        if (notification.eventInv != null) {
-            try {
-                let updatedInv = {
+        } else if (wholeteam == 0) {
+            if (notification.eventInv != null) {
+
+                updatedInv = {
                     id: idNotif,
                     status: newstatus,
                     target: teamORevent,
                     newmember: player,
                     isTeam: false
                 }
-                let result = await $.ajax({
-                    url: "/api/notifications/",
-                    method: "post",
-                    dataType: "json",
-                    data: JSON.stringify(updatedInv),
-                    contentType: "application/json"
-                });
-                /**
-                                if (newstatus == 2) {
-                                    joinEvent(teamORevent, player);
-                                }
-                */
-                notifButton(notification.receiver);
-            } catch (err) {
-                console.log(err);
-            }
-        } else if (notification.teamInv != null) {
 
-            try {
-                let updatedInv = {
+                notifButton(notification.receiver);
+            } else if (notification.teamInv != null) {
+                updatedInv = {
                     id: idNotif,
                     status: newstatus,
                     target: teamORevent,
                     newmember: player,
                     isTeam: true
                 }
-                let result = await $.ajax({
-                    url: "/api/notifications/",
-                    method: "post",
-                    dataType: "json",
-                    data: JSON.stringify(updatedInv),
-                    contentType: "application/json"
-                });
-                /**
-                                if (newstatus == 2) {
-                                    joinTeam(teamORevent, player);
-                                }
-                */
                 notifButton(player);
-            } catch (err) {
-                console.log(err);
-            }
-        } else {
-            try {
-                let updatedInv = {
+            } else {
+                updatedInv = {
                     id: idNotif,
                     status: newstatus
                 }
-                let result = await $.ajax({
-                    url: "/api/notifications/",
-                    method: "post",
-                    dataType: "json",
-                    data: JSON.stringify(updatedInv),
-                    contentType: "application/json"
-                });
                 notifButton(player);
-            } catch (err) {
-                console.log(err);
             }
         }
+        let result = await $.ajax({
+            url: "/api/notifications/",
+            method: "post",
+            dataType: "json",
+            data: JSON.stringify(updatedInv),
+            contentType: "application/json"
+        });
+    } catch (err) {
+        console.log(err);
     }
     location.reload();
 }
+
+
 
 
 function toggleNotif() {
