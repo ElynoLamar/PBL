@@ -509,9 +509,9 @@ async function createNewInvite(eventID, clickedPlayerID, teamID, rowID) {
 
     var event = await getEventObj(eventID);
     var player = await getPlayer(loggedUser);
+    try {
+        if (teamID != null) {
 
-    if (teamID != null) {
-        try {
             let newInvite = {
                 playerRec: clickedPlayerID,
                 playerSend: player.id,
@@ -519,38 +519,26 @@ async function createNewInvite(eventID, clickedPlayerID, teamID, rowID) {
                 team: teamID,
                 text: "You have been invited to '" + event.name + "' event by the player: '" + player.name + "'"
             }
+        } else {
 
-            let result = await $.ajax({
-                url: "/api/notifications/player/invite",
-                method: "post",
-                dataType: "json",
-                data: JSON.stringify(newInvite),
-                contentType: "application/json"
-            });
-        } catch (err) {
-            console.log(err);
-        }
-    } else {
-        try {
             let newInvite = {
                 playerRec: clickedPlayerID,
                 playerSend: player.id,
                 event: event.id,
                 text: "You have been invited to '" + event.name + "' event by the player: '" + player.name + "'"
             }
-
-            let result = await $.ajax({
-                url: "/api/notifications/player/invite",
-                method: "post",
-                dataType: "json",
-                data: JSON.stringify(newInvite),
-                contentType: "application/json"
-            });
-        } catch (err) {
-            console.log(err);
         }
-    }
 
+        let result = await $.ajax({
+            url: "/api/notifications/player/invite",
+            method: "post",
+            dataType: "json",
+            data: JSON.stringify(newInvite),
+            contentType: "application/json"
+        });
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 async function eventDetails(eventID) {

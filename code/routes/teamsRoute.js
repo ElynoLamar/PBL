@@ -82,4 +82,14 @@ router.put("/:team/player/:oldleader/giveLead/:newleader", async function(req, r
 });
 
 
+router.get("/:teamID/members/:playerID", async function(req, res, next) {
+    let playerID = req.params.playerID;
+    let teamID = req.params.teamID;
+    let result = await mteam.getSpecificPlayer(playerID, teamID);
+    res.status(result.status).
+    send(result.data);
+});
+
+
+
 module.exports = router;
