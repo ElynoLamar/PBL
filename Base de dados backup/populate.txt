@@ -58,13 +58,13 @@ insert into Field(name_field) values('Cacém field');
 insert into Field(name_field) values('Rio de Mouro field');    
 insert into Field(name_field) values('Cacém Igreja');
 
-insert into Tactics(field,name_tactic,team,image_tactic) values(1,'Ataque',1,'Ataque.jpg')
-insert into Tactics(field,name_tactic,team,image_tactic) values(1,'Defesa',1,'Defesa.jpg')
-insert into Tactics(field,name_tactic,team,image_tactic) values(1,'Rush',1,'Rush.jpg')
+insert into Tactics(field,name_tactic,team,image_tactic) values(1,'Ataque',1,'Ataque.jpg');
+insert into Tactics(field,name_tactic,team,image_tactic) values(1,'Defesa',1,'Defesa.jpg');
+insert into Tactics(field,name_tactic,team,image_tactic) values(1,'Rush',1,'Rush.jpg');
 
-INSERT INTO Event(name_event, field_event, date_event, duration_event, team_size_event, group_num) VALUES ("Super Cool Event", 1, "10/12/2021", "3 hours" , 5, 2);
-INSERT INTO Event(name_event, field_event, date_event, duration_event, team_size_event, group_num) VALUES ("Not so Cool Event", 1, "22/03/2021", "4 hours" , 6, 3);
-INSERT INTO Event(name_event, field_event, date_event, duration_event, team_size_event, group_num) VALUES ("Really Cool Event", 2, "14/02/2021", "6 hours" , 6, 5);
+INSERT INTO Event(name_event, field_event, date_event, duration_event, team_size_event, group_num,privacy) VALUES ("Super Cool Event", 1, "10/12/2021", "3 hours" , 5, 2,1);
+INSERT INTO Event(name_event, field_event, date_event, duration_event, team_size_event, group_num,privacy) VALUES ("Not so Cool Event", 1, "22/03/2021", "4 hours" , 6, 3,2);
+INSERT INTO Event(name_event, field_event, date_event, duration_event, team_size_event, group_num,privacy) VALUES ("Really Cool Event", 2, "14/02/2021", "6 hours" , 6, 5,3);
 
 insert into EventMember(player, event) values(1, 1);
 insert into EventMember(player, event) values(2, 1);
