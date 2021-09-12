@@ -34,14 +34,14 @@ insert into Team(name_team, description_team) values('Team Snipe Matracas','Very
 insert into Team(name_team, description_team) values('Competitive Lucid Games','Competitive high ranked team');
 insert into Team(name_team, description_team) values('Bruv Gaming','Friends private team');
 
-insert into Player(email_player, name_player, age_player, description_player, image_path) values('ppp@gmail.com','Player1','19', 'Lorem ipsum dolor sit amet', 'Player1.png');
-insert into Player(email_player, name_player, age_player, description_player, image_path) values('ppp@gmail.com','Player2','19', 'Lorem ipsum dolor sit amet', 'Player2.png');
-insert into Player(email_player, name_player, age_player, description_player, image_path) values('ppp@gmail.com','Player3','19', 'Lorem ipsum dolor sit amet', 'Player3.png');
-insert into Player(email_player, name_player, age_player, description_player, image_path) values('ppp@gmail.com','Player4','19', 'Lorem ipsum dolor sit amet', 'Player4.png');
-insert into Player(email_player, name_player, age_player, description_player, image_path) values('ddd@gmail.com','Player5','20', 'Lorem ipsum dolor sit amet', 'Player5.png');
-insert into Player(email_player, name_player, age_player, description_player, image_path) values('ddd@gmail.com','Player6','20', 'Lorem ipsum dolor sit amet', 'Player6.png');
-insert into Player(email_player, name_player, age_player, description_player, image_path) values('ddd@gmail.com','Player7','20', 'Lorem ipsum dolor sit amet', 'Player7.png');
-insert into Player(email_player, name_player, age_player, description_player, image_path) values('ccc@gmail.com','Player8','28', 'Lorem ipsum dolor sit amet', 'Player8.png');
+insert into Player(email_player, name_player, age_player, description_player, photo_path) values('ppp@gmail.com','Player1','19', 'Lorem ipsum dolor sit amet', 'Player1.png');
+insert into Player(email_player, name_player, age_player, description_player, photo_path) values('ppp@gmail.com','Player2','19', 'Lorem ipsum dolor sit amet', 'Player2.png');
+insert into Player(email_player, name_player, age_player, description_player, photo_path) values('ppp@gmail.com','Player3','19', 'Lorem ipsum dolor sit amet', 'Player3.png');
+insert into Player(email_player, name_player, age_player, description_player, photo_path) values('ppp@gmail.com','Player4','19', 'Lorem ipsum dolor sit amet', 'Player4.png');
+insert into Player(email_player, name_player, age_player, description_player, photo_path) values('ddd@gmail.com','Player5','20', 'Lorem ipsum dolor sit amet', 'Player5.png');
+insert into Player(email_player, name_player, age_player, description_player, photo_path) values('ddd@gmail.com','Player6','20', 'Lorem ipsum dolor sit amet', 'Player6.png');
+insert into Player(email_player, name_player, age_player, description_player, photo_path) values('ddd@gmail.com','Player7','20', 'Lorem ipsum dolor sit amet', 'Player7.png');
+insert into Player(email_player, name_player, age_player, description_player, photo_path) values('ccc@gmail.com','Player8','28', 'Lorem ipsum dolor sit amet', 'Player8.png');
 
 insert into TeamMember(player, team,ranking, role) values(1, 1, 1, 6);
 insert into TeamMember(player, team,ranking, role) values(2, 1, 2, 1);
